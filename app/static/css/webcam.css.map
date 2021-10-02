@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AACI,OADG,CACH,aAAa,CAAC;EACV,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,gBAAgB,EAAE,IAAI;CACzB",
+    "sources": [
+        "webcam.scss",
+        "_variables.scss"
+    ],
+    "names": [],
+    "file": "webcam.css"
+}

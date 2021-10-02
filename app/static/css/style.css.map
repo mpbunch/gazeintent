@@ -1,0 +1,13 @@
+{
+    "version": 3,
+    "mappings": "AEGA,AACI,OADG,CACH,aAAa,CAAC;EACV,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,gBAAgB,EAAE,IAAI;CACzB;;AERL,AAAA,CAAC,AAAA,WAAW,AAAA,KAAK,CAAC;EACd,eAAe,EAAE,IAAI;CACxB;;AACD,AAAA,WAAW,CAAA;EACP,OAAO,EAAC,IAAI;CACf;;AACD,AAAA,QAAQ,CAAA;EACJ,OAAO,EAAC,IAAI;CACf;;AACD,AAAA,QAAQ,CAAA;EACJ,gBAAgB,EAAC,OAAO;CAC3B;;AAED,AAAA,gBAAgB,CAAA;EACZ,UAAU,EAAC,cAAc;CAC5B;;AACD,AAAA,MAAM,CAAA;EACF,SAAS,EAAC,IAAI;CACjB;;AACD,AAAA,MAAM,CAAA;EACF,SAAS,EAAC,IAAI;CACjB",
+    "sources": [
+        "style.scss",
+        "_variables.scss",
+        "webcam.scss",
+        "_variables.scss",
+        "global.scss"
+    ],
+    "names": [],
+    "file": "style.css"
+}
