@@ -1,10 +1,8 @@
-CSCI S14A - Building Interactive Web Applications for Data Analysis
-
-# Super Cool Awesome Project
+# GazeIntent
 
 ## Project Plan
 
-**Meeting Times**: Tues, Thursdays 3:30 - 4:30p (1 hour)
+**Meeting Times**: Monday, Wednesday 7:00 - 8:00PM EST (1 hour)
 
 **Zoom Link**: https://harvard.zoom.us/j/82654004922?pwd=bXE3SVo0L1lFajhLdmpTNld6MXlVUT09
 
@@ -22,9 +20,20 @@ Matt Bunch - mattbunch@gmail.com
 
 ## Project Basics
 
-The purpose of this project is XXX. It will be distributed as XXX. It will be implemented in XXX.
+The purpose of this project is to determine intent of gaze. Specifically, the intent of gaze while viewing a screen. We believe we can determine if someone is actively looking at a screen, for how long, as well as collect other bio/demo data about the user.
 
-General description of how the project will work
+
+The project will be implemented using the following technologies: Python, Flask, and a Convolutional Neural Network
+
+
+As an initial proof of concept, we will observe users through a web application with webcam support. The webcam data will be sent to a server where the data is passed through a CNN, features will be analyzed, and spit out for rendering. This returned metadata will be rendered within the web application to prove that we are able to accurately classify and represent the users gaze.
+
+
+This foundational technology could be used within many industries:
+1. Advertising, how valuable is my ad space actually worth
+2. Airplanes, are people paying attention to the flight attendants
+3. Enhanced web interface controls, allowing for non-motor individuals to control and interact with the web
+
 
 ## Project Structure
 

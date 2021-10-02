@@ -1,10 +1,10 @@
 CSCI S14A - Building Interactive Web Applications for Data Analysis
 
-# Super Cool Awesome Project
+# GazeIntent
 
 ## Project Plan
 
-**Meeting Times**: Tues, Thursdays 3:30 - 4:30p (1 hour)
+**Meeting Times**: Monday, Wednesday 7:00 - 8:00PM EST (1 hour)
 
 **Zoom Link**: https://harvard.zoom.us/j/82654004922?pwd=bXE3SVo0L1lFajhLdmpTNld6MXlVUT09
 
@@ -22,7 +22,7 @@ Matt Bunch - mattbunch@gmail.com
 
 # Milestone 1 Tasks
 
-Cool Dude
+Matt Bunch
 1. Github repository **COMPLETE**
 
 Sam Cooke
