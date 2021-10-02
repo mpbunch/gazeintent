@@ -25,33 +25,30 @@ Matt Bunch - mattbunch@gmail.com
 Matt Bunch
 1. Github repository **COMPLETE**
 
-Sam Cooke
-1. Process book **COMPLETE**
-2. Project Plan **COMPLETE**
+Name
+1. Process book **IN PROCESS**
+2. Project Plan **IN PROCESS**
 
 All:
-1. Choose data set **COMPLETE**
+1. Choose data set **IN PROCESS**
 2. Cite all work **IN PROCESS**
 
 # Milestone X Tasks
 
-Cool Dude
+Name
+1. Task 1 **NOT STARTED**
+2. Task 2 **NOT STARTED**
+3. Task 3 **NOT STARTED**
 
-1. Task 1 **COMPLETE**
-2. Task 2 **IN PROCESS**
-3. Task 3 **IN PROCESS**
+Name
+1. Task 1 **NOT STARTED**
+2. Task 2 **NOT STARTED**
+3. Task 3 **NOT STARTED**
 
-Lady Gaga
-
-1. Task 1 **COMPLETE**
-2. Task 2 **IN PROCESS**
-3. Task 3 **IN PROCESS**
-
-Sam Cooke
-
-1. Task 1 **COMPLETE**
-2. Task 2 **IN PROCESS**
-3. Task 3 **IN PROCESS**
+Name
+1. Task 1 **NOT STARTED**
+2. Task 2 **NOT STARTED**
+3. Task 3 **NOT STARTED**
 
 # References & Citations
 
