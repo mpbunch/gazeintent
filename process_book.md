@@ -22,12 +22,12 @@ Matt Bunch - mattbunch@gmail.com
 
 # Milestone 1 Tasks
 
-Matt Bunch
+Matt
 1. Github repository **COMPLETE**
 
-Name
+Yihan, Matt
 1. Process book **IN PROCESS**
-2. Project Plan **IN PROCESS**
+2. Project Plan **COMPLETE**
 
 All:
 1. Choose data set **IN PROCESS**
