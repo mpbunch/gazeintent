@@ -59,16 +59,22 @@ for checking for compatibility, as well as loading and securing the various sub-
 
 ## Project Timeline
 
-Milestone 1: Determine the dataset
-Milestone 2: Come up with the innovative metrics of gaze detection based on the dataset annotation. Example could be "Ask the users to open the webcam and the web app could indicate the gaze on the interface."
-Milestone 3: Setup application hosting
-Milestone 4: ML work
+1. Milestone 1: Determine the dataset
+
+2. Milestone 2: Come up with the innovative metrics of gaze detection based on the dataset annotation. Example could be "Ask the users to open the webcam and the web app could indicate the gaze on the interface."
+
+3. Milestone 3: Setup application hosting
+
+4. Milestone 4: ML work
   Read papers: decide which network to use and how to train the networks
   Decide which framework to use (e.g. TensorFlow)
   Cloud service: “where to do the training”, or does anyone has a GPU to run the training locally
   Decide which data processing container to use:  docker, singularity
   After training, tuning the hyperparameters and network architecture
   Export trained network (ONNX?)
-Milestone 5: Sketch the wireframe/prototype the web application and determine how to implement D3
-Milestone 6: Build the frontend and backend of the web application
-Milestone 7: Test & fine tune
+
+5. Milestone 5: Sketch the wireframe/prototype the web application and determine how to implement D3
+
+6. Milestone 6: Build the frontend and backend of the web application
+
+7. Milestone 7: Test & fine tune
