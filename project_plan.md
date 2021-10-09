@@ -12,6 +12,8 @@
 
 **Website Location**: TBD
 
+**Presentation: https://docs.google.com/presentation/d/1Fax5foeX8a4OCsrN9AUU04rWT10ZJ9dVs29y311Ph7A
+
 ### Team Members
 
 Yihan Zhou - zhanonly@gmail.com
