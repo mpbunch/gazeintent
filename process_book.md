@@ -12,7 +12,7 @@ CSCI S14A - Building Interactive Web Applications for Data Analysis
 
 **Website Design Template**: TBD
 
-**Website Location**: TBD
+**Website Location**: https://gazeintent.herokuapp.com/
 
 ### Team Members
 
