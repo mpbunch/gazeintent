@@ -1,1 +1,1 @@
-web: gunicorn routes:app/routes
+web: gunicorn app:routes
