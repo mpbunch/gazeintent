@@ -5,19 +5,20 @@ app=Flask(__name__)
 
 @app.route("/")
 def index():
+
     return render_template("index.html")
 
-@app.route("/login")
-def login():
-    return render_template("login.html")
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
 
-@app.route("/documentation")
-def documentation():
-    return render_template("documentation.html")
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('index'))
 
-@app.route("/register")
-def register():
-    return render_template("register.html")
+    # show the form, it wasn't submitted
+    return render_template('signup.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
