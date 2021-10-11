@@ -5,6 +5,9 @@ click==8.0.1
 Cython==0.29.24
 docopt==0.6.2
 Flask==2.0.1
+Flask-SQLAlchemy==2.5.1
+Flask-WTF==0.15.1
+greenlet==1.1.2
 gunicorn==20.1.0
 idna==2.10
 importlib-metadata==4.8.1
@@ -23,10 +26,12 @@ scikit-learn==0.21.1
 scipy==1.7.1
 six==1.16.0
 sklearn==0.0
+SQLAlchemy==1.4.25
 tenacity==8.0.1
 threadpoolctl==3.0.0
 typing-extensions==3.10.0.2
 urllib3==1.26.7
 Werkzeug==2.0.1
+WTForms==2.3.3
 yarg==0.1.9
 zipp==3.6.0

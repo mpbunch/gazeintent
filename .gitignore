@@ -5,3 +5,4 @@ etc/
 share/
 __pycache__/
 *.bak
+pyvenv.cfg
