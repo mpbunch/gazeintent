@@ -5,6 +5,7 @@ click==8.0.1
 Cython==0.29.24
 docopt==0.6.2
 Flask==2.0.1
+Flask-Login==0.5.0
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.15.1
 greenlet==1.1.2
