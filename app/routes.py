@@ -1,7 +1,8 @@
 import joblib
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
+from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 from models import db, User
-from forms import UsersForm
+from forms import UsersForm, LoginForm
 import os
 
 app=Flask(__name__)
@@ -26,17 +27,81 @@ if not db_url or not secret_key:
     # Fail if no environment variable is found.
     raise Exception('Credentials not found.')
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres://','postgresql://')
 app.secret_key = secret_key
+login_manager = LoginManager()
+login_manager.init_app(app)
 db.init_app(app)
+
+@login_manager.user_loader
+def user_loader(user_id):
+    user = User().query.filter_by(user_id=user_id).first()
+    print(user, user_id)
+    if not user:
+        print('invalid 1')
+        return
+    return user
+
+@login_manager.request_loader
+def request_loader(request):
+    if request.form.get('email_address'):
+        email_address = request.form.get('email_address')
+        user = User().query.filter_by(email_address=email_address).first()
+        if not user:
+            print('invalid 2')
+            return
+        return user
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized'
+
+@app.route('/client')
+@app.route('/admin')
+@login_required
+def admin():
+    if current_user.role == 'admin':
+        return render_template("admin.html", user=current_user)
+    return render_template("client.html", user=current_user)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/login")
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html")
+
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    message={
+        "message":False,
+        "type":0
+    }
+    if request.method == 'POST':
+        email_address = request.form['email_address']
+        print(email_address)
+        user = User().query.filter_by(email_address=email_address).first()
+        print(user)
+        print(user.check_password(form.password.data))
+        if user and user.check_password(form.password.data):
+            print('VALID')
+            login_user(user)
+            return redirect(url_for('admin'))
+        else:
+            message={
+                "message":"Invalid credentials, try again.",
+                "type":2
+            }
+    return render_template("login.html", form=form, message=message)
 
 @app.route("/documentation")
 def documentation():
@@ -67,8 +132,9 @@ def signup():
         email_address = request.form['email_address']
         first_name = request.form['first_name']
         last_name = request.form['last_name']
-        password = request.form['password']
-        new_user = User(first_name=first_name, last_name=last_name, email_address=email_address, password=password)
+        new_user = User(first_name=first_name, last_name=last_name, email_address=email_address)
+        # hash the password
+        new_user.set_password(request.form['password'])
         try:
             db.session.add(new_user)
             db.session.commit()
