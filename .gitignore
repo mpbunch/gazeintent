@@ -3,3 +3,5 @@ bin/
 lib/
 etc/
 share/
+__pycache__/
+*.bak
