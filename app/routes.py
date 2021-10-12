@@ -149,6 +149,18 @@ def signup():
     active="signup"
     return render_template('signup.html', form=form, message=message, active=active)
 
+@app.route('/slack', methods=['post'])
+def slack():
+    data = request.data
+    if not data:
+        return
+    email = data.user.email
+    status = data.status
+    action = data.action
+    data = {"text": f"{email} {action} gazeintent. Status: {status}"}
+    slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
+    request.post(slack_webhook_url, data=data, headers={'Content-Type': 'application/json'})
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
