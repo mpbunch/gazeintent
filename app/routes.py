@@ -36,6 +36,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 db.init_app(app)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 @login_manager.user_loader
 def user_loader(user_id):
     user = User().query.filter_by(user_id=user_id).first()
