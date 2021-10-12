@@ -4,6 +4,7 @@ from flask_login import current_user, LoginManager, logout_user, login_required,
 from models import db, User
 from forms import UsersForm, LoginForm
 import json
+import requests
 import os
 
 app=Flask(__name__)
@@ -154,13 +155,26 @@ def signup():
 def slack():
     data = request.get_json()
     if not data:
-        return
-    email = data['user']['email']
-    status = data['status']
-    action = data['action']
-    data = {"text": f"{email} {action} gazeintent. Status: {status}"}
-    slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
-    request.post(slack_webhook_url, data=data, headers={'Content-Type': 'application/json'})
+        return "Malformed payload"
+    try:
+        email = data['data']['user']['email']
+        status = data['status']
+        action = data['action']
+        data = {"text": f"{email} {action} gazeintent. Status: {status}"}
+        slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
+    except Exception:
+        return "Malformed payload."
+
+    try:
+        response = requests.post(slack_webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+        if response.status_code != 200:
+            raise ValueError(
+                f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}'
+            )
+    except Exception:
+        return "Some error with posting to slack."
+
+    return "Message sent to slack."
     
 
 if __name__ == "__main__":
