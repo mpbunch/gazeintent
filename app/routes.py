@@ -39,7 +39,6 @@ def user_loader(user_id):
     user = User().query.filter_by(user_id=user_id).first()
     print(user, user_id)
     if not user:
-        print('invalid 1')
         return
     return user
 
@@ -49,7 +48,6 @@ def request_loader(request):
         email_address = request.form.get('email_address')
         user = User().query.filter_by(email_address=email_address).first()
         if not user:
-            print('invalid 2')
             return
         return user
 
@@ -62,8 +60,10 @@ def unauthorized_handler():
 @login_required
 def admin():
     if current_user.role == 'admin':
-        return render_template("admin.html", user=current_user)
-    return render_template("client.html", user=current_user)
+        active="admin"
+        return render_template("admin.html", user=current_user, active=active)
+    active="client"
+    return render_template("client.html", user=current_user, active=active)
 
 @app.route('/logout')
 def logout():
@@ -72,12 +72,14 @@ def logout():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    active="index"
+    return render_template("index.html", active=active)
 
 @app.route("/profile")
 @login_required
 def profile():
-    return render_template("profile.html")
+    active="profile"
+    return render_template("profile.html", active=active)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -101,11 +103,13 @@ def login():
                 "message":"Invalid credentials, try again.",
                 "type":2
             }
-    return render_template("login.html", form=form, message=message)
+    active="login"
+    return render_template("login.html", form=form, message=message, active=active)
 
 @app.route("/documentation")
 def documentation():
-    return render_template("documentation.html")
+    active="documentation"
+    return render_template("documentation.html", active=active)
 
 # @app.route("/register", methods=['GET', 'POST'])
 # @app.route('/signup', methods=['GET', 'POST'])
@@ -147,7 +151,8 @@ def signup():
                 "message": "Opps, something went wrong. Try again.",
                 "type":2
             }
-    return render_template('signup.html', form=form, message=message)
+    active="signup"
+    return render_template('signup.html', form=form, message=message, active=active)
 
 
 if __name__ == "__main__":

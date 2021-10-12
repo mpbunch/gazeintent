@@ -25,4 +25,13 @@ a.text-white.me-4 {
 .ts-14 {
   font-size: 14px;
 }
+
+.ts-16 {
+  font-size: 16px;
+}
+
+li a .fa-user {
+  position: relative;
+  top: -1px;
+}
 /*# sourceMappingURL=global.css.map */

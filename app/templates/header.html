@@ -9,28 +9,35 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul>
-
-                    </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/documentation">How It Works</a>
-                        </li>
                         {% if not current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                            <a {% if active=='documentation' %} class="nav-link active" aria-current="page" {% else %}
+                                class="nav-link" {% endif %} href="{{ url_for('documentation') }}">How It
+                                Works</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
+                            <a {% if active=='signup' %} class="nav-link active" aria-current="page" {% else %}
+                                class="nav-link" {% endif %} href="{{ url_for('signup') }}">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a {% if active=='login' %} class="nav-link active" aria-current="page" {% else %}
+                                class="nav-link" {% endif %} href="{{ url_for('login') }}">Login</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile">
-                                {{ current_user.first_name }}
+                            <a {% if active=='admin' or active=='client' %} class="nav-link active" aria-current="page"
+                                {% else %} class="nav-link" {% endif %} href="{{ url_for('admin') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a {% if active=='profile' %} class="nav-link active" aria-current="page" {% else %}
+                                class="nav-link" {% endif %} href="{{ url_for('profile') }}">
+                                <i class="fa fa-user ts-12"></i> {{ current_user.first_name }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
+                            <a {% if active=='logout' %} class="nav-link active" aria-current="page" {% else %}
+                                class="nav-link" {% endif %} href="{{ url_for('logout') }}">Logout</a>
                         </li>
                         {% endif %}
 

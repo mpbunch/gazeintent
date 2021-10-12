@@ -1,8 +1,12 @@
 <!-- Client Page -->
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
 
-<h1>Client</h1>
+<h3>Client</h3>
 {{user.email_address}}
+
+{% include "webcam.html" %}
+
+{% include "d3sample.html" %}
 
 {% endblock %}
