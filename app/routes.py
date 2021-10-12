@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 from models import db, User
 from forms import UsersForm, LoginForm
+import json
 import os
 
 app=Flask(__name__)
@@ -151,12 +152,12 @@ def signup():
 
 @app.route('/slack', methods=['post'])
 def slack():
-    data = request.data
+    data = request.get_json()
     if not data:
         return
-    email = data.user.email
-    status = data.status
-    action = data.action
+    email = data['user']['email']
+    status = data['status']
+    action = data['action']
     data = {"text": f"{email} {action} gazeintent. Status: {status}"}
     slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
     request.post(slack_webhook_url, data=data, headers={'Content-Type': 'application/json'})
