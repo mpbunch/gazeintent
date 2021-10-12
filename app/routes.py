@@ -37,7 +37,6 @@ db.init_app(app)
 @login_manager.user_loader
 def user_loader(user_id):
     user = User().query.filter_by(user_id=user_id).first()
-    print(user, user_id)
     if not user:
         return
     return user
@@ -90,12 +89,8 @@ def login():
     }
     if request.method == 'POST':
         email_address = request.form['email_address']
-        print(email_address)
         user = User().query.filter_by(email_address=email_address).first()
-        print(user)
-        print(user.check_password(form.password.data))
         if user and user.check_password(form.password.data):
-            print('VALID')
             login_user(user)
             return redirect(url_for('admin'))
         else:
