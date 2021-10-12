@@ -9,6 +9,10 @@
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
+        integrity="sha512-xnP2tOaCJnzp2d2IqKFcxuOiVCbuessxM6wuiolT9eeEJCyy0Vhcwa4zQvdrZNVqlqaxXhHqsSV1Ww7T2jSCUQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- 
         Style overrides, update the sass file and compile 
         otherwise chagnes to .css file will be lost
@@ -21,11 +25,11 @@
     <!-- Product Site -->
     <!-- Header for every page -->
     {% include "header.html" %}
-    <div class="container section">
-        {% block content %}
-        <!-- Block Content to be loaded herre -->
-        {% endblock %}
-    </div>
+
+    {% block content %}
+    <!-- Block Content to be loaded herre -->
+    {% endblock %}
+
     <!-- Footer for every page -->
     {% include "footer.html" %}
 

@@ -1,3 +1,4 @@
+@import 'variables';
 a.text-white.me-4 {
     text-decoration: none;
 }
@@ -26,4 +27,14 @@ a.text-white.me-4 {
 li a .fa-user{
     position:relative;
     top:-1px;
+}
+.text-muted{
+    opacity:.4;
+}
+.btn-outline{
+    background-color: inherit;
+    border: solid 2px;
+}
+.md-height{
+    height:100px;
 }
