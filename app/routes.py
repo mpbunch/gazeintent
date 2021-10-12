@@ -155,10 +155,10 @@ def signup():
 def slack():
     data = request.get_json()
     if not data:
-        return "Malformed payload"
+        return "Missing payload."
     try:
         email = data['data']['user']['email']
-        status = data['status']
+        status = data['data']['status']
         action = data['action']
         data = {"text": f"{email} {action} gazeintent. Status: {status}"}
         slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
