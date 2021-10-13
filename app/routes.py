@@ -11,14 +11,14 @@ app=Flask(__name__)
 # In order to keep the database credentials, and secret_key secure
 # We need to use environment variables
 # Heroku does this natively
-# 
+#
 # Your localhost does not
 # Before you start the application on your local machine
 # run the following code:
-# 
+#
 # export DATABASE_URL=$(heroku config:get DATABASE_URL -a gazeintent)
 # export SECRET_KEY=$(heroku config:get SECRET_KEY -a gazeintent)
-# 
+#
 # check to see that $DATABASE_URL looks correct
 # echo $DATABASE_URL
 # postgres://[user-name-random-characters]:[password-random-characters]@[ec2-path.*.amazonaws.com]:[port]/[database-name]
@@ -126,14 +126,14 @@ def documentation():
 #     # show the form, it wasn't submitted
 #     return render_template('signup.html')
 
-@app.route('/signup', methods=['GET', 'POST']) 
-def signup(): 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     form = UsersForm()
     message={
         "message":False,
         "type":0
     }
-    
+
     if form.validate_on_submit():
         email_address = request.form['email_address']
         first_name = request.form['first_name']
@@ -149,6 +149,8 @@ def signup():
                 "type":1
             }
         except:
+            # including rollback() in the exception statement. According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
+            db.session.rollback()
             message = {
                 "message": "Opps, something went wrong. Try again.",
                 "type":2
@@ -180,7 +182,7 @@ def slack():
         return "Some error with posting to slack."
 
     return "Message sent to slack."
-    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
