@@ -149,6 +149,9 @@ def signup():
                 "type":1
             }
         except:
+            # Not sure this is needed
+            # As the only way this block will be hit is if the db.session fails
+            # Which will result in no data entered to need a rollback
             # including rollback() in the exception statement. According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
             db.session.rollback()
             message = {
