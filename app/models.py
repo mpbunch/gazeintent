@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(145), nullable=False)
     last_name = db.Column(db.String(145), nullable=False)
     password = db.Column(db.String(145), nullable=False)
-    role = db.Column(db.String(20), nullable=True)
+    role = db.Column(db.String(20), nullable=True, default='client')
     
     def set_password(self, password):
         self.password = generate_password_hash(password)

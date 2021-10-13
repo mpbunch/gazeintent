@@ -25,9 +25,10 @@ app=Flask(__name__)
 
 db_url = os.environ.get('DATABASE_URL')
 secret_key = os.environ.get('SECRET_KEY')
+print(db_url, secret_key)
 if not db_url or not secret_key:
     # Fail if no environment variable is found.
-    raise Exception('Credentials not found.')
+    raise Exception('Credentials not found. Did you for get to export environment variables?')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres://','postgresql://')
