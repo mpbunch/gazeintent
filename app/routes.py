@@ -167,20 +167,23 @@ def slack():
     if not data:
         return "Missing payload."
     try:
-        email = data['data']['user']['email']
+        # Removing email, as I dont think it really matters
+        # It always shows the email for my account, as it is the one
+        # with the integration configured
         status = data['data']['status']
         action = data['action']
-        data = {"text": f"{email} {action} gazeintent. Status: {status}"}
+        data = {"text": f"{action} gazeintent. Status: {status}"}
         slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
     except Exception:
         return "Malformed payload."
 
     try:
-        response = requests.post(slack_webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-        if response.status_code != 200:
-            raise ValueError(
-                f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}'
-            )
+        if action.lower() == 'update':
+            response = requests.post(slack_webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+            if response.status_code != 200:
+                raise ValueError(
+                    f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}'
+                )
     except Exception:
         return "Some error with posting to slack."
 
