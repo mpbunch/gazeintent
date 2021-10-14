@@ -59,7 +59,7 @@ def request_loader(request):
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-    return 'Unauthorized'
+    return redirect(url_for('index'))
 
 @app.route('/client')
 @app.route('/admin')
@@ -85,7 +85,7 @@ def index():
 @login_required
 def profile():
     active="profile"
-    return render_template("profile.html", active=active)
+    return render_template("profile.html", user=current_user, active=active)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
