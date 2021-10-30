@@ -4,17 +4,39 @@
       width: 350px;
       height: 350px;
     }
+
+    #image {
+      width: 500px;
+    }
+
+    #grid {
+      width: 100vw;
+    }
   </style>
 
-  <h3>Snapshot</h3>
+  <h3>Calibrate GazeIntent</h3>
 
   <body>
-    <div id="camera"></div>
-    <button onclick="take_snapshot(); myFunction();" name="button">Take Snapshot</button>
-    <div id="results">
+    <img src="https://tech.tobii.com/wp-content/uploads/2019/11/technology-eye-tracking-illustration.jpg" id="image" alt="">
 
+    <!-- <button onclick="take_snapshot();">Take Snapshot</button> -->
+    <!-- <button id="fullscreen" href="/calibrate" onclick="openFullscreen();">Open full screen</button> -->
+    <div class="row">
+      <div id="camera" class="mx-auto"></div>
+      <div class="mx-auto">
+        <li>To get started, let's calibrate your eyes by running through a test environment with 16 points. Look at each circle and click the cicle to capture your gaze.</li>
+        <li>Make sure you are sitting in a comfortable posture.</li>
+        <li>Face the front of the eye tracker and screen. Your eyes should be in the center of the track box. </li>
+        <li>Adjust yourself to be at the optimal distance to the eye tracker. When you are ready, click on "Start". </li>
+      </div>
+      <div class="mx-auto">
+        <!-- <button class="btn btn-primary" href="/calibrate">Start</button> -->
+        <p><a class="btn btn-secondary" href="/calibrate">Start</a></p>
+      </div>
 
     </div>
+
+
   </body>
 </div>
 
@@ -30,22 +52,29 @@
   });
   Webcam.attach('#camera');
 
+
+  var fullscreen = document.getElementById("camera");
+
+  function openFullscreen() {
+    if (fullscreen.requestFullscreen) {
+      fullscreen.requestFullscreen();
+    } else if (fullscreen.webkitRequestFullscreen) {
+      /* Safari */
+      fullscreen.webkitRequestFullscreen();
+    } else if (fullscreen.msRequestFullscreen) {
+      /* IE11 */
+      fullscreen.msRequestFullscreen();
+    }
+  }
+
   function take_snapshot() {
     // capture the photo after clicking on "Take Snapshot" and load it to result div
     Webcam.snap(function(data_uri) {
-      document.getElementById('results').innerHTML =
+      var div = document.createElement("DIV");
+      div.innerHTML =
         '<img src="' + data_uri + '"/>';
-        document.createElement("BUTTON");
-        document.body.appendChild(btn);
+      document.getElementById('results').appendChild(div);
     });
 
   }
-
-  // function myFunction() {
-  //   var btn = document.createElement("BUTTON");
-  //   document.body.appendChild(btn);
-  //   // alert("Hello! I am an alert box!!");
-  //   const currentDiv = document.getElementById("camera");
-  //   document.body.insertBefore(btn, currentDiv);
-  // }
 </script>

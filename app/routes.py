@@ -113,6 +113,12 @@ def documentation():
     active="documentation"
     return render_template("documentation.html", active=active)
 
+@app.route("/calibrate")
+@login_required
+def calibrate():
+    active="calibrate"
+    return render_template("calibrate.html", active=active)
+
 # @app.route("/register", methods=['GET', 'POST'])
 # @app.route('/signup', methods=['GET', 'POST'])
 # def signup():
