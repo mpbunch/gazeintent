@@ -1,0 +1,51 @@
+<div class="section">
+  <style>
+    #camera {
+      width: 350px;
+      height: 350px;
+    }
+  </style>
+
+  <h3>Snapshot</h3>
+
+  <body>
+    <div id="camera"></div>
+    <button onclick="take_snapshot(); myFunction();" name="button">Take Snapshot</button>
+    <div id="results">
+
+
+    </div>
+  </body>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+
+<script>
+  // test loading the camera. Set the camera frame and then attach it to camera div
+  Webcam.set({
+    width: 350,
+    height: 350,
+    image_format: 'jpeg',
+    jpeg_quality: 90
+  });
+  Webcam.attach('#camera');
+
+  function take_snapshot() {
+    // capture the photo after clicking on "Take Snapshot" and load it to result div
+    Webcam.snap(function(data_uri) {
+      document.getElementById('results').innerHTML =
+        '<img src="' + data_uri + '"/>';
+        document.createElement("BUTTON");
+        document.body.appendChild(btn);
+    });
+
+  }
+
+  // function myFunction() {
+  //   var btn = document.createElement("BUTTON");
+  //   document.body.appendChild(btn);
+  //   // alert("Hello! I am an alert box!!");
+  //   const currentDiv = document.getElementById("camera");
+  //   document.body.insertBefore(btn, currentDiv);
+  // }
+</script>

@@ -2,11 +2,12 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container section">
-    <h3>Client</h3>
+    <h3>Clients</h3>
     {{user.email_address}}
 
-    {% include "webcam.html" %}
+    {% include "snapshot.html" %}
+    <!-- {% include "webcam.html" %} -->
 
-    {% include "d3sample.html" %}
+    <!-- {% include "d3sample.html" %} -->
 </div>
 {% endblock %}
