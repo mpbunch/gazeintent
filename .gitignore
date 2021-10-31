@@ -5,3 +5,5 @@ etc/
 share/
 __pycache__/
 pyvenv.cfg
+static/node_modules
+.DS_Store
