@@ -1,0 +1,10 @@
+#container {
+    background-color: black !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#svgCanvas {
+    height: 100% !important;
+    width: 100% !important;
+}
