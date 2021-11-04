@@ -1,5 +1,5 @@
 import joblib
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 from models import db, User
 from forms import UsersForm, LoginForm
@@ -36,6 +36,17 @@ app.secret_key = secret_key
 login_manager = LoginManager()
 login_manager.init_app(app)
 db.init_app(app)
+
+# This will be the calibration api
+@app.route('/api/calibrate', methods=['POST'])
+def api_calibrate():
+    if request.method == 'POST':
+        # We can now take the payload and insert it into the db
+        # We will need to create the model
+        # and do some testing, but we should be able to finish this tomorrow
+        payload = request.json
+        return payload['id'], 200
+    return 'ERROR', 201
 
 @app.errorhandler(404)
 def page_not_found(e):
