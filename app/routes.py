@@ -1,7 +1,8 @@
 import joblib
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
-from models import db, User
+
+from models import db, User, Calibration
 from forms import UsersForm, LoginForm
 import json
 import requests
@@ -38,15 +39,35 @@ login_manager.init_app(app)
 db.init_app(app)
 
 # This will be the calibration api
-@app.route('/api/calibrate', methods=['POST'])
+@app.route('/api/calibrate', methods=['POST','GET'])
 def api_calibrate():
     if request.method == 'POST':
         # We can now take the payload and insert it into the db
         # We will need to create the model
         # and do some testing, but we should be able to finish this tomorrow
         payload = request.json
-        return payload['id'], 200
-    return 'ERROR', 201
+        user_id = current_user.id
+        print('--')
+        print(current_user)
+        new_calibration = Calibration(user_id=user_id, data=json.dumps(payload))
+        try:
+            db.session.add(new_calibration)
+            db.session.commit()
+            message = "Calibration Complete" if payload['id'] == 9 else "Calibration data saved."
+            message = {
+                "message":message,
+                "type":1
+            }
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            message = {
+                "message": "Opps, something went wrong. Try again.",
+                "type":2
+            }
+        return message
+    active="calibrate"
+    return render_template("calibrate.html", active=active)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -78,7 +99,9 @@ def unauthorized_handler():
 def admin():
     if current_user.role == 'admin':
         active="admin"
-        return render_template("admin.html", user=current_user, active=active)
+        data = Calibration.query.all()
+
+        return render_template("admin.html", user=current_user, active=active, calibration=data)
     active="client"
     return render_template("client.html", user=current_user, active=active)
 

@@ -4,6 +4,28 @@
 {% block content %}
 <div class="container section">
     <h3>Admin</h3>
-    {{user.email_address}}
+    <label>{{user.email_address}}</label>
+
+    <table id="data" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Record Id</th>
+                <th>User Id</th>
+                <th>Data</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cal in calibration %}
+            <tr>
+                <td>{{ cal.calibration_id }}</td>
+                <td>{{ cal.user_id }}</td>
+                <td>{{ cal.data }}</td>
+                <td>{{ cal.record_created }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endblock %}

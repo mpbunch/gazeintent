@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy 
+from sqlalchemy.sql import func
 from flask_login import UserMixin
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy() 
 
@@ -18,3 +20,17 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def __repr__(self):
+        return f'<User {self.id}>' 
+
+class Calibration(db.Model):
+    __tablename__ = 'calibration'
+    calibration_id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    data = db.Column(db.Text, nullable=False)
+    record_created = db.Column(db.DateTime, server_default=db.func.now())
+
+    def __repr__(self):
+        return f'<Calibration {self.calibration_id}>' 
+    

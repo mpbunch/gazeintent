@@ -4,17 +4,17 @@ export class gazeCell {
         this.element.className = 'gazeCell';
         this.element.id = id;
 
-        this.calibrate_button = document.createElement('button');
-        this.calibrate_button.className = 'gazeCellCalibrate btn btn-primary btn-sm';
-        this.calibrate_button.innerHTML = '<i class="bi bi-check-lg"></i>';
-        this.calibrate_button.disabled = true;
+        this.center_element = document.createElement('button');
+        this.center_element.className = 'gazeCellCalibrate btn btn-primary btn-sm';
+        this.center_element.innerHTML = '<i class="bi bi-check-lg"></i>';
+        this.center_element.disabled = true;
 
-        this.element.append(this.calibrate_button);
+        this.element.append(this.center_element);
         this.element.onclick = this.onClick.bind(this);
     }
 
     onClick = () => {
-        if (!this.calibrate_button.disabled) {
+        if (!this.center_element.disabled) {
             let payload = {
                 cache: "no-cache",
                 method: "POST",
