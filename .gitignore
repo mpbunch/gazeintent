@@ -9,3 +9,4 @@ pyvenv.cfg
 app/static/node_modules
 app/package-lock.json
 app/package.json
+app/include
