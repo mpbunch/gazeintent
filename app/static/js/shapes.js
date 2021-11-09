@@ -6,7 +6,7 @@
 // append the shape to the position
 // do math stuff and figure out which quadrant of the canvas it is in
 
-// next to do: auto shape add/clear timer thing, routing, bootstrap layout, use d3 symbols
+// next to do: auto shape add/clear timer thing, routing, bootstrap layout, use d3 symbols.
 
 
 // create svg element:
