@@ -229,6 +229,10 @@ def slack():
 
     return "Message sent to slack."
 
+@app.route("/stimulus")
+def stimulus():
+    active="stimulus"
+    return render_template("stimulus.html", active=active)
 
 if __name__ == "__main__":
     app.run(debug=True)
