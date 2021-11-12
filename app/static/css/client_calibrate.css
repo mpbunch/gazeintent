@@ -14,8 +14,7 @@ body {
   left: 0;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[3];
-      grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 #gazeGrid .gazeCell {
@@ -35,4 +34,4 @@ body {
 #gazeGrid .gazeCell .gazeCellCalibrate {
   border-radius: 50%;
 }
-/*# sourceMappingURL=calibration.css.map */
+/*# sourceMappingURL=client_calibrate.css.map */

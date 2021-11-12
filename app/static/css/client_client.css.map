@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAEQ,cAFM,CACV,YAAY,CACR,EAAE,CAAA;EACE,eAAe,EAAE,IAAI;EACrB,WAAW,EAAC,KAAK;CACpB",
+    "sources": [
+        "client_client.scss",
+        "_variables.scss"
+    ],
+    "names": [],
+    "file": "client_client.css"
+}

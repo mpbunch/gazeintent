@@ -1,0 +1,21 @@
+{% extends "shared/layout.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_client.css')}}" />
+<div id="client-client" class="container section">
+    <div class="row">
+        <div class="col-6">
+            <h3>Getting Started</h3>
+            <p>
+                Some text about what to do.
+            </p>
+        </div>
+        <div class="col-6">
+            <ul class="client-list">
+                <li><a href="{{ url_for('clientcalibrate') }}">Calibrate</a></li>
+                <li><a href="{{ url_for('clienttest') }}">Test</a></li>
+                <li><a href="{{ url_for('clienthistory') }}">View History</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

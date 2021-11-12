@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "client_test.scss",
+        "_variables.scss"
+    ],
+    "names": [],
+    "file": "client_test.css"
+}

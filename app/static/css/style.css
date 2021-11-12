@@ -1,21 +1,8 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
-*{
-  font-family: 'IBM Plex Sans', sans-serif;
-  color: #2E65B5;
-}
-.btn, .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #F29F39 !important;
-    font-family: 'IBM Plex Sans', sans-serif !important;
-    font-weight: bold;
-    font-size: 1.25rem;
-    border: 0px;
-    color:white;
-}
 /* Padding below the footer and lighter body text */
 /* CUSTOMIZE THE CAROUSEL
   -------------------------------------------------- */
-
 /* Carousel base class */
 .carousel {
   margin-bottom: 4rem;
@@ -62,19 +49,16 @@
 /* Featurettes
   ------------------------- */
 .featurette-divider {
-  margin: 8rem 0;
+  margin: 5rem 0;
   /* Space out the Bootstrap <hr> more */
 }
 
 /* Thin out the marketing headings */
 .featurette-heading {
+  font-weight: 300;
   line-height: 1;
-  font-size: 2rem;
   /* rtl:remove */
   letter-spacing: -.05rem;
-}
-.lead{
-    font-size: 1.5rem;
 }
 
 /* RESPONSIVE CSS
@@ -122,10 +106,6 @@ a.text-white.me-4 {
 
 .bg-gray {
   background-color: #F8F9FA;
-}
-
-.bg-blue {
-  background-color: #2E65B5;
 }
 
 .border-top-gray {
@@ -180,15 +160,5 @@ li a .fa-user {
 
 .mt-30 {
   margin-top: 30px;
-}
-.nav-item {
-  font-family: 'IBM Plex Sans', sans-serif;
-  color: #white !important;
-}
-
-.navbar-brand {
-  font-weight: bold;
-  font-size: 1.25rem;
-  color: white !important;
 }
 /*# sourceMappingURL=style.css.map */

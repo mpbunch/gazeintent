@@ -71,7 +71,7 @@ def api_calibrate():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('shared/404.html'), 404
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -103,7 +103,7 @@ def admin():
 
         return render_template("admin.html", user=current_user, active=active, calibration=data)
     active="client"
-    return render_template("client.html", user=current_user, active=active)
+    return render_template("client/client.html", user=current_user, active=active)
 
 @app.route('/logout')
 def logout():
@@ -113,7 +113,7 @@ def logout():
 @app.route("/")
 def index():
     active="index"
-    return render_template("index.html", active=active)
+    return render_template("site/index.html", active=active)
 
 @app.route("/profile")
 @login_required
@@ -149,10 +149,21 @@ def documentation():
 
 @app.route("/calibrate")
 @login_required
-def calibrate():
+def clientcalibrate():
     active="calibrate"
-    return render_template("calibrate.html", active=active)
+    return render_template("client/calibrate.html", active=active)
 
+@app.route("/test")
+@login_required
+def clienttest():
+    active="test"
+    return render_template("client/test.html", active=active)
+
+@app.route("/clienthistory")
+@login_required
+def clienthistory():
+    active="clienthistory"
+    return render_template("client/history.html", active=active)
 # @app.route("/register", methods=['GET', 'POST'])
 # @app.route('/signup', methods=['GET', 'POST'])
 # def signup():
@@ -207,9 +218,6 @@ def slack():
     if not data:
         return "Missing payload."
     try:
-        # Removing email, as I dont think it really matters
-        # It always shows the email for my account, as it is the one
-        # with the integration configured
         status = data['data']['status']
         action = data['action']
         data = {"text": f"{action} gazeintent. Status: {status}"}
@@ -226,13 +234,8 @@ def slack():
                 )
     except Exception:
         return "Some error with posting to slack."
-
     return "Message sent to slack."
 
-@app.route("/stimulus")
-def stimulus():
-    active="stimulus"
-    return render_template("stimulus.html", active=active)
 
 if __name__ == "__main__":
     app.run(debug=True)
