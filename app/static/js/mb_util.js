@@ -123,17 +123,23 @@ export class doGaze {
         const start = (cellId = 1) => {
             helpers.advance(cellId);
             console.log('Calibration Start');
-            setInterval(function () {
-                if (overlaps('webgazerGazeDot', cellId)) {
-                    helpers.advance(cellId++)
-                }
-            }, 100);
+
+
+            // setInterval(function () {
+            //     if (overlaps('webgazerGazeDot', cellId)) {
+            //         helpers.advance(cellId++)
+            //     }
+            // }, 100);
         };
 
         // Define calibration stop funciton
         const end = () => {
             console.log('Calibration Stop');
         };
+
+        helpers.compare = (target, tracker) => {
+
+        }
 
         // Define calibration advance function
         helpers.advance = (cellId) => {
@@ -331,6 +337,7 @@ var overlaps = (function () {
     }
 
     function comparePositions(p1, p2) {
+        console.log(p1, p2);
         var r1, r2;
         r1 = p1[0] < p2[0] ? p1 : p2;
         r2 = p1[0] < p2[0] ? p2 : p1;
