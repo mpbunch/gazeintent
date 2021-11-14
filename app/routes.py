@@ -140,7 +140,7 @@ def login():
                 "type":2
             }
     active="login"
-    return render_template("login.html", form=form, message=message, active=active)
+    return render_template("site/login.html", form=form, message=message, active=active)
 
 @app.route("/documentation")
 def documentation():
@@ -210,7 +210,7 @@ def signup():
                 "type":2
             }
     active="signup"
-    return render_template('signup.html', form=form, message=message, active=active)
+    return render_template('site/signup.html', form=form, message=message, active=active)
 
 @app.route('/slack', methods=['post'])
 def slack():
