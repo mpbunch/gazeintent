@@ -20,44 +20,45 @@ export class doGaze {
                     this.center_element = document.createElement('button');
                     this.center_element.className = 'gazeCellCalibrate btn btn-primary btn-sm';
                     this.center_element.innerHTML = '<i class="bi bi-check-lg"></i>';
-                    this.center_element.id = `cell-btn-${i}`;
+                    this.center_element.id = ` v${i}`;
                     this.center_element.disabled = true;
 
-                    // Click event will change to 'red dot event'
+
                     this.center_element.addEventListener('click', () => {
                         console.log('Click');
                         console.log(document.getElementById(`cell-btn-${i}`), i)
                         let btn = document.getElementById(`cell-btn-${i}`);
+                        btn.setAttribute('style', 'background-color:red;')
 
-                        // Stare at middle of screen for 5 seconds.
-                        store_points_variable(); // start storing the prediction points
-                        sleep(5000).then(() => {
-                            stop_storing_points_variable(); // stop storing the prediction points
-                            var past50 = webgazer.getStoredPoints(); // retrieve the stored points
-                            var precision_measurement = calculatePrecision(past50);
-                            var accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
-                            document.getElementById("accuracy").innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
-                            swal({
-                                title: "Your accuracy measure is " + precision_measurement + "%",
-                                allowOutsideClick: false,
-                                buttons: {
-                                    cancel: "Recalibrate",
-                                    confirm: true,
-                                }
-                            }).then(isConfirm => {
-                                if (isConfirm) {
-                                    //clear the calibration & hide the last middle button
-                                    ClearCanvas();
-                                } else {
-                                    //use restart function to restart the calibration
-                                    document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
-                                    webgazer.clearData();
-                                    ClearCalibration();
-                                    ClearCanvas();
-                                    ShowCalibrationPoint();
-                                }
-                            });
-                        });
+                        // // Stare at middle of screen for 5 seconds.
+                        // store_points_variable(); // start storing the prediction points
+                        // sleep(5000).then(() => {
+                        //     stop_storing_points_variable(); // stop storing the prediction points
+                        //     var past50 = webgazer.getStoredPoints(); // retrieve the stored points
+                        //     var precision_measurement = calculatePrecision(past50);
+                        //     var accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
+                        //     document.getElementById("accuracy").innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
+                        //     swal({
+                        //         title: "Your accuracy measure is " + precision_measurement + "%",
+                        //         allowOutsideClick: false,
+                        //         buttons: {
+                        //             cancel: "Recalibrate",
+                        //             confirm: true,
+                        //         }
+                        //     }).then(isConfirm => {
+                        //         if (isConfirm) {
+                        //             //clear the calibration & hide the last middle button
+                        //             ClearCanvas();
+                        //         } else {
+                        //             //use restart function to restart the calibration
+                        //             document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
+                        //             webgazer.clearData();
+                        //             ClearCalibration();
+                        //             ClearCanvas();
+                        //             ShowCalibrationPoint();
+                        //         }
+                        //     });
+                        // });
 
                         // if (!btn.disabled) {
                         //     let payload = {
@@ -94,17 +95,39 @@ export class doGaze {
         }
     }
 
+    loading = (waiting = true) => {
+        // wait for webgazer to fully load
+        if (waiting) {
+            console.log('loading')
+            const grid = document.querySelector('#gazeGrid');
+            let loading = document.createElement('div');
+            loading.id = 'webgazerLoading';
+            loading.innerHTML = '<div id="webgazerLoading"><div class="spinner-box"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div></div>';
+            grid.append(loading);
+        } else {
+            console.log('not loading')
+            let loading = document.getElementById('webgazerLoading');
+            if (loading) loading.remove()
+        }
+    }
+
     calibrate = (gridSize = 9) => {
         console.log('Calibration');
-
+        var helpers = {}
         // Make calibration Grid
-        if (gridSize) this.#makeGrid(gridSize)
+        if (gridSize) this.#makeGrid(gridSize);
         let accuracy = document.createElement('div');
         accuracy.id = 'accuracy'
         document.getElementById('gazeGrid').parentElement.append(accuracy)
         // Define calibration start function
-        const start = () => {
+        const start = (cellId = 1) => {
+            helpers.advance(cellId);
             console.log('Calibration Start');
+            setInterval(function () {
+                if (overlaps('webgazerGazeDot', cellId)) {
+                    helpers.advance(cellId++)
+                }
+            }, 100);
         };
 
         // Define calibration stop funciton
@@ -113,7 +136,8 @@ export class doGaze {
         };
 
         // Define calibration advance function
-        const advance = (cellId) => {
+        helpers.advance = (cellId) => {
+            console.log('ADVANCE')
             let elements = document.getElementsByClassName('gazeCell');
             Array.from(elements).forEach(element => {
                 let button = element.getElementsByTagName('button')[0];
@@ -122,7 +146,7 @@ export class doGaze {
             });
         }
 
-        return { start: start, end: end, advance: advance }
+        return { start: start, end: end }
     }
 
     test = () => {
@@ -139,12 +163,22 @@ export class doGaze {
 }
 
 export function calibrateAdvance(id) {
-    let elements = document.getElementsByClassName('gazeCell');
-    Array.from(elements).forEach(element => {
-        let button = element.getElementsByTagName('button')[0];
-        button.disabled = true;
-        if (element.id == id) button.disabled = false;
-    });
+    // Click event will change to 'red dot event'
+    // let calibrated = false;
+    // let calibrateCount = 0;
+    // let dot = document.getElementById('webgazerGazeDot');
+    // let target = document.getElementById(id)
+    // while (!calibrated) {
+    //     console.log(calibrateCount)
+    //     if (calibrateCount > 5) calibrated = overlaps(source, dot)
+    //     calibrateCount += 1
+    // }
+    // let elements = document.getElementsByClassName('gazeCell');
+    // Array.from(elements).forEach(element => {
+    //     let button = element.getElementsByTagName('button')[0];
+    //     button.disabled = true;
+    //     if (element.id == id) button.disabled = false;
+    // });
 }
 
 function calibrateDestory() {
@@ -285,3 +319,31 @@ function ClearCalibration() {
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+
+var overlaps = (function () {
+    function getPositions(elem) {
+        var pos, width, height;
+        pos = elem.getBoundingClientRect();
+        width = elem.offsetWidth / 2;
+        height = elem.offsetHeight;
+        return [[pos.left, pos.left + width], [pos.top, pos.top + height]];
+    }
+
+    function comparePositions(p1, p2) {
+        var r1, r2;
+        r1 = p1[0] < p2[0] ? p1 : p2;
+        r2 = p1[0] < p2[0] ? p2 : p1;
+        return r1[1] > r2[0] || r1[0] === r2[0];
+    }
+
+    return function (a, b) {
+        var elem_a, elem_b;
+        elem_a = document.getElementById(a);
+        elem_b = document.getElementById(b);
+        if (!elem_a || !elem_b) return false
+        var pos1 = getPositions(elem_a),
+            pos2 = getPositions(elem_b);
+        return comparePositions(pos1[0], pos2[0]) && comparePositions(pos1[1], pos2[1]);
+    };
+})();

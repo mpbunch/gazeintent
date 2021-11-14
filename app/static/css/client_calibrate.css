@@ -14,7 +14,8 @@ body {
   left: 0;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
 }
 
 #gazeGrid .gazeCell {
@@ -31,7 +32,35 @@ body {
           justify-content: center;
 }
 
+#gazeGrid .gazeCell button[id^=cell-btn-] {
+  height: 100px;
+  width: 100px;
+}
+
 #gazeGrid .gazeCell .gazeCellCalibrate {
   border-radius: 50%;
+}
+
+#gazeGrid #webgazerLoading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: -ms-grid;
+  display: grid;
+}
+
+#gazeGrid #webgazerLoading .spinner-box {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 /*# sourceMappingURL=client_calibrate.css.map */

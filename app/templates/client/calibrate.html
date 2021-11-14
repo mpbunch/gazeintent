@@ -8,10 +8,9 @@
   <div id="gazeGrid"></div>
 
 </div>
+<script src="{{ url_for('static', filename='node_modules/webgazer/dist/webgazer.min.js') }}"
+  type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/webcam.js') }}" type="text/javascript">
+</script>
 <script type="module" src="{{ url_for('static', filename='js/calibrate.js') }}" type="text/javascript"></script>
-<!-- <script src="{{ url_for('static', filename='node_modules/webgazer/dist/webgazer.min.js') }}"
-  type="text/javascript"></script> -->
-<!-- <script src="{{ url_for('static', filename='js/webcam.js') }}" type="text/javascript">
-</script> -->
-
 {% endblock %}

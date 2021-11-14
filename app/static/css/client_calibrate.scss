@@ -19,9 +19,26 @@ body{
         display: flex;
         align-items: center;
         justify-content: center;
+        button[id^=cell-btn-]{
+            height:100px;
+            width:100px;
+        }
         .gazeCellCalibrate{
             border-radius:50%;
         }
     }
-    
+    #webgazerLoading{
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        display:grid;
+        .spinner-box{
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 }
