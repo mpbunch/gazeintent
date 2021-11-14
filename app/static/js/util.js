@@ -1,141 +1,40 @@
-export class doGaze {
-    constructor(...grid) {
-        this.grid = grid
+export class gazeCell {
+    constructor(id) {
+        this.element = document.createElement('div');
+        this.element.className = 'gazeCell';
+        this.element.id = id;
+
+        this.center_element = document.createElement('button');
+        this.center_element.className = 'gazeCellCalibrate btn btn-primary btn-sm';
+        this.center_element.innerHTML = '<i class="bi bi-check-lg"></i>';
+        this.center_element.disabled = true;
+
+        this.element.append(this.center_element);
+        this.element.onclick = this.onClick.bind(this);
     }
 
-    #makeGrid = (gridSize, type = 'calibrate') => {
-        console.log('Make Grid');
-        console.log(gridSize);
-        const grid = document.querySelector('#gazeGrid');
-
-        if (grid) {
-            for (let i = 1; i <= gridSize; ++i) {
-                this.element = document.createElement('div');
-                this.element.className = 'gazeCell';
-                this.element.id = i;
-
-                if (type === 'calibrate') {
-                    console.log('calibration')
-
-                    this.center_element = document.createElement('button');
-                    this.center_element.className = 'gazeCellCalibrate btn btn-primary btn-sm';
-                    this.center_element.innerHTML = '<i class="bi bi-check-lg"></i>';
-                    this.center_element.id = `cell-btn-${i}`;
-                    this.center_element.disabled = true;
-
-                    // Click event will change to 'red dot event'
-                    this.center_element.addEventListener('click', () => {
-                        console.log('Click');
-                        console.log(document.getElementById(`cell-btn-${i}`), i)
-                        let btn = document.getElementById(`cell-btn-${i}`);
-
-                        // Stare at middle of screen for 5 seconds.
-                        store_points_variable(); // start storing the prediction points
-                        sleep(5000).then(() => {
-                            stop_storing_points_variable(); // stop storing the prediction points
-                            var past50 = webgazer.getStoredPoints(); // retrieve the stored points
-                            var precision_measurement = calculatePrecision(past50);
-                            var accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
-                            document.getElementById("accuracy").innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
-                            swal({
-                                title: "Your accuracy measure is " + precision_measurement + "%",
-                                allowOutsideClick: false,
-                                buttons: {
-                                    cancel: "Recalibrate",
-                                    confirm: true,
-                                }
-                            }).then(isConfirm => {
-                                if (isConfirm) {
-                                    //clear the calibration & hide the last middle button
-                                    ClearCanvas();
-                                } else {
-                                    //use restart function to restart the calibration
-                                    document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
-                                    webgazer.clearData();
-                                    ClearCalibration();
-                                    ClearCanvas();
-                                    ShowCalibrationPoint();
-                                }
-                            });
-                        });
-
-                        // if (!btn.disabled) {
-                        //     let payload = {
-                        //         cache: "no-cache",
-                        //         method: "POST",
-                        //         headers: {
-                        //             'Content-Type': 'application/json',
-                        //         },
-                        //         body: JSON.stringify({
-                        //             id: i
-                        //         })
-                        //     }
-                        //     fetch(`/api/calibrate`, payload)
-                        //         .then(response => {
-                        //             return response.text();
-                        //         }).then(() => {
-                        //             i < gridSize ?
-                        //                 calibrateAdvance(i <= gridSize && i + 1) :
-                        //                 calibrateDestory()
-                        //         });
-                        // }
-                    });
-                }
-
-                if (type === 'test') {
-                    console.log('testing')
-                }
-
-                this.element.append(this.center_element);
-                grid.appendChild(this.element);
+    onClick = () => {
+        if (!this.center_element.disabled) {
+            let payload = {
+                cache: "no-cache",
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: this.element.id
+                })
             }
-        } else {
-            console.log('No div with id gazeGrid found.')
+            fetch(`/api/calibrate`, payload)
+                .then(response => {
+                    return response.text();
+                }).then(text => {
+                    this.element.id < 9 ?
+                        calibrateAdvance(this.element.id < 10 && parseInt(this.element.id) + 1) :
+                        calibrateDestory()
+                });
         }
     }
-
-    calibrate = (gridSize = 9) => {
-        console.log('Calibration');
-
-        // Make calibration Grid
-        if (gridSize) this.#makeGrid(gridSize)
-        let accuracy = document.createElement('div');
-        accuracy.id = 'accuracy'
-        document.getElementById('gazeGrid').parentElement.append(accuracy)
-        // Define calibration start function
-        const start = () => {
-            console.log('Calibration Start');
-        };
-
-        // Define calibration stop funciton
-        const end = () => {
-            console.log('Calibration Stop');
-        };
-
-        // Define calibration advance function
-        const advance = (cellId) => {
-            let elements = document.getElementsByClassName('gazeCell');
-            Array.from(elements).forEach(element => {
-                let button = element.getElementsByTagName('button')[0];
-                button.disabled = true;
-                if (element.id == cellId) button.disabled = false;
-            });
-        }
-
-        return { start: start, end: end, advance: advance }
-    }
-
-    test = () => {
-        console.log('Test');
-        const start = () => {
-            console.log('Calibration Start');
-        };
-        const end = () => {
-            console.log('Calibration Stop');
-        };
-        return { start: start, end: end }
-    }
-
 }
 
 export function calibrateAdvance(id) {
@@ -152,136 +51,4 @@ function calibrateDestory() {
     // and then destroy
     // .. will also need to do something about the overflow:hidden (no scroll)
     document.getElementById('gazeContainer').innerHTML = '<h3>Calibration Complete</h3>'
-}
-
-
-
-/*
- * Sets store_points to true, so all the occuring prediction
- * points are stored
- */
-function store_points_variable() {
-    webgazer.params.storingPoints = true;
-}
-
-/*
- * Sets store_points to false, so prediction points aren't
- * stored any more
- */
-function stop_storing_points_variable() {
-    webgazer.params.storingPoints = false;
-}
-
-/**
-* This function occurs on resizing the frame
-* clears the canvas & then resizes it (as plots have moved position, can't resize without clear)
-*/
-function resize() {
-    var canvas = document.getElementById('client-calibrate');
-    var context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-};
-window.addEventListener('resize', resize, false);
-
-/*
- * This function calculates a measurement for how precise 
- * the eye tracker currently is which is displayed to the user
- */
-function calculatePrecision(past50Array) {
-    var windowHeight = window.innerHeight;
-    var windowWidth = window.innerWidth;
-
-    // Retrieve the last 50 gaze prediction points
-    var x50 = past50Array[0];
-    var y50 = past50Array[1];
-
-    // Calculate the position of the point the user is staring at
-    var staringPointX = windowWidth / 2;
-    var staringPointY = windowHeight / 2;
-
-    var precisionPercentages = new Array(50);
-    calculatePrecisionPercentages(precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY);
-    var precision = calculateAverage(precisionPercentages);
-
-    // Return the precision measurement as a rounded percentage
-    return Math.round(precision);
-};
-
-/*
- * Calculate percentage accuracy for each prediction based on distance of
- * the prediction point from the centre point (uses the window height as
- * lower threshold 0%)
- */
-function calculatePrecisionPercentages(precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY) {
-    for (let x = 0; x < 50; x++) {
-        // Calculate distance between each prediction and staring point
-        var xDiff = staringPointX - x50[x];
-        var yDiff = staringPointY - y50[x];
-        var distance = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
-
-        // Calculate precision percentage
-        var halfWindowHeight = windowHeight / 2;
-        var precision = 0;
-        if (distance <= halfWindowHeight && distance > -1) {
-            precision = 100 - (distance / halfWindowHeight * 100);
-        } else if (distance > halfWindowHeight) {
-            precision = 0;
-        } else if (distance > -1) {
-            precision = 100;
-        }
-
-        // Store the precision
-        precisionPercentages[x] = precision;
-    }
-}
-
-/*
- * Calculates the average of all precision percentages calculated
- */
-function calculateAverage(precisionPercentages) {
-    var precision = 0;
-    for (let x = 0; x < 50; x++) {
-        precision += precisionPercentages[x];
-    }
-    precision = precision / 50;
-    return precision;
-}
-
-/**
- * Restart the calibration process by clearing the local storage and reseting the calibration point
- */
-function Restart() {
-    document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
-    webgazer.clearData();
-    ClearCalibration();
-    PopUpInstruction();
-}
-
-/**
- * Show the Calibration Points
- */
-function ShowCalibrationPoint() {
-    $(".Calibration").show();
-    $("#Pt5").hide(); // initially hides the middle button
-}
-
-/**
-* This function clears the calibration buttons memory
-*/
-function ClearCalibration() {
-    // Clear data from WebGazer
-
-    $(".Calibration").css('background-color', 'red');
-    $(".Calibration").css('opacity', 0.2);
-    $(".Calibration").prop('disabled', false);
-
-    CalibrationPoints = {};
-    PointCalibrate = 0;
-}
-
-// sleep function because java doesn't have one, sourced from http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
-function sleep(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
 }
