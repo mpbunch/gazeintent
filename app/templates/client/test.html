@@ -2,8 +2,13 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_test.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/calibration.css')}}" />
 <div id="client-test" class="container section">
-    Client Test
+    <div id="gazeContainer" class="row">
+        <div id="fullheight"></div>
+        <div id="gazeGrid"></div>
 </div>
+
+<script type="module" src="{{url_for('static', filename='js/client_test.js')}}"></script>
 
 {% endblock %}

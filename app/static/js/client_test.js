@@ -25,7 +25,4 @@ document.getElementById(randomCell).appendChild(svg);
 
 // Add symbol to the selected cell
 document.getElementById(randomCell).style.backgroundColor = 'green';
-
-d3.select("#stimCell")
-    .append("path")
-    .attr("d", d3.symbol().type("diamond"));
+document.getElementById(randomCell).innerHTML += 'test';
