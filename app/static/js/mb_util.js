@@ -20,7 +20,7 @@ export class doGaze {
                     this.center_element = document.createElement('button');
                     this.center_element.className = 'gazeCellCalibrate btn btn-primary btn-sm';
                     this.center_element.innerHTML = '<i class="bi bi-check-lg"></i>';
-                    this.center_element.id = ` v${i}`;
+                    this.center_element.id = `cell-btn-${i}`;
                     this.center_element.disabled = true;
 
 

@@ -1,18 +1,24 @@
+// mb_util is in progress, and kind of a mess
+// much more work needs to be done before it is ... readable, useable, etc
 import { doGaze } from "./mb_util.js";
 
 (function () {
-    // wait for webgazer before calibration grid load
     let gaze = new doGaze();
+    // Show loading wheel wile webgazer is being loaded
     gaze.loading();
+    // wait for webgazer before calibration grid load
     var checkExist = setInterval(function () {
+        // Once the eye location div is loaded, show calibration or test
         if (document.getElementById('webgazerGazeDot')) {
-            console.log('Webgazer Loaded!')
+            console.log('Webgazer Loaded!');
+            // turn off loading wheel
             gaze.loading(false);
+            // init calibration
             let calibrate = gaze.calibrate();
+            // start calibration
             calibrate.start();
-            // calibrate.advance(1);
+            // clear interval, so only one calibration event is loaded
             clearInterval(checkExist);
         }
     }, 100);
-    // gaze.test();
 })(doGaze);

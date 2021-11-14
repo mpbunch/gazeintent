@@ -119,7 +119,7 @@ def index():
 @login_required
 def profile():
     active="profile"
-    return render_template("profile.html", user=current_user, active=active)
+    return render_template("client/profile.html", user=current_user, active=active)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
