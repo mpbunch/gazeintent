@@ -18,6 +18,7 @@ body {
       grid-template-columns: repeat(3, 1fr);
 }
 
+#gazeGrid .gaze-cell,
 #gazeGrid .gazeCell {
   text-align: center;
   border: solid 1px #f00;
@@ -32,11 +33,13 @@ body {
           justify-content: center;
 }
 
+#gazeGrid .gaze-cell button[id^=cell-btn-],
 #gazeGrid .gazeCell button[id^=cell-btn-] {
   height: 100px;
   width: 100px;
 }
 
+#gazeGrid .gaze-cell .gazeCellCalibrate,
 #gazeGrid .gazeCell .gazeCellCalibrate {
   border-radius: 50%;
 }

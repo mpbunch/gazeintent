@@ -13,6 +13,7 @@ body{
     left:0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    .gaze-cell,
     .gazeCell{
         text-align: center;
         border: solid 1px $red;
