@@ -115,11 +115,28 @@ def index():
     active="index"
     return render_template("site/index.html", active=active)
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST', 'PUT'])
 @login_required
 def profile():
-    active="profile"
-    return render_template("client/profile.html", user=current_user, active=active)
+    form = UsersForm()
+    message = {
+        "message": False,
+        "type": 0
+    }
+    if request.method == "POST":
+        if request.form.get("submit") == "update":
+            current_user.age = form.age.data
+            current_user.gender = form.gender.data
+            db.session.commit()
+            print("Post profile information")
+        else:
+            pass
+    elif request.method == "GET":
+        form.age.data = current_user.age
+        form.gender.data = current_user.gender
+        print("Get profile information")
+    active = "profile"
+    return render_template("client/profile.html", form=form, message=message, user=current_user, active=active)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
