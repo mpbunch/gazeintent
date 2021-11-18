@@ -127,6 +127,7 @@ def profile():
         if request.form.get("submit") == "update":
             current_user.age = form.age.data
             current_user.gender = form.gender.data
+            current_user.zipcode = form.zipcode.data
             db.session.commit()
             print("Post profile information")
         else:
@@ -134,6 +135,7 @@ def profile():
     elif request.method == "GET":
         form.age.data = current_user.age
         form.gender.data = current_user.gender
+        form.zipcode.data = current_user.zipcode
         print("Get profile information")
     active = "profile"
     return render_template("client/profile.html", form=form, message=message, user=current_user, active=active)
