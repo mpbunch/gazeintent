@@ -1,4 +1,4 @@
-import joblib
+# import joblib
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 
@@ -239,7 +239,7 @@ def slack():
     try:
         status = data['data']['status']
         action = data['action']
-        data = {"text": f"{action} gazeintent. Status: {status}"}
+        data = {"text": '{action} gazeintent. Status: {status}'.format(action=action, status=status)}
         slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
     except Exception:
         return "Malformed payload."
@@ -248,9 +248,8 @@ def slack():
         if action.lower() == 'update':
             response = requests.post(slack_webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
             if response.status_code != 200:
-                raise ValueError(
-                    f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}'
-                )
+                pass
+                # raise ValueError(f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}')
     except Exception:
         return "Some error with posting to slack."
     return "Message sent to slack."

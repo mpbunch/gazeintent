@@ -6,6 +6,17 @@ body {
   height: 100vh;
 }
 
+#clicker {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 50%;
+  z-index: 1000000;
+  top: 50%;
+  left: 50%;
+}
+
 #gazeGrid {
   position: absolute;
   top: 50px;
@@ -16,6 +27,13 @@ body {
   display: grid;
   -ms-grid-columns: (1fr)[3];
       grid-template-columns: repeat(3, 1fr);
+}
+
+#gazeGrid #accuracy {
+  display: none;
+  position: absolute;
+  top: 50%;
+  text-align: center;
 }
 
 #gazeGrid .gaze-cell,

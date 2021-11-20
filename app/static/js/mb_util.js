@@ -29,57 +29,6 @@ export class doGaze {
                         console.log(document.getElementById(`cell-btn-${i}`), i)
                         let btn = document.getElementById(`cell-btn-${i}`);
                         btn.setAttribute('style', 'background-color:red;')
-
-                        // // Stare at middle of screen for 5 seconds.
-                        // store_points_variable(); // start storing the prediction points
-                        // sleep(5000).then(() => {
-                        //     stop_storing_points_variable(); // stop storing the prediction points
-                        //     var past50 = webgazer.getStoredPoints(); // retrieve the stored points
-                        //     var precision_measurement = calculatePrecision(past50);
-                        //     var accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
-                        //     document.getElementById("accuracy").innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
-                        //     swal({
-                        //         title: "Your accuracy measure is " + precision_measurement + "%",
-                        //         allowOutsideClick: false,
-                        //         buttons: {
-                        //             cancel: "Recalibrate",
-                        //             confirm: true,
-                        //         }
-                        //     }).then(isConfirm => {
-                        //         if (isConfirm) {
-                        //             //clear the calibration & hide the last middle button
-                        //             ClearCanvas();
-                        //         } else {
-                        //             //use restart function to restart the calibration
-                        //             document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
-                        //             webgazer.clearData();
-                        //             ClearCalibration();
-                        //             ClearCanvas();
-                        //             ShowCalibrationPoint();
-                        //         }
-                        //     });
-                        // });
-
-                        // if (!btn.disabled) {
-                        //     let payload = {
-                        //         cache: "no-cache",
-                        //         method: "POST",
-                        //         headers: {
-                        //             'Content-Type': 'application/json',
-                        //         },
-                        //         body: JSON.stringify({
-                        //             id: i
-                        //         })
-                        //     }
-                        //     fetch(`/api/calibrate`, payload)
-                        //         .then(response => {
-                        //             return response.text();
-                        //         }).then(() => {
-                        //             i < gridSize ?
-                        //                 calibrateAdvance(i <= gridSize && i + 1) :
-                        //                 calibrateDestory()
-                        //         });
-                        // }
                     });
                 }
 
@@ -123,13 +72,6 @@ export class doGaze {
         const start = (cellId = 1) => {
             helpers.advance(cellId);
             console.log('Calibration Start');
-
-
-            // setInterval(function () {
-            //     if (overlaps('webgazerGazeDot', cellId)) {
-            //         helpers.advance(cellId++)
-            //     }
-            // }, 100);
         };
 
         // Define calibration stop funciton
@@ -235,7 +177,8 @@ function calculatePrecision(past50Array) {
 
     // Retrieve the last 50 gaze prediction points
     var x50 = past50Array[0];
-    var y50 = past50Array[1];
+    // offset for header height
+    var y50 = past50Array[1] - 30;
 
     // Calculate the position of the point the user is staring at
     var staringPointX = windowWidth / 2;
