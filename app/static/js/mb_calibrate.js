@@ -180,7 +180,7 @@ export class gridBuilder {
             // convert to seconds
             // save start, end, diff_in_sec
 
-            var start = document.querySelector('#gaze-1').dataset.start;
+            var start = parseInt(document.querySelector('#gaze-1').dataset.start);
             var diff = end - start;
             let payload = {
                 cache: "no-cache",
@@ -189,6 +189,7 @@ export class gridBuilder {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    type: 'calibration',
                     accuracy: precision_measurement,
                     start: start,
                     end: end,

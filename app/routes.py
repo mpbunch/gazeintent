@@ -182,7 +182,11 @@ def clienttest():
 @login_required
 def clienthistory():
     active="clienthistory"
-    return render_template("client/history.html", active=active)
+    user_id = current_user.get_id()
+    data = Calibration.query.with_entities(Calibration.data).filter_by(user_id=user_id).all()
+    data = [json.loads(x[0]) for x in data]
+    print(data)
+    return render_template("client/history.html", active=active, history=data)
 # @app.route("/register", methods=['GET', 'POST'])
 # @app.route('/signup', methods=['GET', 'POST'])
 # def signup():

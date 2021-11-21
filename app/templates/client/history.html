@@ -1,9 +1,37 @@
 {% extends "shared/layout.html" %}
 {% block content %}
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_history.css')}}" />
 <div id="client-history" class="container section">
-
+    <table id="data" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Diff</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history %}
+            <tr>
+                <td>{{ item.type }}</td>
+                <td>{{ item.start }}</td>
+                <td>{{ item.end }}</td>
+                <td>{{ item.diff }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#data').DataTable();
+    });
+</script>
 
 {% endblock %}
