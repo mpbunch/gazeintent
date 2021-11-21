@@ -46,6 +46,7 @@ export class gridBuilder {
         // get active calibartion cell
         let active_cell = document.querySelector(`.active-cell`);
         if (!active_cell) return
+        if (active_cell.id == 'gaze-1') active_cell.dataset.start = Date.now();
         let position = active_cell.dataset.position.split(',');
         let cell_position = [position[0], position[1], [position[2], position[3]]];
 
@@ -58,7 +59,7 @@ export class gridBuilder {
         // add dataset.gazed += 1
         // if dataset.gazed == 5
         // advance to next cell
-        let threshold = 10;
+        let threshold = 5;
         let active_cell_gazed = parseInt(active_cell.dataset.gazed);
         var rect = active_cell.getBoundingClientRect();
         let x = rect.x + active_cell.offsetWidth / 2;
@@ -162,7 +163,7 @@ export class gridBuilder {
         }
 
         store_points_variable(); // start storing the prediction points
-
+        var end = Date.now()
         sleep(5000).then(() => {
             stop_storing_points_variable(); // stop storing the prediction points
             var past50 = webgazer.getStoredPoints(); // retrieve the stored points
@@ -171,7 +172,35 @@ export class gridBuilder {
             var accuracy_div = document.querySelector("#accuracy");
             accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
             accuracy_div.style.display = 'initial';
+            // write some data to the db
+            // how do we keep track of start time
+            // how do we get time ellapsed
+            // write a timestamp to some dataset.start
+            // new date.now() - start
+            // convert to seconds
+            // save start, end, diff_in_sec
 
+            var start = document.querySelector('#gaze-1').dataset.start;
+            var diff = end - start;
+            let payload = {
+                cache: "no-cache",
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    accuracy: precision_measurement,
+                    start: start,
+                    end: end,
+                    diff: diff
+                })
+            }
+            fetch(`/api/calibrate`, payload)
+                .then(response => {
+                    return response.text();
+                }).then(text => {
+                    console.log(text)
+                });
         });
     }
 
