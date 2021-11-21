@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th>Type</th>
+                <th>Accuracy</th>
                 <th>Start</th>
                 <th>End</th>
                 <th>Diff</th>
@@ -16,6 +17,7 @@
             {% for item in history %}
             <tr>
                 <td>{{ item.type }}</td>
+                <td>{{ item.accuracy }}</td>
                 <td>{{ item.start }}</td>
                 <td>{{ item.end }}</td>
                 <td>{{ item.diff }}</td>
