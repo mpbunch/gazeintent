@@ -1,4 +1,4 @@
-// edited copy of mb_utils
+// edited copy of mb_utils 
 // for client test grid, cells and symbols
 // work in progress, much yet to do
 
