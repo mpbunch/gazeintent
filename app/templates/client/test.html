@@ -2,13 +2,16 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_test.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/calibration.css')}}" />
 <div id="client-test" class="container section">
-    <div id="gazeContainer" class="row">
-        <div id="fullheight"></div>
-        <div id="gazeGrid"></div>
-</div> 
-
-<script type="module" src="{{url_for('static', filename='js/client_test.js')}}"></script>
-
+  <div id="fullheight"></div>
+  !!!!!!!!!!!!!!!!!TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TESTING!!!!!!!!!!!!!!!!!
+  <div id="gazeGrid"></div>
+  <div id="clicker"></div>
+  <canvas id="plotting_canvas"></canvas>
+</div>
+<script src="{{ url_for('static', filename='node_modules/webgazer/dist/webgazer.min.js') }}"
+  type="text/javascript"></script>
+<script type="module" src="{{ url_for('static', filename='js/webcam.js') }}" type="text/javascript">
+</script>
+<script type="module" src="{{ url_for('static', filename='js/client_test.js') }}" type="text/javascript"></script>
 {% endblock %}

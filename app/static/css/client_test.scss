@@ -1,5 +1,61 @@
-@import "_variables";
-
-#client-test{
-    // edit here
+@import 'variables';
+body{
+    overflow: hidden;
+}
+#fullheight{
+    height:100vh;
+}
+#clicker{
+    position: absolute;
+    width:15px;
+    height:15px;
+    background-color: green;
+    border-radius: 50%;
+    z-index:1000000;
+    top:50%;
+    left:50%;
+}
+#gazeGrid{
+    #accuracy{
+        display:none;
+        position:absolute;
+        top:50%;
+        text-align: center;
+    }
+    position:absolute;
+    top:50px;
+    right:0;
+    bottom:0;
+    left:0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    .gaze-cell,
+    .gazeCell{
+        text-align: center;
+        border: solid 1px $red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button[id^=cell-btn-]{
+            height:100px;
+            width:100px;
+        }
+        .gazeCellCalibrate{
+            border-radius:50%;
+        }
+    }
+    #webgazerLoading{
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        display:grid;
+        .spinner-box{
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 }

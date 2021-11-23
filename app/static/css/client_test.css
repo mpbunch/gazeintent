@@ -1,1 +1,106 @@
 /* No CSS *//*# sourceMappingURL=client_test.css.map */
+
+body {
+  overflow: hidden;
+}
+
+#fullheight {
+  height: 100vh;
+}
+
+#clicker {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 50%;
+  z-index: 1000000;
+  top: 50%;
+  left: 50%;
+}
+
+#gazeGrid {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+}
+
+#gazeGrid #accuracy {
+  display: none;
+  position: absolute;
+  top: 50%;
+  text-align: center;
+}
+
+#gazeGrid .gaze-cell,
+#gazeGrid .gazeCell {
+  text-align: center;
+  border: solid 1px #f00;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#gazeGrid .gaze-cell button[id^=cell-btn-],
+#gazeGrid .gazeCell button[id^=cell-btn-] {
+  height: 100px;
+  width: 100px;
+}
+
+#gazeGrid .gaze-cell .gazeCellCalibrate,
+#gazeGrid .gazeCell .gazeCellCalibrate {
+  border-radius: 50%;
+}
+
+#gazeGrid #webgazerLoading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: -ms-grid;
+  display: grid;
+}
+
+#gazeGrid #webgazerLoading .spinner-box {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#gazeGrid .gaze-cell .gazeCellTest,
+#gazeGrid .gazeCell .gazeCellTest{
+  text-align: center;
+  border: solid 4px rgb(255, 242, 0);
+  width: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+/*# sourceMappingURL=client_calibrate.css.map */
