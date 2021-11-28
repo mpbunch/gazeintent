@@ -109,6 +109,8 @@ def unauthorized_handler():
 def admin():
     if current_user.role == 'admin':
         active = "admin"
+
+
         # data for profile list
         profile = User.query.all()
         # data for Calibration list
@@ -117,12 +119,20 @@ def admin():
         details = query.with_entities(
             Calibration.data).filter()[:2]
         details = [json.loads(x[0]) for x in details]
+        # type_cal = Calibration.query.with_entities(
+        #     Calibration.user_id).filter_by(type="calibration")
+        # totalType = Calibration.query.filter(Calibration.user_id=="26").with_entities(
+        #     Calibration.data)
+        totalType = Calibration.query.with_entities(
+            Calibration.data).count()
 
-        print(profile)
-        print(data)
-        print(details)
 
-        return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile)
+        # print(profile)
+        # print(data)
+        # print(details)
+        print(totalType)
+
+        return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile, totalType=totalType)
     active = "client"
     return render_template("client/client.html", user=current_user, active=active)
 
