@@ -2,30 +2,83 @@
 {% extends 'shared/layout.html' %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
 <div class="container section">
-    <h3>Admin</h3>
-    <label>{{user.email_address}}</label>
+  <h3>Admin</h3>
+  <label>{{user.email_address}}</label>
 
-    <table id="data" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Record Id</th>
-                <th>User Id</th>
-                <th>Data</th>
-                <th>Created</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for cal in calibration %}
-            <tr>
-                <td>{{ cal.calibration_id }}</td>
-                <td>{{ cal.user_id }}</td>
-                <td>{{ cal.data }}</td>
-                <td>{{ cal.record_created }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Zipcode</th>
+        <th>User Id</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for pro in profile %}
+      <tr>
+        <td>{{ pro.first_name }}</td>
+        <td>{{ pro.last_name }}</td>
+        <td>{{ pro.email_address }}</td>
+        <td>{{ pro.gender }}</td>
+        <td>{{ pro.age }}</td>
+        <td>{{ pro.zipcode }}</td>
+        <td>{{ pro.id }}</td>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Record Id</th>
+        <th>User Id</th>
+        <th>Type</th>
+        <th>Accuracy</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Diff</th>
+        <th>Created Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for detail in details %}
+      {% for cal in calibration %}
+      <tr>
+
+        <td>{{ cal.calibration_id }}</td>
+        <td>{{ cal.user_id }}</td>
+        <!-- if id=id, print the details one by one -->
+
+        <td>{{ detail.type }}</td>
+        <td>{{ detail.accuracy }}</td>
+        <td>{{ detail.start }}</td>
+        <td>{{ detail.end }}</td>
+        <td>{{ detail.diff }}</td>
+
+        <td>{{ cal.record_created }}</td>
+
+
+        {% endfor %}
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
 
 </div>
+
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#data').DataTable();
+  });
+</script>
 {% endblock %}

@@ -109,9 +109,20 @@ def unauthorized_handler():
 def admin():
     if current_user.role == 'admin':
         active = "admin"
-        data = Calibration.query.all()
+        # data for profile list
+        profile = User.query.all()
+        # data for Calibration list
+        query = Calibration.query
+        data = query.all()
+        details = query.with_entities(
+            Calibration.data).filter()[:2]
+        details = [json.loads(x[0]) for x in details]
 
-        return render_template("admin/admin.html", user=current_user, active=active, calibration=data)
+        print(profile)
+        print(data)
+        print(details)
+
+        return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile)
     active = "client"
     return render_template("client/client.html", user=current_user, active=active)
 
@@ -136,7 +147,6 @@ def profile():
         "message": False,
         "type": 0
     }
-    print(current_user.password)
 
     if request.method == "POST":
 
@@ -164,15 +174,16 @@ def profile():
 
         # Update password
         elif request.form.get("security") == "updatesecurity":
-            new_password=request.form['new_password']
-            repeat_new_password=request.form['repeat_new_password']
+            new_password = request.form['new_password']
+            repeat_new_password = request.form['repeat_new_password']
 
             # if current password is correct
             if current_user.check_password(form.current_password.data):
                 # if passwords match
                 if new_password == repeat_new_password:
                     # Hash the new password
-                    current_user.password=generate_password_hash(new_password)
+                    current_user.password = generate_password_hash(
+                        new_password)
                     db.session.commit()
                     message = {
                         "message": "Password has been updated.",
@@ -257,18 +268,6 @@ def clienthistory():
     data = [json.loads(x[0]) for x in data]
     print(data)
     return render_template("client/history.html", active=active, history=data)
-# @app.route("/register", methods=['GET', 'POST'])
-# @app.route('/signup', methods=['GET', 'POST'])
-# def signup():
-#     if request.method == 'POST':
-#         # do stuff when the form is submitted
-
-#         # redirect to end the POST handling
-#         # the redirect can be to the same route or somewhere else
-#         return redirect(url_for('index'))
-
-#     # show the form, it wasn't submitted
-#     return render_template('signup.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
