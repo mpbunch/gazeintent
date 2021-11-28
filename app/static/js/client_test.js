@@ -6,19 +6,19 @@ import { doGazeTest } from "./ml_util.js";
 
 (function () {
     let gaze = new doGazeTest();
-    console.log('testingtesgin!!!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log('client_test - new doGazeTest');
     // Show loading wheel wile webgazer is being loaded
     gaze.loading();
     // wait for webgazer before calibration grid load
     var checkExist = setInterval(function () {
         // Once the eye location div is loaded, show calibration or test
         if (document.getElementById('webgazerGazeDot')) {
-            console.log('Webgazer Loaded! --1');
+            console.log('client_test - Webgazer Loaded!');
             // turn off loading wheel
             gaze.loading(false);
             // init test
             let test = gaze.test();
-            console.log('starting test now')
+            console.log('client_test - starting test now')
             // start test
             test.start();
             // clear interval, so only one test event is loaded
@@ -26,34 +26,3 @@ import { doGazeTest } from "./ml_util.js";
         }
     }, 100);
 })(doGazeTest);
-
-/**
-// Create grid using gazeCell
-import { gazeCell } from "./util.js";
-
-(function () {
-    const grid = document.querySelector('#gazeGrid');
-    for (let i = 1; i < 10; ++i) {
-        const cell = new gazeCell(i);
-        grid.appendChild(cell.element)
-    }
-})(gazeCell);
-
-
-// Get a random cell id
-var min = 1
-var max = 9
-var randomCell = Math.floor(Math.random() * (max - min + 1) + min);
-console.log('randomCell-----------------> ' + randomCell);
-
-// Create svg element in the selected cell
-var svg = document.createElementNS('svg', 'svg');
-svg.setAttribute('id', 'stimCell');
-document.getElementById(randomCell).appendChild(svg);
-
-
-// Add symbol to the selected cell
-document.getElementById(randomCell).style.backgroundColor = 'green';
-document.getElementById(randomCell).innerHTML += 'test';
-
- */
