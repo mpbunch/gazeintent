@@ -43,14 +43,14 @@ export class doGazeTest {
                     this.center_element.className = 'clientTestSymbolDiv';
                     this.center_element.innerHTML = '<b>Symbol Placeholder</b>';
                     this.center_element.id = `client-test-div-${i}`;
-                    this.center_element.disabled = true;
+                    
 
 
                     this.center_element.addEventListener('click', () => {
                         console.log('Click');
                         console.log(document.getElementById(`client-test-div-${i}`), i)
                         let clientTestDiv = document.getElementById(`client-test-div-${i}`);
-                        clientTestDiv.setAttribute('style', 'background-color:red;')
+                        clientTestDiv.setAttribute('style', 'background-color:green;')
                     });
                 }
 
@@ -131,7 +131,7 @@ export class doGazeTest {
 
         // Define calibration stop funciton
         const end = () => {
-            console.log('Calibration Stop');
+            console.log('Test Stop');
         };
 
         helpers.compare = (target, tracker) => {
