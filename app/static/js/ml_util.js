@@ -1,4 +1,4 @@
-// edited copy of mb_utils 
+// edited copy of mb_utils
 // for client test grid, cells and symbols
 // work in progress, much yet to do
 export class doGazeTest {
@@ -43,14 +43,14 @@ export class doGazeTest {
                     this.center_element.className = 'clientTestSymbolDiv';
                     this.center_element.innerHTML = '<b>Symbol Placeholder</b>';
                     this.center_element.id = `client-test-div-${i}`;
-                    
+                    this.center_element.disabled = true;
 
 
                     this.center_element.addEventListener('click', () => {
                         console.log('Click');
                         console.log(document.getElementById(`client-test-div-${i}`), i)
                         let clientTestDiv = document.getElementById(`client-test-div-${i}`);
-                        clientTestDiv.setAttribute('style', 'background-color:green;')
+                        clientTestDiv.setAttribute('style', 'background-color:red;')
                     });
                 }
 
@@ -131,7 +131,7 @@ export class doGazeTest {
 
         // Define calibration stop funciton
         const end = () => {
-            console.log('Test Stop');
+            console.log('Calibration Stop');
         };
 
         helpers.compare = (target, tracker) => {
@@ -210,7 +210,7 @@ function resize() {
 window.addEventListener('resize', resize, false);
 
 /*
- * This function calculates a measurement for how precise 
+ * This function calculates a measurement for how precise
  * the eye tracker currently is which is displayed to the user
  */
 function calculatePrecision(past50Array) {
