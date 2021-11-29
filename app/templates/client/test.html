@@ -2,6 +2,55 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_test.css')}}" />
+
+
+
+
+<div id="symbol-selector">
+<form>
+  <div class="row">
+    <div class="col">
+      <b><u>Symbol</u></b>
+      <br>
+      <input type="checkbox" class="custom-control-input" id="symbolSelect1">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-check"></i></h2> </label>
+      <br>
+      <input type="checkbox" class="custom-control-input" id="symbolSelect2">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-times"></i></h2> </label>
+      <br>
+       <input type="checkbox" class="custom-control-input" id="symbolSelect3">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-cog"></i></h2> </label>
+      <br>
+      <input type="checkbox" class="custom-control-input" id="symbolSelect4">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-crosshairs"></i></h2> </label> 
+    </div>
+
+    <div class="col">
+      <b><u>Color</u></b>
+      <br>
+      <input type="checkbox" class="custom-control-input" id="colorSelect1">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-paint-brush" style="color: red";></i></h2> </label>
+      <br>
+      <input type="checkbox" class="custom-control-input" id="colorSelect2">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-paint-brush" style="color: yellow";></i></h2> </label>
+      <br>
+       <input type="checkbox" class="custom-control-input" id="colorSelect3">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-paint-brush" style="color: green";></i></h2> </label>
+      <br>
+      <input type="checkbox" class="custom-control-input" id="colorSelect4">
+      <label class="custom-control-label" for="customCheck1"><h2><i class="fa fa-paint-brush" style="color: blue";></i></h2> </label>
+    </div>
+
+  </div>
+</form>
+</div>
+
+
+
+
+
+
+
 <div id="client-test" class="container section">
   <div id="fullheight"></div>
   <div id="gazeGrid"></div>

@@ -1,5 +1,13 @@
 /* No CSS *//*# sourceMappingURL=client_test.css.map  */
 
+#symbol-selector {
+  width: 200px;
+  background-color: rgb(178, 178, 178);
+  float: right;
+  padding: 12px;
+}
+
+
 body {
   overflow: hidden;
 }
