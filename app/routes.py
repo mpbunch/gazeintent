@@ -7,6 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import requests
 import os
+from sqlalchemy.inspection import inspect
+
 
 app = Flask(__name__)
 # In order to keep the database credentials, and secret_key secure
@@ -126,12 +128,20 @@ def admin():
         totalType = Calibration.query.with_entities(
             Calibration.data).count()
 
-
-        # print(profile)
-        # print(data)
-        # print(details)
-        print(totalType)
-
+        data = Calibration.query.all()
+        # This is to clean up the text as json issue
+        # There should be a better solution to this problem
+        # but too much time has been spent on this already
+        new_data = []
+        for row in data:
+            record = {}
+            for x in row.__table__.columns:
+                try:
+                    record[x.name] = json.loads(getattr(row, x.name))
+                except Exception:
+                    record[x.name] = getattr(row, x.name)
+            new_data.append(record)
+        details = new_data
         return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile, totalType=totalType)
     active = "client"
     return render_template("client/client.html", user=current_user, active=active)
@@ -276,6 +286,10 @@ def clienthistory():
     data = Calibration.query.with_entities(
         Calibration.data).filter_by(user_id=user_id).all()
     data = [json.loads(x[0]) for x in data]
+
+
+
+
     print(data)
     return render_template("client/history.html", active=active, history=data)
 

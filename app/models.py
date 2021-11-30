@@ -28,10 +28,10 @@ class User(db.Model, UserMixin):
         return f'<User {self.id}>'
 
 class Calibration(db.Model):
-    __tablename__ = 'calibration'
+    __tablename__ = 'calibrate'
     calibration_id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, nullable=False)
-    data = db.Column(db.Text, nullable=False)
+    data = db.Column(db.JSON, nullable=False)
     record_created = db.Column(db.DateTime, server_default=db.func.now())
 
     def __repr__(self):
