@@ -5,13 +5,8 @@
         <div class="col-md-4 offset-md-4">
             <div class="login-form bg-light mt-4 p-4">
                 <div class="col-xs-12">
-                    {% if message.type == 1 %}
-                    <div class="alert alert-success" role="alert">
-                        {{ message.message }}
-                    </div>
-                    {% endif %}
-                    {% if message.type == 2 %}
-                    <div class="alert alert-danger" role="alert">
+                    {% if message.message and message.type is not none %}
+                    <div class="alert {{'alert-success' if message.type == 1 else 'alert-danger'}}" role="alert">
                         {{ message.message }}
                     </div>
                     {% endif %}
@@ -22,6 +17,7 @@
                     <div class="col-12">
                         <label>{{ form.email_address.label }}</label>
                         {{ form.email_address(class="form-control",placeholder="Email Address") }}
+                        <span class="form-error"> {{ form.errors.email_address | first }} </span>
                     </div>
                     <div class="col-12">
                         <label>{{ form.password.label }}</label>

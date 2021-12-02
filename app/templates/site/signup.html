@@ -5,7 +5,7 @@
         <div class="col-md-4 offset-md-4">
             <div class="login-form bg-light mt-4 p-4">
                 <div class="col-xs-12">
-                    {% if message.error is not none %}
+                    {% if message.message and message.type is not none %}
                     <div class="alert {{'alert-success' if message.type == 1 else 'alert-danger'}}" role="alert">
                         {{ message.message }}
                     </div>
@@ -17,17 +17,17 @@
                     <div class="col-12">
                         <label>{{ form.first_name.label }}</label>
                         {{ form.first_name(class="form-control",placeholder="First Name") }}
-                        <span> {{ form.errors.first_name | first }} </span>
+                        <span class="form-error"> {{ form.errors.first_name | first }} </span>
                     </div>
                     <div class="col-12">
                         <label>{{ form.last_name.label }}</label>
                         {{ form.last_name(class="form-control",placeholder="Last Name") }}
-                        <span> {{ form.errors.last_name | first }} </span>
+                        <span class="form-error"> {{ form.errors.last_name | first }} </span>
                     </div>
                     <div class="col-12">
                         <label>{{ form.email_address.label }}</label>
                         {{ form.email_address(class="form-control",placeholder="Email Address") }}
-                        <span> {{ form.errors.email_address | first }} </span>
+                        <span class="form-error"> {{ form.errors.email_address | first }} </span>
                     </div>
                     <div class="col-12">
                         <label>{{ form.password.label }}</label>

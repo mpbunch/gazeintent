@@ -243,14 +243,20 @@ def login():
         "type": 0
     }
     if request.method == 'POST':
-        email_address = request.form['email_address']
-        user = User().query.filter_by(email_address=email_address).first()
-        if user and user.check_password(form.password.data):
-            login_user(user)
-            return redirect(url_for('admin'))
+        if form.validate_on_submit():
+            email_address = request.form['email_address']
+            user = User().query.filter_by(email_address=email_address).first()
+            if user and user.check_password(form.password.data):
+                login_user(user)
+                return redirect(url_for('admin'))
+            else:
+                message = {
+                    "message": "Invalid credentials, try again.",
+                    "type": 2
+                }
         else:
             message = {
-                "message": "Invalid credentials, try again.",
+                "message": "Oops, something isn't quite right.",
                 "type": 2
             }
     active = "login"
@@ -298,35 +304,36 @@ def signup():
     }
     form = SignupForm(request.form)
     print(form.validate_on_submit())
-    if form.validate_on_submit():
-        email_address = request.form['email_address']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        new_user = User(first_name=first_name, last_name=last_name, email_address=email_address)
-        # hash the password
-        new_user.set_password(request.form['password'])
-        try:
-            db.session.add(new_user)
-            db.session.commit()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            email_address = request.form['email_address']
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            new_user = User(first_name=first_name, last_name=last_name, email_address=email_address)
+            # hash the password
+            new_user.set_password(request.form['password'])
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                message = {
+                    "message": "Successfuly created account.",
+                    "type": 1
+                }
+            except:
+                # Not sure this is needed
+                # As the only way this block will be hit is if the db.session fails
+                # Which will result in no data entered to need a rollback
+                # including rollback() in the exception statement. According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
+                db.session.rollback()
+                message = {
+                    "message": "Opps, something went wrong. Try again.",
+                    "type": 2
+                }
+        else:
             message = {
-                "message": "Successfuly created account.",
-                "type": 1
-            }
-        except:
-            # Not sure this is needed
-            # As the only way this block will be hit is if the db.session fails
-            # Which will result in no data entered to need a rollback
-            # including rollback() in the exception statement. According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
-            db.session.rollback()
-            message = {
-                "message": "Opps, something went wrong. Try again.",
+                "message": "Oops something isn't quite right.",
                 "type": 2
             }
-    else:
-        message = {
-            "message": "Bigtime error.",
-            "type": 2
-        }
     active = "signup"
     return render_template('site/signup.html', form=form, message=message, active=active)
 
