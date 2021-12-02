@@ -161,4 +161,8 @@ li a .fa-user {
 .mt-30 {
   margin-top: 30px;
 }
+
+.form-error {
+  color: #f00;
+}
 /*# sourceMappingURL=style.css.map */

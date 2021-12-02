@@ -1,8 +1,7 @@
-# import joblib
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 from models import db, User, Calibration
-from forms import UsersForm, LoginForm
+from forms import UsersForm, LoginForm, SignupForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import requests
@@ -35,16 +34,13 @@ if not db_url or not secret_key:
         'Credentials not found. Did you for get to export environment variables?')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'DATABASE_URL').replace('postgres://', 'postgresql://')
-app.secret_key = secret_key
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres://', 'postgresql://')
+app.config['SECRET_KEY'] = secret_key
 login_manager = LoginManager()
 login_manager.init_app(app)
 db.init_app(app)
 
 # This will be the calibration api
-
-
 @app.route('/api/calibrate', methods=['POST', 'GET'])
 def api_calibrate():
     if request.method == 'POST':
@@ -136,10 +132,13 @@ def admin():
         for row in data:
             record = {}
             for x in row.__table__.columns:
+                value = getattr(row, x.name)
+                if x.name == 'record_created':
+                    value = value.strftime('%m/%d/%y')
                 try:
-                    record[x.name] = json.loads(getattr(row, x.name))
+                    record[x.name] = json.loads(value)
                 except Exception:
-                    record[x.name] = getattr(row, x.name)
+                    record[x.name] = value
             new_data.append(record)
         details = new_data
         return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile, totalType=totalType)
@@ -286,28 +285,24 @@ def clienthistory():
     data = Calibration.query.with_entities(
         Calibration.data).filter_by(user_id=user_id).all()
     data = [json.loads(x[0]) for x in data]
-
-
-
-
     print(data)
     return render_template("client/history.html", active=active, history=data)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    form = UsersForm()
+    form = SignupForm()
     message = {
         "message": False,
         "type": 0
     }
-
+    form = SignupForm(request.form)
+    print(form.validate_on_submit())
     if form.validate_on_submit():
         email_address = request.form['email_address']
         first_name = request.form['first_name']
         last_name = request.form['last_name']
-        new_user = User(first_name=first_name,
-                        last_name=last_name, email_address=email_address)
+        new_user = User(first_name=first_name, last_name=last_name, email_address=email_address)
         # hash the password
         new_user.set_password(request.form['password'])
         try:
@@ -327,6 +322,11 @@ def signup():
                 "message": "Opps, something went wrong. Try again.",
                 "type": 2
             }
+    else:
+        message = {
+            "message": "Bigtime error.",
+            "type": 2
+        }
     active = "signup"
     return render_template('site/signup.html', form=form, message=message, active=active)
 

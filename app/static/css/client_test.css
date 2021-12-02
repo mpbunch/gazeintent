@@ -1,13 +1,3 @@
-/* No CSS *//*# sourceMappingURL=client_test.css.map  */
-
-#symbol-selector {
-  width: 200px;
-  background-color: rgb(178, 178, 178);
-  float: right;
-  padding: 12px;
-}
-
-
 body {
   overflow: hidden;
 }
@@ -94,21 +84,4 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
 }
-
-#gazeGrid .gaze-cell .gazeCellTest,
-#gazeGrid .gazeCell .gazeCellTest{
-  text-align: center;
-  border: solid 4px rgb(255, 242, 0);
-  width: 25px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-/*# sourceMappingURL=client_calibrate.css.map */
+/*# sourceMappingURL=client_test.css.map */
