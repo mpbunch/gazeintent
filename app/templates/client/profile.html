@@ -24,28 +24,22 @@
           <!-- checkout the validator url, this might need to be dynamic -->
           BIO
           <div class="col-12">
+            <div class="col-12">
+              <label>{{ form.email_address.label }}</label>
+              <br>
+              <label>{{user.email_address}}</label>
+            </div>
             <label>{{ form.first_name.label }}</label>
             {{ form.first_name(value=user.first_name, class="form-control",placeholder="First Name") }}
+            <span class="form-error"> {{ form.errors.first_name | first }} </span>
           </div>
           <div class="col-12">
             <label>{{ form.last_name.label }}</label>
             {{ form.last_name(value=user.last_name, class="form-control",placeholder="Last Name") }}
           </div>
-          <div class="col-12">
-            <label>{{ form.email_address.label }}</label>
-            {{ form.email_address(value=user.email_address, class="form-control",placeholder="Email Address") }}
-            <!-- {% if form.email_address.errors %}
-              <ul class="errors">
-                {% for error in form.email_address.errors %}
-                  <li>{{ error }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %} -->
-          </div>
-          <div class="col-12">
+          <!-- <div class="col-12">
             <button action="/profile" type="submit" name="bio" value="updatebio" class="btn btn-dark float-end">Update</button>
-          </div>
-
+          </div> -->
           <hr class="mt-4">
           DEMO
           <div class="col-12">
@@ -60,10 +54,11 @@
             <label>{{ form.zipcode.label }}</label>
             {{ form.zipcode(value=user.zipcode, class="form-control",placeholder="zipcode") }}
           </div>
+          <p><a class="link-primary" href="{{ url_for('resetpassword') }}">Reset Password</a></p>
           <div class="col-12">
             <button action="/profile" type="submit" name="demo" value="updatedemo" class="btn btn-dark float-end">Update</button>
           </div>
-
+<!--
           <hr class="mt-4">
           SECURITY
           <div class="col-12">
@@ -79,7 +74,7 @@
           </div>
           <div class="col-12">
             <button action="/profile" type="submit" name="security" value="updatesecurity" class="btn btn-dark float-end">Update</button>
-          </div>
+          </div> -->
         </form>
       </div>
     </div>

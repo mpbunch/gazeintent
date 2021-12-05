@@ -4,10 +4,7 @@ from wtforms.validators import DataRequired
 
 
 class UsersForm(FlaskForm):
-    email_address = StringField('Email Address', validators=[
-            DataRequired(),
-            validators.Email()
-        ]
+    email_address = StringField('Email Address', validators=[]
     )
     first_name = StringField('First Name', validators=[
             DataRequired(),
@@ -25,7 +22,7 @@ class UsersForm(FlaskForm):
             DataRequired()
         ]
     )
-    new_password = PasswordField('New Password', validators=[        
+    new_password = PasswordField('New Password', validators=[
             DataRequired(),
             validators.Length(min=8, message='Password should be at least %(min)d characters long'),
             validators.Length(max=32, message='Password should be no more than %(max)d characters long'),
@@ -36,13 +33,13 @@ class UsersForm(FlaskForm):
         ]
     )
     repeat_new_password = PasswordField('Repeat New Password', validators=[
-            DataRequired(),
+            # DataRequired(),
             validators.EqualTo('password', message='Passwords must match')
         ]
     )
     gender = StringField('Gender', validators=[])
     age = IntegerField('Age', validators=[
-            validators.Length(1,3, message='Invalid Age'), 
+            validators.Length(1,3, message='Invalid Age'),
             validators.Regexp("[0-9]", message="Only numbers please.")
         ]
     )
