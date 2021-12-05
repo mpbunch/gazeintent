@@ -1,145 +1,128 @@
+
 <!-- Admin Page -->
 {% extends 'shared/layout.html' %}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+  }
+
+  .grid-item {
+    background: rgba(51, 170, 51, 1);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+</style>
+
 <div class="container section">
   <h3>Admin</h3>
   <label>{{user.email_address}}</label>
-  <div id="pieChart"></div>
-  <div id="histogram"></div>
-  <table id="data" class="table table-striped">
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Zipcode</th>
-        <th>User Id</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="grid-container" id="heatmap">
+    <div class="grid-item" id="1">1</div>
+    <div class="grid-item" id="2">2</div>
+    <div class="grid-item" id="3">3</div>
+    <div class="grid-item" id="4">4</div>
+    <div class="grid-item" id="5">5</div>
+    <div class="grid-item" id="6">6</div>
+    <div class="grid-item" id="7">7</div>
+    <div class="grid-item" id="8">8</div>
+    <div class="grid-item" id="9">9</div>
+  </div>
+</div>
+<table id="data" class="table table-striped">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Zipcode</th>
+      <th>User Id</th>
+    </tr>
+  </thead>
+  <tbody>
 
-      {% for pro in profile %}
-      <tr>
-        <td>{{ pro.first_name }}</td>
-        <td>{{ pro.last_name }}</td>
-        <td>{{ pro.email_address }}</td>
-        <td>{{ pro.gender }}</td>
-        <td>{{ pro.age }}</td>
-        <td>{{ pro.zipcode }}</td>
-        <td>{{ pro.id }}</td>
-        {% endfor %}
-    </tbody>
-  </table>
+    {% for pro in profile %}
+    <tr>
+      <td>{{ pro.first_name }}</td>
+      <td>{{ pro.last_name }}</td>
+      <td>{{ pro.email_address }}</td>
+      <td>{{ pro.gender }}</td>
+      <td>{{ pro.age }}</td>
+      <td>{{ pro.zipcode }}</td>
+      <td>{{ pro.id }}</td>
+      {% endfor %}
+  </tbody>
+</table>
 
-  <table id="data" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Record Id</th>
-        <th>User Id</th>
-        <th>Type</th>
-        <th>Accuracy</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Diff</th>
-        <th>Created Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for record in details %}
-      <tr>
-        <td>{{ record.calibration_id }}</td>
-        <td>{{ record.user_id }}</td>
-        {% for key, value in record.data.items() %}
-        <td>{{value}}</td>
-        {% endfor %}
-        <td>{{ record.record_created }}</td>
-        {% endfor %}
-      </tr>
-    </tbody>
-  </table>
-
+<table id="data" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Record Id</th>
+      <th>User Id</th>
+      <th>Type</th>
+      <th>Accuracy</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Diff</th>
+      <th>Created Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in details %}
+    <tr>
+      <td>{{ record.calibration_id }}</td>
+      <td>{{ record.user_id }}</td>
+      {% for key, value in record.data.items() %}
+      <td>{{value}}</td>
+      {% endfor %}
+      <td>{{ record.record_created }}</td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+<p></p>
 </div>
 
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8"
-  src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
-<script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
-<script>
-  $(document).ready(function () {
+<script type="text/javascript">
+  $(document).ready(function() {
     $('#data').DataTable();
   });
 
-  // starting the pie chart
-  // set the dimensions and margins of the graph
-  var width = 450
-  height = 450
-  margin = 40
+  let myData = [
+    // ['calibration_id', 'user_id', 'cell','start','end','gaze_enter','gaze_exit','stim','color']
+    [57, 1, 1, 1000, 2222, 1122, 1222, "square", "red"],
+    [57, 1, 2, 1000, 2222, 1122, 1223, "square", "red"],
+    [57, 1, 3, 1000, 2222, 1122, 1224, "square", "red"],
+    [57, 1, 4, 1000, 2222, 1122, 1225, "square", "red"],
+    [57, 1, 5, 1000, 2222, 1122, 1265, "square", "red"],
+    [57, 1, 6, 1000, 2222, 1122, 1234, "square", "red"],
+    [57, 1, 7, 1000, 2222, 1122, 1246, "square", "red"],
+    [57, 1, 8, 1000, 2222, 1122, 1290, "square", "red"],
+    [57, 1, 9, 1000, 2222, 1122, 1239, "square", "red"],
+  ];
+  console.table(myData);
 
-  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-  var radius = Math.min(width, height) / 2 - margin
+  // each grid is showing from 0 to 100 opacity based on the percentage.
+  var totalCells = 9
 
-  // append the svg object to the div called 'my_dataviz'
-  var svg = d3.select("#pieChart")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-  // Create dummy data
-
-  var totalType = {{ totalType }}
-  var data = { Calibration: totalType, b: 2, c: 1 }
-  // alert(totalType)
-
-  // set the color scale
-  var color = d3.scaleOrdinal()
-    .domain(data)
-    .range(d3.schemeSet2);
-
-  // Compute the position of each group on the pie:
-  var pie = d3.pie()
-    .value(function (d) { return d.value; })
-  var data_ready = pie(d3.entries(data))
-  // Now I know that group A goes from 0 degrees to x degrees and so on.
-
-  // shape helper to build arcs:
-  var arcGenerator = d3.arc()
-    .innerRadius(0)
-    .outerRadius(radius)
-
-  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-  svg
-    .selectAll('mySlices')
-    .data(data_ready)
-    .enter()
-    .append('path')
-    .attr('d', arcGenerator)
-    .attr('fill', function (d) { return (color(d.data.key)) })
-    .attr("stroke", "black")
-    .style("stroke-width", "2px")
-    .style("opacity", 0.7)
-
-  // Now add the annotation. Use the centroid method to get the best coordinates
-  svg
-    .selectAll('mySlices')
-    .data(data_ready)
-    .enter()
-    .append('text')
-    .text(function (d) { return "Task: " + d.data.key })
-    .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
-    .style("text-anchor", "middle")
-    .style("font-size", 17)
-
-
-
-
+  for (let i = 0; i < totalCells; i++) {
+    var percentage_cell = (myData[i][6] - myData[i][5]) / (myData[i][4] - myData[i][3])
+    console.log(percentage_cell)
+    let id= i+1;
+    let div = document.getElementById(id);
+    div.innerHTML = id;
+    div.style.opacity=percentage_cell*10;
+  }
 </script>
 {% endblock %}
