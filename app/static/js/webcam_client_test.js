@@ -66,3 +66,5 @@ import { gridBuilder } from "./ml_client_test.js";
     }
 
 })(webgazer, gridBuilder);
+
+console.log("@@@@@@@@@@@@@@@@@@@@" + Date.now());
