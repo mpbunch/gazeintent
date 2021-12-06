@@ -12,7 +12,7 @@ import { gridBuilder } from "./ml_client_test.js";
     grid.loading(true, div);
 
 
-    // REMOVE THIS SETUP FUNCTION, NOT NEEDED FOR CLIENT TEST
+    // REMOVE THIS SETUP FUNCTION, NOT NEEDED FOR CLIENT TEST 
         /*     //Set up the webgazer video feedback.
             var setup = function () {
 

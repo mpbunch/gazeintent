@@ -1,63 +1,110 @@
-// variable to hold the stimulus details
-var timeStartTest = '1';
-var timeStopTest = '2';
-var timeStartStim = '3';
-var timeStopStim = '4';
+// variables to hold the stimulus details
+var timeStartTest = ''; // test start time
+var timeStopTest = '';  // test stop time (same time as the end of final symbol display time )
+var timeStartStim = ''; // time the stimulus appears in the cell
+var timeStopStim = '';  // time the stimulus disappears from the screen - either by timeout or by user gazing at active cell
 
-// Create a button to start the test
-let btn = document.createElement("button");
-btn.innerHTML = "Start the Test";
-btn.type="button";
-btn.class="btn btn-success btn-sm";
-btn.id="btnStartTest";
+var randomSymbol = '';  // random symbol list
+var randomColor = '';   // random color list
+var stimSymbol = '';    // single symbol for now, update to a list of 10 symbols
 
-// change this to wait until webgazer is loaded
-const el = document.getElementById("clicker");
-el.appendChild(btn);
+var stimData = []       // dictionary for the stim symbol, color, time and user data points
 
-// Start button onclick function
-btn.onclick=function () {
-    timeStartTest = Date.now();
-    console.log(timeStartTest);
+var stimEventsTotal = 4; // total stimulus events in the test?
 
-    // remove button once it is clicked and the test has started
-    btn.remove();
 
-    // start stim function
-    stim();
+// checkExist copied from webcam.js and edited for the client test page
+// Webgazer examples were used as a launching off point for this code block
+var checkExist = setInterval(function () {
+    // Once the eye location div is loaded, show calibration or test
+    if (document.getElementById('webgazerGazeDot')) {
+        setTimeout(() => {
+            console.log('Webgazer Loaded IN THE CLIENT TEST PAGE!');
+            btnStartStim(); 
+        }, 3000);
+        // clear interval, so only one calibration event is loaded
+        clearInterval(checkExist);
+    } 
+}, 100);
+
+// add the start button once the gazer dot div is loaded
+function btnStartStim() {
+    // Create a button to start the test
+    let btn = document.createElement("button");
+    btn.innerHTML = "Start";
+    btn.type="button";
+    btn.className="btn btn-success btn-sm";
+    btn.id="btnStartTest";
+
+    // change this to wait until webgazer is loaded
+    const el = document.getElementById("clicker");
+    el.appendChild(btn);
+
+    // Start button onclick function
+    btn.onclick=function () {
+        timeStartTest = Date.now();
+        console.log(timeStartTest);
+
+        // remove button once it is clicked and the test has started
+        btn.remove();
+
+        // start stim function
+        stim();
+    };
 };
 
 // Stimulus function - places a random symbol in a random cell for a random duration
 function stim() {
     console.log('this is the STIM function');
+    
+    // how many times will the stim function run
+
+
+    // randomly select a stimulus symbol and color
+    console.log('randomly selecting a stim symbol and color...');
+//    randomSymbol = "CIRCLE";
+//    randomColor = "RED";
+
+    stimSymbol = '<i class="fas fa-circle"></i>';
 
     // randomly select a cell id
-
+    console.log('randomly selecting a cell...');
+    // var testCellId = '';
+    
     // get the div of the randomly selected cell and add the symbol
-    var e = document.getElementById("gaze-1");
-    e.innerHTML = 'symbol';
+    console.log('placing symbol into the randomly selected cell...');
+    var el = document.getElementById("gaze-1").innerHTML = stimSymbol;
 
     // record the symbol start time
     timeStartStim = Date.now();
 
-    // wait the randomly selected amount of time
-    console.log('starting delay time')
-    setTimeout(() => {  console.log("end delay time"); }, 4000);   // PLACEHOLDER TO SIMULATE RANDOM DELAY TIME
+    // wait the randomly selected amount of time, then remove stim symbol
+    console.log('start stim display time...')
+    setTimeout(() => {
+        console.log("stop stim display time...");
+        
+        // remove the symbol
+        el = document.getElementById("gaze-1").innerHTML = '---';
+    }, 3000);   // PLACEHOLDER TO SIMULATE RANDOM DELAY TIME
     
     // record the symbol stop time
-        // if user gaze touches the active cell
-        timeStopStim = Date.now();
-        // if symbol duration time runs out before user gaze touch active cell
-        timeStopStim = Date.now();
+    // if user gaze touches the active cell
+    timeStopStim = Date.now();
 
-    // remove the symbol
-    e.innerHTML = ''
+    // if symbol duration time runs out before user gaze touch active cell
+    timeStopStim = Date.now();
+
+
 
     // save/append stim data to a dictionary
-    var stimData = []
-    stimData = [{"test_id":1,"user_id":20,"start":0,"end":1},{"test_id":1,"user_id":20,"start":0,"end":1}]    // PLACEHOLDER DATA 
+    console.log('saved stimulus event details into a dictionary');
+
+    // APPEND TO stimData
+
+    stimData = [{"meta":{"start":1111,"end":2222},"data":[{"cell":2, "stim":"square", "start":1111, "end":2222, "gaze":1100, "color":"red", "latency":20},{"cell":9, "stim":"square", "start":1111, "end":2222, "gaze":1100, "color":"red", "latency":20},{"cell":4, "stim":"square", "start":1111, "end":2222, "gaze":1100, "color":"red", "latency":20}]}]    // PLACEHOLDER DATA 
 
     // write dictionary to database
+    console.log(stimData);
 }
 
 

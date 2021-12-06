@@ -3,7 +3,7 @@ export class gridBuilder {
         // Default values
         // cells = number of cells/zones
         // type = calibrate or test
-        // div = the div for which you wish the grid to be appended
+        // div = the div for which you wish the grid to be appended 
         const grid = document.querySelector(`#${div}`);
 
         // If div not found return nothing
