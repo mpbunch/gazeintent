@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 from models import db, User, Calibration
-from forms import UsersForm, LoginForm, SignupForm
+from forms import UsersForm, LoginForm, SignupForm, ProfileForm, PasswordResetForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import requests
@@ -161,12 +161,13 @@ def index():
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
-    form = UsersForm()
+    form = ProfileForm(request.form)
     message = {
         "message": False,
         "type": 0
     }
     if request.method == "POST":
+        if form.validate_on_submit():
             current_user.first_name = form.first_name.data
             current_user.last_name = form.last_name.data
             current_user.age = form.age.data
@@ -177,85 +178,27 @@ def profile():
                 "message": "Successfuly updated profile.",
                 "type": 1
             }
-
-    # if request.method == "POST":
-    #
-    #     # Update bio section
-    #     if request.form.get("bio") == "updatebio":
-    #         current_user.first_name = form.first_name.data
-    #         current_user.last_name = form.last_name.data
-    #         current_user.email_address = form.email_address.data
-    #         db.session.commit()
-    #         message = {
-    #             "message": "Successfuly updated bio.",
-    #             "type": 1
-    #         }
-    #
-    #     # Update demo section
-    #     elif request.form.get("demo") == "updatedemo":
-    #         current_user.age = form.age.data
-    #         current_user.gender = form.gender.data
-    #         current_user.zipcode = form.zipcode.data
-    #         db.session.commit()
-    #         message = {
-    #             "message": "Successfuly updated demo.",
-    #             "type": 1
-    #         }
-    #
-    #     # Update password
-    #     elif request.form.get("security") == "updatesecurity":
-    #         new_password = request.form['new_password']
-    #         repeat_new_password = request.form['repeat_new_password']
-    #
-    #         # if current password is correct
-    #         if current_user.check_password(form.current_password.data):
-    #             # if passwords match
-    #             if new_password == repeat_new_password:
-    #                 # Hash the new password
-    #                 current_user.password = generate_password_hash(
-    #                     new_password)
-    #                 db.session.commit()
-    #                 message = {
-    #                     "message": "Password has been updated.",
-    #                     "type": 1
-    #                 }
-    #             # if passwords don't match
-    #             else:
-    #                 # remind to check
-    #                 message = {
-    #                     "message": "Please make sure your new passwords match.",
-    #                     "type": 2
-    #                 }
-    #         # if current password is not correct
-    #         else:
-    #             message = {
-    #                 "message": "Current password is wrong.",
-    #                 "type": 2
-    #             }
-    #
-    #     else:
-    #         form.first_name.data = current_user.first_name
-    #         form.last_name.data = current_user.last_name
-    #         form.email_address.data = current_user.email_address
-    #         form.age.data = current_user.age
-    #         form.gender.data = current_user.gender
-    #         form.zipcode.data = current_user.zipcode
-    #         print("Get profile information")
-
+        else:
+            message = {
+                "message": "Oops, something went wrong.",
+                "type": 2
+            }
     active = "profile"
     return render_template("client/profile.html", form=form, message=message, user=current_user, active=active)
 
 @app.route("/resetpassword", methods=['GET', 'POST'])
 @login_required
 def resetpassword():
-    form = UsersForm()
+    form = PasswordResetForm(request.form)
     message = {
         "message": False,
         "type": 0
     }
     # print(form.validate_on_submit())
     if request.method == "POST":
-
+        print(form.validate_on_submit())
+        print(form.errors)
+        if form.validate_on_submit():
             new_password = request.form['new_password']
             repeat_new_password = request.form['repeat_new_password']
 
@@ -281,6 +224,11 @@ def resetpassword():
             else:
                 message = {
                     "message": "Current password is wrong.",
+                    "type": 2
+                }
+        else:
+            message = {
+                    "message": "Oops, something went wrong.",
                     "type": 2
                 }
             # testtest

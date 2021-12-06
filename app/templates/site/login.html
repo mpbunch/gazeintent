@@ -12,7 +12,7 @@
                     {% endif %}
                 </div>
                 <form action="/login" method="POST" class="row g-3">
-                    {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
                     <h4>Login</h4>
                     <div class="col-12">
                         <label>{{ form.email_address.label }}</label>

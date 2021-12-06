@@ -20,61 +20,45 @@
         {% endif %}
       </div>
       <div class="login-form bg-light mt-4 p-4">
-        <form action="/profile" method="POST" class="row g-3" action="{{ url_for('profile') }}">
-          <!-- checkout the validator url, this might need to be dynamic -->
+        <form method="POST" class="row g-3" action="{{ url_for('profile') }}">
+          {{ form.csrf_token }}
           BIO
           <div class="col-12">
             <div class="col-12">
-              <label>{{ form.email_address.label }}</label>
+              <label>Email Address</label>
               <br>
               <label>{{user.email_address}}</label>
             </div>
             <label>{{ form.first_name.label }}</label>
-            {{ form.first_name(value=user.first_name, class="form-control",placeholder="First Name") }}
+            {{ form.first_name(value=user.first_name, class="form-control", placeholder="First Name") }}
             <span class="form-error"> {{ form.errors.first_name | first }} </span>
           </div>
           <div class="col-12">
             <label>{{ form.last_name.label }}</label>
-            {{ form.last_name(value=user.last_name, class="form-control",placeholder="Last Name") }}
+            {{ form.last_name(value=user.last_name, class="form-control", placeholder="Last Name") }}
+            <span class="form-error"> {{ form.errors.last_name | first }} </span>
           </div>
-          <!-- <div class="col-12">
-            <button action="/profile" type="submit" name="bio" value="updatebio" class="btn btn-dark float-end">Update</button>
-          </div> -->
           <hr class="mt-4">
           DEMO
           <div class="col-12">
             <label>{{ form.gender.label }}</label>
-            {{ form.gender(value=user.gender, class="form-control",placeholder="Gender") }}
+            {{ form.gender(value=user.gender, class="form-control", placeholder="Gender") }}
+            <span class="form-error"> {{ form.errors.gender | first }} </span>
           </div>
           <div class="col-12">
             <label>{{ form.age.label }}</label>
-            {{ form.age(value=user.age, class="form-control",placeholder="age") }}
+            {{ form.age(value=user.age, class="form-control", placeholder="Age") }}
+            <span class="form-error"> {{ form.errors.age | first }} </span>
           </div>
           <div class="col-12">
             <label>{{ form.zipcode.label }}</label>
-            {{ form.zipcode(value=user.zipcode, class="form-control",placeholder="zipcode") }}
+            {{ form.zipcode(value=user.zipcode, class="form-control", placeholder="Zipcode") }}
+            <span class="form-error"> {{ form.errors.zipcode | first }} </span>
           </div>
           <p><a class="link-primary" href="{{ url_for('resetpassword') }}">Reset Password</a></p>
           <div class="col-12">
-            <button action="/profile" type="submit" name="demo" value="updatedemo" class="btn btn-dark float-end">Update</button>
+            <button type="submit" name="demo" value="updatedemo" class="btn btn-dark float-end">Update</button>
           </div>
-<!--
-          <hr class="mt-4">
-          SECURITY
-          <div class="col-12">
-            <label>{{ form.current_password.label }}</label>
-            {{ form.current_password(value="none", class="form-control",placeholder="Current password") }}
-          </div>
-          <div class="col-12">
-            <label>{{ form.new_password.label }}</label>
-            {{ form.new_password(value='{{ user.new_password }}', class="form-control",placeholder="New Password") }}
-          </div>
-          <div class="col-12">
-            {{ form.repeat_new_password(value=repeat_new_password, class="form-control",placeholder="Repeat New Password") }}
-          </div>
-          <div class="col-12">
-            <button action="/profile" type="submit" name="security" value="updatesecurity" class="btn btn-dark float-end">Update</button>
-          </div> -->
         </form>
       </div>
     </div>
