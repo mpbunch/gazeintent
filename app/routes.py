@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import requests
 import os
-from sqlalchemy.inspection import inspect
+from sqlalchemy import exc
 
 
 app = Flask(__name__)
@@ -48,20 +48,20 @@ def api_calibrate():
         # We will need to create the model
         # and do some testing, but we should be able to finish this tomorrow
         payload = request.json
-        user_id = current_user.id
+        user_id = current_user.get_id()
         print('--')
-        print(current_user)
-        new_calibration = Calibration(
-            user_id=user_id, data=json.dumps(payload))
+        print(user_id)
+        print(payload)
         try:
+            new_calibration = Calibration(user_id=user_id, data=payload)
             db.session.add(new_calibration)
             db.session.commit()
-            message = "Calibration Complete" if payload['id'] == 9 else "Calibration data saved."
             message = {
-                "message": message,
+                "message": "Calibration Complete.",
                 "type": 1
             }
-        except Exception as e:
+        except exc.SQLAlchemyError as e:
+            print('!! db error !!')
             print(e)
             db.session.rollback()
             message = {
@@ -116,7 +116,7 @@ def admin():
         data = query.all()
         details = query.with_entities(
             Calibration.data).filter()[:2]
-        details = [json.loads(x[0]) for x in details]
+        details = [x[0] for x in details]
         # type_cal = Calibration.query.with_entities(
         #     Calibration.user_id).filter_by(type="calibration")
         # totalType = Calibration.query.filter(Calibration.user_id=="26").with_entities(
@@ -135,10 +135,7 @@ def admin():
                 value = getattr(row, x.name)
                 if x.name == 'record_created':
                     value = value.strftime('%m/%d/%y')
-                try:
-                    record[x.name] = json.loads(value)
-                except Exception:
-                    record[x.name] = value
+                record[x.name] = value
             new_data.append(record)
         details = new_data
         return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile, totalType=totalType)
@@ -196,31 +193,28 @@ def resetpassword():
     }
     # print(form.validate_on_submit())
     if request.method == "POST":
-        print(form.validate_on_submit())
-        print(form.errors)
         if form.validate_on_submit():
             new_password = request.form['new_password']
             repeat_new_password = request.form['repeat_new_password']
 
             # if current password is correct
             if current_user.check_password(form.current_password.data):
-                    # if passwords match
+                # if passwords match
                 if new_password == repeat_new_password:
-                        # Hash the new password
-                    current_user.password = generate_password_hash(
-                            new_password)
+                    # Hash the new password
+                    current_user.password = generate_password_hash(new_password)
                     db.session.commit()
                     message = {
-                            "message": "Password has been updated.",
-                            "type": 1
+                        "message": "Password has been updated.",
+                        "type": 1
                     }
                 else:
-                        # remind to check
+                    # remind to check
                     message = {
-                            "message": "Please make sure your new passwords match.",
-                            "type": 2
+                        "message": "Please make sure your new passwords match.",
+                        "type": 2
                     }
-                # if current password is not correct
+            # if current password is not correct
             else:
                 message = {
                     "message": "Current password is wrong.",
@@ -228,10 +222,9 @@ def resetpassword():
                 }
         else:
             message = {
-                    "message": "Oops, something went wrong.",
-                    "type": 2
-                }
-            # testtest
+                "message": "Oops, something went wrong.",
+                "type": 2
+            }
 
     active = "resetpassword"
     return render_template("client/resetpassword.html", form=form, message=message, user=current_user, active=active)
@@ -290,9 +283,8 @@ def clienttest():
 def clienthistory():
     active = "clienthistory"
     user_id = current_user.get_id()
-    data = Calibration.query.with_entities(
-        Calibration.data).filter_by(user_id=user_id).all()
-    data = [json.loads(x[0]) for x in data]
+    data = Calibration.query.with_entities(Calibration.data).filter_by(user_id=user_id).all()
+    data = [x[0] for x in data]
     print(data)
     return render_template("client/history.html", active=active, history=data)
 

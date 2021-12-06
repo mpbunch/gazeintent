@@ -1,10 +1,10 @@
-
 <!-- Admin Page -->
 {% extends 'shared/layout.html' %}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
 <style>
+  /* This needs to be moved to an independent, page specific scss file. */
   .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -20,82 +20,98 @@
 </style>
 
 <div class="container section">
-  <h3>Admin</h3>
-  <label>{{user.email_address}}</label>
-  <div class="grid-container" id="heatmap">
-    <div class="grid-item" id="1">1</div>
-    <div class="grid-item" id="2">2</div>
-    <div class="grid-item" id="3">3</div>
-    <div class="grid-item" id="4">4</div>
-    <div class="grid-item" id="5">5</div>
-    <div class="grid-item" id="6">6</div>
-    <div class="grid-item" id="7">7</div>
-    <div class="grid-item" id="8">8</div>
-    <div class="grid-item" id="9">9</div>
+  <div class="row">
+    <div class="col-12">
+      <h3>Admin</h3>
+    </div>
   </div>
-</div>
-<table id="data" class="table table-striped">
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Gender</th>
-      <th>Age</th>
-      <th>Zipcode</th>
-      <th>User Id</th>
-    </tr>
-  </thead>
-  <tbody>
 
-    {% for pro in profile %}
-    <tr>
-      <td>{{ pro.first_name }}</td>
-      <td>{{ pro.last_name }}</td>
-      <td>{{ pro.email_address }}</td>
-      <td>{{ pro.gender }}</td>
-      <td>{{ pro.age }}</td>
-      <td>{{ pro.zipcode }}</td>
-      <td>{{ pro.id }}</td>
-      {% endfor %}
-  </tbody>
-</table>
+  <div class="row mt-30">
+    <div class="col-12 mt-30">
+      <div class="grid-container" id="heatmap">
+        <div class="grid-item" id="1">1</div>
+        <div class="grid-item" id="2">2</div>
+        <div class="grid-item" id="3">3</div>
+        <div class="grid-item" id="4">4</div>
+        <div class="grid-item" id="5">5</div>
+        <div class="grid-item" id="6">6</div>
+        <div class="grid-item" id="7">7</div>
+        <div class="grid-item" id="8">8</div>
+        <div class="grid-item" id="9">9</div>
+      </div>
+    </div>
+  </div>
 
-<table id="data" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Record Id</th>
-      <th>User Id</th>
-      <th>Type</th>
-      <th>Accuracy</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Diff</th>
-      <th>Created Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for record in details %}
-    <tr>
-      <td>{{ record.calibration_id }}</td>
-      <td>{{ record.user_id }}</td>
-      {% for key, value in record.data.items() %}
-      <td>{{value}}</td>
-      {% endfor %}
-      <td>{{ record.record_created }}</td>
-      {% endfor %}
-    </tr>
-  </tbody>
-</table>
-<p></p>
+  <div class="row mt-30">
+    <div class="col-12 mt-30">
+      <table id="data" class="table table-striped">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Zipcode</th>
+            <th>User Id</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pro in profile %}
+          <tr>
+            <td>{{ pro.first_name }}</td>
+            <td>{{ pro.last_name }}</td>
+            <td>{{ pro.email_address }}</td>
+            <td>{{ pro.gender }}</td>
+            <td>{{ pro.age }}</td>
+            <td>{{ pro.zipcode }}</td>
+            <td>{{ pro.id }}</td>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-30">
+    <div class="col-12 mt-30">
+      <table id="data" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Record Id</th>
+            <th>User Id</th>
+            <th>Type</th>
+            <th>Accuracy</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Diff</th>
+            <th>Created Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in details %}
+          <tr>
+            <td>{{ record.calibration_id }}</td>
+            <td>{{ record.user_id }}</td>
+            {% for key, value in record.data.items() %}
+            <td>{{value}}</td>
+            {% endfor %}
+            <td>{{ record.record_created }}</td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+<script type="text/javascript" charset="utf8"
+  src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('#data').DataTable();
   });
 
@@ -119,10 +135,10 @@
   for (let i = 0; i < totalCells; i++) {
     var percentage_cell = (myData[i][6] - myData[i][5]) / (myData[i][4] - myData[i][3])
     console.log(percentage_cell)
-    let id= i+1;
+    let id = i + 1;
     let div = document.getElementById(id);
     div.innerHTML = id;
-    div.style.opacity=percentage_cell*10;
+    div.style.opacity = percentage_cell * 10;
   }
 </script>
 {% endblock %}

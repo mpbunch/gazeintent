@@ -59,7 +59,7 @@ export class gridBuilder {
         // add dataset.gazed += 1
         // if dataset.gazed == 5
         // advance to next cell
-        let threshold = 5;
+        let threshold = 10;
         let active_cell_gazed = parseInt(active_cell.dataset.gazed);
         var rect = active_cell.getBoundingClientRect();
         let x = rect.x + active_cell.offsetWidth / 2;
@@ -70,7 +70,6 @@ export class gridBuilder {
             // calibration is working
             active_cell.dataset.gazed = active_cell_gazed ? active_cell_gazed + 1 : 1
             // click
-
             // document.elementFromPoint(x, y).click();
         } else if (hit && active_cell_gazed >= threshold) {
             // advance calibration
