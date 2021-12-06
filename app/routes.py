@@ -40,6 +40,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 db.init_app(app)
 
+
 # This will be the calibration api
 @app.route('/api/calibrate', methods=['POST', 'GET'])
 def api_calibrate():
@@ -49,9 +50,6 @@ def api_calibrate():
         # and do some testing, but we should be able to finish this tomorrow
         payload = request.json
         user_id = current_user.get_id()
-        print('--')
-        print(user_id)
-        print(payload)
         try:
             new_calibration = Calibration(user_id=user_id, data=payload)
             db.session.add(new_calibration)
@@ -61,8 +59,6 @@ def api_calibrate():
                 "type": 1
             }
         except exc.SQLAlchemyError as e:
-            print('!! db error !!')
-            print(e)
             db.session.rollback()
             message = {
                 "message": "Opps, something went wrong. Try again.",
@@ -182,6 +178,7 @@ def profile():
             }
     active = "profile"
     return render_template("client/profile.html", form=form, message=message, user=current_user, active=active)
+
 
 @app.route("/resetpassword", methods=['GET', 'POST'])
 @login_required
