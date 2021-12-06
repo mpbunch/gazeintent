@@ -1,4 +1,3 @@
-// Copied and edited from mb_calibrate to fit the client test use case
 export class gridBuilder {
     makeGrid = (cells = 9, type = 'test', div = 'gazeGrid') => {
         // Default values
@@ -19,11 +18,11 @@ export class gridBuilder {
             this.element.dataset.gazed = 0;
             this.element.dataset.position = '0,0,0,0';
 
-
-            if (i == 1) {
+            // adding the start button in ml_client_test_stim.js instead
+/*             if (i == 1) {
                 this.element.classList.add('active-cell');
-                this.element.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="btn-symbol" onclick="clientTestStart()">Click to Begin Test</button>'
-            }    
+                this.element.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="btn-symbol" onclick=console.log("CLICK")>Click to Begin Test</button>';
+            } */
             // this.element.append(this.center_element);
             grid.appendChild(this.element);
         }
@@ -41,54 +40,7 @@ export class gridBuilder {
         return document.querySelector(`#${div}`);
     }
 
-
-
-//==================== PUT THIS IN HERE SOMEWHERE  this.element.innerHTML = '<button type="button" class="btn btn-success btn-sm" id="btn-symbol">Click to Begin Test</button>';
     test = () => {
-        (grid_cells = 9, div = 'gazeGrid', actual_gaze = false) => {
-            if (!actual_gaze) return
-            // get active grid cell
-            let active_cell = document.querySelector(`.active-cell`);
-            if (!active_cell) return
-            
-            // append the symbol placeholder div ot the active cell
-    
-            
-            if (active_cell.id == 'gaze-1') {
-
-
-            }
-            let position = active_cell.dataset.position.split(',');
-            let cell_position = [position[0], position[1], [position[2], position[3]]];
-            
-            let size = 3;
-            let gaze_position = [[actual_gaze.x, size], [actual_gaze.y, size]];
-            let hit = this.collision(cell_position, gaze_position);
-            // console.log(hit)
-    
-            // if gaze hits active cell
-            // add dataset.gazed += 1
-            // if dataset.gazed == 5
-            // advance to next cell
-            let threshold = 5;
-            let active_cell_gazed = parseInt(active_cell.dataset.gazed);
-            var rect = active_cell.getBoundingClientRect();
-            let x = rect.x + active_cell.offsetWidth / 2;
-            let y = rect.y + active_cell.offsetHeight / 2;
-            var clicker = document.querySelector('#clicker');
-            clicker.setAttribute('style', `left: ${x}px; top: ${y}px`)
-            if (hit && active_cell_gazed < threshold) {
-                // calibration is working
-                active_cell.dataset.gazed = active_cell_gazed ? active_cell_gazed + 1 : 1
-                // click
-    
-                // document.elementFromPoint(x, y).click();
-            } else if (hit && active_cell_gazed >= threshold) {
-                // advance calibration
-                this.advance(active_cell, grid_cells)
-            }
-        }
-
         return "test"
     }
     calibrate = (grid_cells = 9, div = 'gazeGrid', actual_gaze = false) => {
@@ -259,8 +211,6 @@ export class gridBuilder {
         webgazer.clearData();
     }
 
-
-// CHANGE THIS TO A RANDOM SELCTION ---------======================================
     advance = (activeCell, grid_cells) => {
         // we need to identify calibration sequence
         let sequence = { 1: 2, 2: 3, 3: 4, 4: 6, 5: 0, 6: 7, 7: 8, 8: 9, 9: 5 }
@@ -311,5 +261,7 @@ export class gridBuilder {
             if (loading) loading.remove()
         }
     }
+    
 
 }
+
