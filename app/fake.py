@@ -5,16 +5,22 @@ import json
 
 def meta():
     s = int(time.time()) * 1000
-    e = s + random.randrange(30,45)
-    payload['meta'] = {"start": s, "end": e}
+    e = s + random.randrange(3000,4500)
+    payload['meta'] = {"start": s, "end": e, "diff":e-s}
 
 def data():
-    cell = random.randrange(1, 9)
+    cell = random.randrange(1, events_per+1)
+    # stimulus starts
     ss = int(time.time()) * 1000
-    ser = random.randrange(3, 5)
-    se = int(time.time()) * 1000 + ser
-    gs = ss + random.randrange(1,3)
-    ger = random.randrange(1, 3) if gs + 3 < se else ser
+    # stimulus end random
+    ser = random.randrange(3000, 6000)
+    # stimulus ends
+    se = ss + ser
+    # gaze starts
+    gs = ss + random.randrange(100,2000)
+    # gaze ends random
+    ger = random.randrange(500, 3000) if gs + 3000 < se else ser-1000
+    # gaze ends
     ge = gs + ger
     selected_stim = stim[random.randrange(0,len(stim))]
     selected_color = color[random.randrange(0,len(color))]
@@ -26,7 +32,7 @@ def data():
         "gazeEnd": ge,
         "color":selected_color,
         "stim":selected_stim
-    
+
     }
     payload['data'].append(gaze)
 
@@ -39,10 +45,11 @@ if __name__ == "__main__":
     events_per = 9
     stim = ['square', 'triangle', 'circle', 'rombus', 'rectangle', 'star', 'smile']
     color = ['red', 'green', 'blue', 'purple', 'orange', 'black', 'teal', 'pink']
-    for ix in range(1, how_many):
+    for ix in range(0, how_many):
         payload = {'meta':{},'data':[], 'type':'test'}
         meta()
-        for i in range(1, events_per+1):
+        for i in range(0, events_per):
             data()
+            time.sleep(random.randrange(2,5))
         insert()
-        time.sleep(random.randrange(1,3))
+        time.sleep(random.randrange(5,9))

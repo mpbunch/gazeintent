@@ -107,12 +107,14 @@ def admin():
 
         # data for profile list
         profile = User.query.all()
+
         # data for Calibration list
         query = Calibration.query
         data = query.all()
-        details = query.with_entities(
-            Calibration.data).filter()[:2]
-        details = [x[0] for x in details]
+        # details = query.with_entities(
+        #     Calibration.data).filter()[:2]
+        # details = [x[0] for x in details if x[0]['type'] == 'calibration']
+        # print(details)
         # type_cal = Calibration.query.with_entities(
         #     Calibration.user_id).filter_by(type="calibration")
         # totalType = Calibration.query.filter(Calibration.user_id=="26").with_entities(
@@ -124,7 +126,8 @@ def admin():
         # This is to clean up the text as json issue
         # There should be a better solution to this problem
         # but too much time has been spent on this already
-        new_data = []
+        calibration_data = []
+        test_data = []
         for row in data:
             record = {}
             for x in row.__table__.columns:
@@ -132,9 +135,12 @@ def admin():
                 if x.name == 'record_created':
                     value = value.strftime('%m/%d/%y')
                 record[x.name] = value
-            new_data.append(record)
-        details = new_data
-        return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=details, profile=profile, totalType=totalType)
+            if record['data']['type']=='calibration':
+                calibration_data.append(record)
+            else:
+                test_data.append(record)
+
+        return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=calibration_data, tdetails=test_data, profile=profile, totalType=totalType)
     active = "client"
     return render_template("client/client.html", user=current_user, active=active)
 
@@ -313,7 +319,7 @@ def signup():
                 # Not sure this is needed
                 # As the only way this block will be hit is if the db.session fails
                 # Which will result in no data entered to need a rollback
-                # including rollback() in the exception statement. 
+                # including rollback() in the exception statement.
                 # According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
                 db.session.rollback()
                 message = {
