@@ -12,3 +12,4 @@ app/package.json
 app/include
 !app/static/node_modules/webgazer/dist/webgazer.min.js
 .coverage
+fake*
