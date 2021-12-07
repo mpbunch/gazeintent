@@ -10,7 +10,6 @@ import { doGaze } from "./mb_util.js";
     var checkExist = setInterval(function () {
         // Once the eye location div is loaded, show calibration or test
         if (document.getElementById('webgazerGazeDot')) {
-            console.log('Webgazer Loaded!');
             // turn off loading wheel
             gaze.loading(false);
             // init calibration

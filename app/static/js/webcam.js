@@ -1,7 +1,6 @@
 import { gridBuilder } from "./mb_calibrate.js";
 
 (async function () {
-    console.log('Webgazer is alive!');
     var grid, data, cells, div;
     div = 'gazeGrid';
     cells = 9;
@@ -25,7 +24,6 @@ import { gridBuilder } from "./mb_calibrate.js";
         // Once the eye location div is loaded, show calibration or test
         if (document.getElementById('webgazerGazeDot')) {
             setTimeout(() => {
-                console.log('Webgazer Loaded!');
                 // turn off loading wheel
                 grid.loading(false, div);
                 // make the grid
@@ -41,9 +39,6 @@ import { gridBuilder } from "./mb_calibrate.js";
     await webgazer.setRegression('ridge') /* currently must set regression and tracker */
         //.setTracker('clmtrackr')
         .setGazeListener(function (data, clock) {
-            // console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-            // console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-
             // init calibration
             grid.calibrate(cells, div, data)
         })

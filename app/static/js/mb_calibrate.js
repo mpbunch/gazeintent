@@ -54,8 +54,6 @@ export class gridBuilder {
         let size = 3;
         let gaze_position = [[actual_gaze.x, size], [actual_gaze.y, size]];
         let hit = this.collision(cell_position, gaze_position);
-        // console.log(hit)
-
         // if gaze hits active cell
         // add dataset.gazed += 1
         // if dataset.gazed == 5
@@ -200,7 +198,7 @@ export class gridBuilder {
                 .then(response => {
                     return response.text();
                 }).then(text => {
-                    console.log(text)
+                    // error
                 });
         });
     }
@@ -212,7 +210,6 @@ export class gridBuilder {
     advance = (activeCell, grid_cells) => {
         // we need to identify calibration sequence
         let sequence = { 1: 2, 2: 3, 3: 4, 4: 6, 5: 0, 6: 7, 7: 8, 8: 9, 9: 5 }
-        console.log(activeCell.dataset.cell)
         // active cell clean up
         activeCell.classList.remove('active-cell');
         activeCell.innerHTML = ''
@@ -224,7 +221,6 @@ export class gridBuilder {
             next_cell.classList.add('active-cell');
             next_cell.innerHTML = `Look Here, Hold Your Gaze.`;
         } else {
-            console.log('calibration complete')
             this.accuracy()
         }
     }
@@ -247,14 +243,12 @@ export class gridBuilder {
     loading = (waiting = true, div = 'gazeGrid') => {
         // wait for webgazer to fully load
         if (waiting) {
-            console.log('loading')
             const grid = document.querySelector(`#${div}`);
             let loading = document.createElement('div');
             loading.id = 'webgazerLoading';
             loading.innerHTML = '<div id="webgazerLoading"><div class="spinner-box"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div></div>';
             grid.append(loading);
         } else {
-            console.log('not loading')
             let loading = document.getElementById('webgazerLoading');
             if (loading) loading.remove()
         }
