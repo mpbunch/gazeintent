@@ -3,213 +3,175 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-<style>
-  /* This needs to be moved to an independent, page specific scss file. */
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    padding: 10px;
-  }
-
-  .grid-item {
-    background: rgba(51, 170, 51, 1);
-    padding: 18px;
-    font-size: 30px;
-    text-align: center;
-    opacity: 0;
-  }
-  .grid-item-container {
-    font-size: 30px;
-    text-align: center;
-    padding: 2px;
-    border: 1px solid red;
-  }
-  #testdata tr{
-    cursor: pointer;
-
-  }
-  tr:hover {
-    background-color:#ccc;
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/admin.css')}}" />
 
 <div class="container section">
-  <div class="row">
-    <div class="col-12">
-      <h3>Admin</h3>
-    </div>
-  </div>
+	<div class="row">
+		<div class="col-12">
+			<h3>Admin</h3>
+		</div>
+	</div>
 
-  <div class="row mt-30">
-    <div class="col-12 mt-30">
-      <div class="grid-container" id="heatmap">
-        <div class="grid-item-container">
-          <div class="grid-item" id="1">1</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="2">2</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="3">3</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="4">4</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="5">5</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="6">6</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="7">7</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="8">8</div>
-        </div>
-        <div class="grid-item-container">
-          <div class="grid-item" id="9">9</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-30">
-    <div class="col-12 mt-30">
-      <table id="testdata" class="table table-striped">
-        <h3>Test Results</h3>
-        <thead>
-          <tr>
-            <th>Action</th>
-            <th>Record Id</th>
-            <th>User Id</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Total Time</th>
-            <th>Type</th>
-            <th>Created Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for record in tdetails %}
-          <tr onclick="heatmap({{ record.data.data }})">
-            <td > <i class="fas fa-eye"/> Heatmap </td>
-            <td>{{ record.calibration_id }}</td>
-            <td>{{ record.user_id }}</td>
-            <td>{{ record.data.meta.start }}</td>
-            <td>{{ record.data.meta.end }}</td>
-            <td>{{ record.data.meta.diff }}</td>
-            <td>{{ record.data.type }}</td>
-            <td>{{ record.record_created }}</td>
-            {% endfor %}
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+	<div class="row mt-30">
+		<div class="col-12 mt-30">
+			<div class="grid-container" id="heatmap">
+				<div class="grid-item-container">
+					<div class="grid-item" id="1">1</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="2">2</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="3">3</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="4">4</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="5">5</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="6">6</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="7">7</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="8">8</div>
+				</div>
+				<div class="grid-item-container">
+					<div class="grid-item" id="9">9</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-30">
+		<div class="col-12 mt-30">
+			<table id="testdata" class="table table-striped">
+				<h3>Test Results</h3>
+				<thead>
+					<tr>
+						<th>Action</th>
+						<th>Record Id</th>
+						<th>User Id</th>
+						<th>Start</th>
+						<th>End</th>
+						<th>Total Time</th>
+						<th>Type</th>
+						<th>Created Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for record in tdetails %}
+					<tr onclick="heatmap({{ record.data.data }})">
+						<td> <i class="fas fa-eye" /> Heatmap </td>
+						<td>{{ record.calibration_id }}</td>
+						<td>{{ record.user_id }}</td>
+						<td>{{ record.data.meta.start }}</td>
+						<td>{{ record.data.meta.end }}</td>
+						<td>{{ record.data.meta.diff }}</td>
+						<td>{{ record.data.type }}</td>
+						<td>{{ record.record_created }}</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
-  <div class="row mt-30">
-    <div class="col-12 mt-30">
-      <table id="data" class="table table-striped">
-        <h3>Users</h3>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Zipcode</th>
-            <th>User Id</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for pro in profile %}
-          <tr>
-            <td>{{ pro.first_name }}</td>
-            <td>{{ pro.last_name }}</td>
-            <td>{{ pro.email_address }}</td>
-            <td>{{ pro.gender }}</td>
-            <td>{{ pro.age }}</td>
-            <td>{{ pro.zipcode }}</td>
-            <td>{{ pro.id }}</td>
-            {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+	<div class="row mt-30">
+		<div class="col-12 mt-30">
+			<table id="data" class="table table-striped">
+				<h3>Users</h3>
+				<thead>
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+						<th>Gender</th>
+						<th>Age</th>
+						<th>Zipcode</th>
+						<th>User Id</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for pro in profile %}
+					<tr>
+						<td>{{ pro.first_name }}</td>
+						<td>{{ pro.last_name }}</td>
+						<td>{{ pro.email_address }}</td>
+						<td>{{ pro.gender }}</td>
+						<td>{{ pro.age }}</td>
+						<td>{{ pro.zipcode }}</td>
+						<td>{{ pro.id }}</td>
+						{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 
-  <div class="row mt-30">
-    <div class="col-12 mt-30">
-      <table id="data" class="table table-striped">
-        <h3>Calibration Results</h3>
-        <thead>
-          <tr>
-            <th>Record Id</th>
-            <th>User Id</th>
-            <th>End</th>
-            <th>Diff</th>
-            <th>Type</th>
-            <th>Start</th>
-            <th>Accuracy</th>
-            <th>Created Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for record in details %}
-          <tr>
-            <td>{{ record.calibration_id }}</td>
-            <td>{{ record.user_id }}</td>
-            {% for key, value in record.data.items() %}
-            <td>{{value}}</td>
-            {% endfor %}
-            <td>{{ record.record_created }}</td>
-            {% endfor %}
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
+	<div class="row mt-30">
+		<div class="col-12 mt-30">
+			<table id="data" class="table table-striped">
+				<h3>Calibration Results</h3>
+				<thead>
+					<tr>
+						<th>Record Id</th>
+						<th>User Id</th>
+						<th>End</th>
+						<th>Diff</th>
+						<th>Type</th>
+						<th>Start</th>
+						<th>Accuracy</th>
+						<th>Created Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for record in details %}
+					<tr>
+						<td>{{ record.calibration_id }}</td>
+						<td>{{ record.user_id }}</td>
+						{% for key, value in record.data.items() %}
+						<td>{{value}}</td>
+						{% endfor %}
+						<td>{{ record.record_created }}</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 </div>
 
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf8"
-  src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+	src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
 <script type="text/javascript">
-  $(document).ready(function () {
-    $('#data').DataTable();
-  });
+	$(document).ready(function () {
+		$('#data').DataTable();
+	});
 
-  heatmap = (myData)=>{
-    console.log(myData);
+	heatmap = (myData) => {
+		let totalCells = myData.length;
 
-    let totalCells = myData.length;
-    // for (let i = 0; i < totalCells; i++) {
-    //   let cleardiv = document.getElementById(i);
-    //   cleardiv.style.opacity=0;
-    // }
+		for (let i = 0; i < totalCells; i++) {
+			// clear data vis cell
+			let cleardiv = document.getElementById(i + 1);
+			cleardiv.style.opacity = 0;
 
-    for (let i = 0; i < totalCells; i++) {
-      let cleardiv = document.getElementById(i+1);
-      cleardiv.style.opacity=0;
-      let id = myData[i]['cell'];
-      let div = document.getElementById(id);
-      var percentage_cell = (myData[i]['gazeEnd'] - myData[i]['gazeStart']) / (myData[i]['stimEnd'] - myData[i]['stimStart']);
-      console.log("percentage_cell",percentage_cell);
-      console.log(myData[i]['gazeEnd']);
-      console.log(myData[i]['gazeStart']);
-      console.log(myData[i]['gazeEnd'] - myData[i]['gazeStart']);
-      console.log(myData[i]['stimEnd']);
-      console.log(myData[i]['stimStart']);
-      console.log(myData[i]['stimEnd'] - myData[i]['stimStart']);
-      // div.innerHTML = id;
-      div.style.opacity = percentage_cell+0.1;
-    }
-  }
+			// get cell id from test event
+			let id = myData[i]['cell'];
+			let div = document.getElementById(id);
+			// determine opacity for cell
+			var percentage_cell = (myData[i]['gazeEnd'] - myData[i]['gazeStart']) / (myData[i]['stimEnd'] - myData[i]['stimStart']);
+
+			// set opacity
+			div.style.opacity = percentage_cell;
+		}
+	}
 
 </script>
 {% endblock %}

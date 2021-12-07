@@ -1,0 +1,27 @@
+  /* This needs to be moved to an independent, page specific scss file. */
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+  }
+
+  .grid-item {
+    background: rgba(51, 170, 51, 1);
+    padding: 18px;
+    font-size: 30px;
+    text-align: center;
+    opacity: 0;
+  }
+  .grid-item-container {
+    font-size: 30px;
+    text-align: center;
+    padding: 2px;
+    border: 1px solid red;
+  }
+  #testdata tr{
+    cursor: pointer;
+
+  }
+  tr:hover {
+    background-color:#ccc;
+  }
