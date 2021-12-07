@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for
 from flask_login import current_user, LoginManager, logout_user, login_required, login_user
 from models import db, User, Calibration
-from forms import UsersForm, LoginForm, SignupForm, ProfileForm, PasswordResetForm
+from forms import LoginForm, SignupForm, ProfileForm, PasswordResetForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import requests
@@ -30,8 +30,7 @@ secret_key = os.environ.get('SECRET_KEY')
 
 if not db_url or not secret_key:
     # Fail if no environment variable is found.
-    raise Exception(
-        'Credentials not found. Did you for get to export environment variables?')
+    raise Exception('Credentials not found. Did you for get to export environment variables?')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres://', 'postgresql://')
@@ -41,201 +40,76 @@ login_manager.init_app(app)
 db.init_app(app)
 
 
-# This will be the calibration api
-@app.route('/api/calibrate', methods=['POST', 'GET'])
-def api_calibrate():
-    if request.method == 'POST':
-        # We can now take the payload and insert it into the db
-        # We will need to create the model
-        # and do some testing, but we should be able to finish this tomorrow
-        payload = request.json
-        user_id = current_user.get_id()
-        try:
-            new_calibration = Calibration(user_id=user_id, data=payload)
-            db.session.add(new_calibration)
-            db.session.commit()
-            message = {
-                "message": "Calibration Complete.",
-                "type": 1
-            }
-        except exc.SQLAlchemyError as e:
-            db.session.rollback()
-            message = {
-                "message": "Opps, something went wrong. Try again.",
-                "type": 2
-            }
-        return message
-    active = "calibrate"
-    return render_template("calibrate.html", active=active)
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('shared/404.html'), 404
-
-
-@login_manager.user_loader
-def user_loader(user_id):
-    user = User().query.filter_by(user_id=user_id).first()
-    if not user:
-        return
-    return user
-
-
-@login_manager.request_loader
-def request_loader(request):
-    if request.form.get('email_address'):
-        email_address = request.form.get('email_address')
-        user = User().query.filter_by(email_address=email_address).first()
-        if not user:
-            return
-        return user
-
-
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return redirect(url_for('index'))
-
-
-@app.route('/client')
-@app.route('/admin')
-@login_required
-def admin():
-    if current_user.role == 'admin':
-        active = "admin"
-
-
-        # data for profile list
-        profile = User.query.all()
-
-        # data for Calibration list
-        query = Calibration.query
-        data = query.all()
-        # details = query.with_entities(
-        #     Calibration.data).filter()[:2]
-        # details = [x[0] for x in details if x[0]['type'] == 'calibration']
-        # print(details)
-        # type_cal = Calibration.query.with_entities(
-        #     Calibration.user_id).filter_by(type="calibration")
-        # totalType = Calibration.query.filter(Calibration.user_id=="26").with_entities(
-        #     Calibration.data)
-        totalType = Calibration.query.with_entities(
-            Calibration.data).count()
-
-        data = Calibration.query.all()
-        # This is to clean up the text as json issue
-        # There should be a better solution to this problem
-        # but too much time has been spent on this already
-        calibration_data = []
-        test_data = []
-        for row in data:
-            record = {}
-            for x in row.__table__.columns:
-                value = getattr(row, x.name)
-                if x.name == 'record_created':
-                    value = value.strftime('%m/%d/%y')
-                record[x.name] = value
-            if record['data']['type']=='calibration':
-                calibration_data.append(record)
-            else:
-                test_data.append(record)
-
-        return render_template("admin/admin.html", user=current_user, active=active, calibration=data, details=calibration_data, tdetails=test_data, profile=profile, totalType=totalType)
-    active = "client"
-    return render_template("client/client.html", user=current_user, active=active)
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
-
-
+"""
+Home
+"""
 @app.route("/")
 def index():
-    active = "index"
-    return render_template("site/index.html", active=active)
+    return render_template("site/index.html")
 
+"""
+Documentation
+"""
+@app.route("/documentation")
+def documentation():
+    active = "Documentation"
+    return render_template("site/documentation.html", active=active)
 
-@app.route("/profile", methods=['GET', 'POST'])
-@login_required
-def profile():
-    form = ProfileForm(request.form)
+"""
+Signup
+"""
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    # Default message
     message = {
         "message": False,
         "type": 0
     }
-    if request.method == "POST":
+    # Signup form
+    form = SignupForm(request.form)
+    # If POST
+    if request.method == 'POST':
+        # If Valid form submission
         if form.validate_on_submit():
-            current_user.first_name = form.first_name.data
-            current_user.last_name = form.last_name.data
-            current_user.age = form.age.data
-            current_user.gender = form.gender.data
-            current_user.zipcode = form.zipcode.data
-            db.session.commit()
-            message = {
-                "message": "Successfuly updated profile.",
-                "type": 1
-            }
-        else:
-            message = {
-                "message": "Oops, something went wrong.",
-                "type": 2
-            }
-    active = "profile"
-    return render_template("client/profile.html", form=form, message=message, user=current_user, active=active)
-
-
-@app.route("/resetpassword", methods=['GET', 'POST'])
-@login_required
-def resetpassword():
-    form = PasswordResetForm(request.form)
-    message = {
-        "message": False,
-        "type": 0
-    }
-    # print(form.validate_on_submit())
-    if request.method == "POST":
-        if form.validate_on_submit():
-            new_password = request.form['new_password']
-            repeat_new_password = request.form['repeat_new_password']
-
-            # if current password is correct
-            if current_user.check_password(form.current_password.data):
-                # if passwords match
-                if new_password == repeat_new_password:
-                    # Hash the new password
-                    current_user.password = generate_password_hash(new_password)
-                    db.session.commit()
-                    message = {
-                        "message": "Password has been updated.",
-                        "type": 1
-                    }
-                else:
-                    # remind to check
-                    message = {
-                        "message": "Please make sure your new passwords match.",
-                        "type": 2
-                    }
-            # if current password is not correct
-            else:
+            email_address = request.form['email_address']
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            new_user = User(first_name=first_name, last_name=last_name, email_address=email_address)
+            # hash the password
+            new_user.set_password(request.form['password'])
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                # If no exception, success message
                 message = {
-                    "message": "Current password is wrong.",
+                    "message": "Successfuly created account.",
+                    "type": 1
+                }
+            # Database Error
+            except exc.SQLAlchemyError as e:
+                # According to SQLAlchemy 1.3 Documentation: 
+                # https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
+                db.session.rollback()
+                message = {
+                    "message": "Opps, something went wrong. Try again.",
                     "type": 2
                 }
+        # If invalid form submission
         else:
+            # Error message
             message = {
-                "message": "Oops, something went wrong.",
+                "message": "Oops something isn't quite right.",
                 "type": 2
             }
-
-    active = "resetpassword"
-    return render_template("client/resetpassword.html", form=form, message=message, user=current_user, active=active)
+    return render_template('site/signup.html', form=form, message=message)
 
 
+"""
+Login / Logout
+"""
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    form = LoginForm(request.form)
     message = {
         "message": False,
         "type": 0
@@ -260,81 +134,165 @@ def login():
     active = "login"
     return render_template("site/login.html", form=form, message=message, active=active)
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
-@app.route("/documentation")
-def documentation():
-    active = "documentation"
-    return render_template("documentation.html", active=active)
-
-
+"""
+Authenticated
+    Client Calibration
+    Client Test
+    Client History
+    Client Profile
+        Update Information
+        Change Password
+    Dashboard
+        Client
+        Admin
+"""
+# Client Calibration
 @app.route("/calibrate")
 @login_required
 def clientcalibrate():
-    active = "calibrate"
-    return render_template("client/calibrate.html", active=active)
+    return render_template("client/calibrate.html")
 
-
+# Client Test
 @app.route("/test")
 @login_required
 def clienttest():
-    active = "test"
-    return render_template("client/test.html", active=active)
+    return render_template("client/test.html")
 
-
+# Client History
 @app.route("/clienthistory")
 @login_required
 def clienthistory():
-    active = "clienthistory"
     user_id = current_user.get_id()
     data = Calibration.query.with_entities(Calibration.data).filter_by(user_id=user_id).all()
     data = [x[0] for x in data]
-    print(data)
-    return render_template("client/history.html", active=active, history=data)
+    return render_template("client/history.html", history=data)
 
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    form = SignupForm()
+# Client Profile | Update Information
+@app.route("/profile", methods=['GET', 'POST'])
+@login_required
+def profile():
+    form = ProfileForm(request.form)
     message = {
         "message": False,
         "type": 0
     }
-    form = SignupForm(request.form)
-    if request.method == 'POST':
+    if request.method == "POST":
         if form.validate_on_submit():
-            email_address = request.form['email_address']
-            first_name = request.form['first_name']
-            last_name = request.form['last_name']
-            new_user = User(first_name=first_name, last_name=last_name, email_address=email_address)
-            # hash the password
-            new_user.set_password(request.form['password'])
             try:
-                db.session.add(new_user)
+                current_user.first_name = form.first_name.data
+                current_user.last_name = form.last_name.data
+                current_user.age = form.age.data
+                current_user.gender = form.gender.data
+                current_user.zipcode = form.zipcode.data
                 db.session.commit()
                 message = {
-                    "message": "Successfuly created account.",
+                    "message": "Successfuly updated profile.",
                     "type": 1
                 }
-            except:
-                # Not sure this is needed
-                # As the only way this block will be hit is if the db.session fails
-                # Which will result in no data entered to need a rollback
-                # including rollback() in the exception statement.
-                # According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
+            except exc.SQLAlchemyError as e:
+                # According to SQLAlchemy 1.3 Documentation:
+                # https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
                 db.session.rollback()
                 message = {
-                    "message": "Opps, something went wrong. Try again.",
+                    "message": "Oops, something went wrong.",
                     "type": 2
                 }
         else:
             message = {
-                "message": "Oops something isn't quite right.",
+                "message": "Oops, something went wrong.",
                 "type": 2
             }
-    active = "signup"
-    return render_template('site/signup.html', form=form, message=message, active=active)
+    return render_template("client/profile.html", form=form, message=message, user=current_user)
 
+# Client Profile | Change Password
+@app.route("/resetpassword", methods=['GET', 'POST'])
+@login_required
+def resetpassword():
+    form = PasswordResetForm(request.form)
+    message = {
+        "message": False,
+        "type": 0
+    }
+    if request.method == "POST":
+        if form.validate_on_submit():
+            # if current password is correct
+            if current_user.check_password(form.current_password.data):
+                try:
+                    new_password = request.form['new_password']
+                    # Hash the new password
+                    current_user.password = generate_password_hash(new_password)
+                    db.session.commit()
+                    message = {
+                        "message": "Password has been updated.",
+                        "type": 1
+                    }
+                except exc.SQLAlchemyError as e:
+                    # According to SQLAlchemy 1.3 Documentation:
+                    # https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
+                    db.session.rollback()
+                    message = {
+                        "message": "Oops, something went wrong.",
+                        "type": 2
+                    }
+            # if current password is incorrect
+            else:
+                message = {
+                    "message": "Current password is wrong.",
+                    "type": 2
+                }
+        else:
+            message = {
+                "message": "Oops, something went wrong.",
+                "type": 2
+            }
+    return render_template("client/resetpassword.html", form=form, message=message, user=current_user)
 
+# Client & Admin Dashboard
+@app.route('/client')
+@app.route('/admin')
+@login_required
+def admin():
+    if current_user.role == 'admin':
+        # data for profile list
+        profile = User.query.all()
+
+        # data for Calibration list
+        query = Calibration.query
+        data = query.all()
+        totalType = Calibration.query.with_entities(Calibration.data).count()
+
+        data = Calibration.query.all()
+        calibration_data = []
+        test_data = []
+        for row in data:
+            record = {}
+            for x in row.__table__.columns:
+                value = getattr(row, x.name)
+                if x.name == 'record_created':
+                    value = value.strftime('%m/%d/%y')
+                record[x.name] = value
+            if record['data']['type']=='calibration':
+                calibration_data.append(record)
+            else:
+                test_data.append(record)
+        return render_template("admin/admin.html", user=current_user, calibration=data, details=calibration_data, tdetails=test_data, profile=profile, totalType=totalType)
+    return render_template("client/client.html", user=current_user)
+
+"""
+Support Misc
+    Slack support for heroku webhook integration
+    Javascript API
+    404
+    User Loader
+    Request Handler
+    Unauthorized
+"""
+# Slack
 @app.route('/slack', methods=['post'])
 def slack():
     data = request.get_json()
@@ -351,13 +309,66 @@ def slack():
     try:
         if action.lower() == 'update':
             response = requests.post(slack_webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-            if response.status_code != 200:
-                pass
-                # raise ValueError(f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}')
     except Exception:
         return "Some error with posting to slack."
     return "Message sent to slack."
 
+# API
+@app.route('/api/calibrate', methods=['POST', 'GET'])
+def api_calibrate():
+    if request.method == 'POST':
+        # We can now take the payload and insert it into the db
+        payload = request.json
+        user_id = current_user.get_id()
+        try:
+            new_calibration = Calibration(user_id=user_id, data=payload)
+            db.session.add(new_calibration)
+            db.session.commit()
+            message = {
+                "message": "Calibration Complete.",
+                "type": 1
+            }
+        except exc.SQLAlchemyError as e:
+            db.session.rollback()
+            message = {
+                "message": "Opps, something went wrong. Try again.",
+                "type": 2
+            }
+        return message
+    return render_template('shared/404.html'), 404
+
+# 404 Route
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('shared/404.html'), 404
+
+# Get user information
+@login_manager.user_loader
+def user_loader(user_id):
+    user = User().query.filter_by(user_id=user_id).first()
+    if not user:
+        return
+    return user
+
+# Request loader
+@login_manager.request_loader
+def request_loader(request):
+    if request.form.get('email_address'):
+        email_address = request.form.get('email_address')
+        user = User().query.filter_by(email_address=email_address).first()
+        if not user:
+            return
+        return user
+
+# Unauthorized handler
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    # Instead of showing unauthroized 
+    # Display a 404
+    # By showing unauthorized you are telling
+    # potential attackers that the page exists and 
+    # reqiures authentication (something of value exists here)
+    return render_template('shared/404.html'), 404
 
 if __name__ == "__main__":
     app.run(debug=True)
