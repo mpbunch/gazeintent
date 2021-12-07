@@ -28,7 +28,7 @@ Michael
 1. test.html **COMPLETE**
 2. test.js **COMPLETE**
 3. pass test data to /api **COMPLETE**
-4. 
+4. code cleanup **COMPLETE**
 
 Yihan
 1. admin.html **COMPLETE**
@@ -38,7 +38,7 @@ Yihan
 5. video editing **COMPLETE**
 6. crud operations for profile **COMPLETE**
 7. Project Plan **COMPLETE**
-8. 
+8. code cleanup **COMPLETE**
 
 Matt
 1. Gitup setup **COMPLETE**
