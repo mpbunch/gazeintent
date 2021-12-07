@@ -37,8 +37,7 @@ Yihan
 4. data visualization **COMPLETE**
 5. video editing **COMPLETE**
 6. crud operations for profile **COMPLETE**
-7. Project Plan **COMPLETE**
-8. code cleanup **COMPLETE**
+7. code cleanup **COMPLETE**
 
 Matt
 1. Gitup setup **COMPLETE**
@@ -59,6 +58,7 @@ Matt
 16. 404, unauthorized **COMPLETE**
 17. calibrate/test api **COMPLETE**
 18. Process book **COMPLETE**
+19. Project Plan **COMPLETE**
 
 # References & Citations
 Webgazer: https://webgazer.cs.brown.edu/
