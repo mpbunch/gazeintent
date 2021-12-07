@@ -1,6 +1,22 @@
 {% extends "shared/layout.html" %}
 {% block content %}
 <div class="container section">
-    <h3>{{active}}</h3>
+  <h3>How it works</h3>
+</div>
+
+<div class="col-md-8 offset-md-2">
+    <img src="https://tech.tobii.com/wp-content/uploads/2019/11/technology-eye-tracking-illustration.jpg" id="image" alt="">
+    <h3>Client Experience</h3>
+    <li>GazeIntent calibrates your eyes by running through a test environment with 9 points. Look at each visual cuesto capture your gaze.</li>
+    <li>Make sure you are sitting in a comfortable posture.</li>
+    <li>Face the front of the eye tracker and screen. Your eyes should be in the center of the track box. </li>
+    <li>Adjust yourself to be at the optimal distance to the eye tracker. </li>
+<br>
+    <h3>Admin Experience</h3>
+    <li>As an authenticated admin user, GazeIntent collects and displays all the clients generated data.</li>
+    <li>Test Results table shows the record id, user id, start timestamps, end timestamps, total time, type and the record create time.</li>
+    <li>Heatmap visualization shows the total seconds attention was given to any given cell for each test session.</li>
+    <li> The user table shows the profile information for each user registered on GazeIntent.</li>
+    <li>Calibration Results table shows stats of the calibration sessions from the registered test users.</li>
 </div>
 {% endblock %}
