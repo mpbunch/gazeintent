@@ -1,19 +1,26 @@
 .clr-picker {
   display: none;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   position: absolute;
   width: 200px;
   z-index: 1000;
   border-radius: 10px;
   background-color: #fff;
-  justify-content: space-between;
-  box-shadow: 0 0 5px rgba(0,0,0,.05), 0 5px 20px rgba(0,0,0,.1);
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.1);
   -moz-user-select: none;
   -webkit-user-select: none;
-  user-select: none;
+  -ms-user-select: none;
+      user-select: none;
 }
 
 .clr-picker.clr-open {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -27,7 +34,8 @@
   height: 100px;
   margin-bottom: 15px;
   border-radius: 3px 3px 0 0;
-  background-image: linear-gradient(rgba(0,0,0,0), #000), linear-gradient(90deg, #fff, currentColor);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(#000)), -webkit-gradient(linear, left top, right top, from(#fff), to(currentColor));
+  background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, currentColor);
   cursor: pointer;
 }
 
@@ -66,6 +74,7 @@
 }
 
 .clr-hue {
+  background-image: -webkit-gradient(linear, left top, right top, from(#f00), color-stop(16.66%, #ff0), color-stop(33.33%, #0f0), color-stop(50%, #0ff), color-stop(66.66%, #00f), color-stop(83.33%, #f0f), to(#f00));
   background-image: linear-gradient(to right, #f00 0%, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, #f00 100%);
 }
 
@@ -83,7 +92,8 @@
   height: 100%;
   width: 100%;
   border-radius: inherit;
-  background-image: linear-gradient(90deg, rgba(0,0,0,0), currentColor);
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), to(currentColor));
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), currentColor);
 }
 
 .clr-hue input,
@@ -97,7 +107,8 @@
   background-color: transparent;
   opacity: 0;
   cursor: pointer;
-  appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   -webkit-appearance: none;
 }
 
@@ -109,11 +120,13 @@
   left: 0;
   top: 50%;
   margin-left: -8px;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   border: 2px solid #fff;
   border-radius: 50%;
   background-color: currentColor;
-  box-shadow: 0 0 1px #888;
+  -webkit-box-shadow: 0 0 1px #888;
+          box-shadow: 0 0 1px #888;
   pointer-events: none;
 }
 
@@ -130,12 +143,16 @@
 
 .clr-format {
   display: none;
-  order: 1;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
   width: calc(100% - 40px);
   margin: 0 20px 20px;
 }
 
 .clr-segmented {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: relative;
   width: 100%;
@@ -143,7 +160,8 @@
   padding: 0;
   border: 1px solid #ddd;
   border-radius: 15px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: #999;
   font-size: 12px;
 }
@@ -163,7 +181,9 @@
 }
 
 .clr-segmented label {
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   padding: 4px 0;
   text-align: center;
   cursor: pointer;
@@ -183,16 +203,23 @@
 }
 
 .clr-swatches {
-  order: 2;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
   width: calc(100% - 32px);
   margin: 0 16px;
 }
 
 .clr-swatches div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   padding-bottom: 12px;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .clr-swatches button {
@@ -219,11 +246,14 @@
   top: 0;
   border-radius: inherit;
   background-color: currentColor;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 input.clr-color {
-  order: 1;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
   width: calc(100% - 80px);
   height: 32px;
   margin: 15px 20px 20px 0;
@@ -235,7 +265,8 @@ input.clr-color {
   font-family: sans-serif;
   font-size: 14px;
   text-align: center;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 input.clr-color:focus {
@@ -245,7 +276,9 @@ input.clr-color:focus {
 
 .clr-clear {
   display: none;
-  order: 2;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
   height: 24px;
   margin: 0 20px 20px auto;
   padding: 0 20px;
@@ -285,14 +318,16 @@ input.clr-color:focus {
 .clr-preview:after {
   border: 0;
   background-color: currentColor;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .clr-marker,
 .clr-hue div,
 .clr-alpha div,
 .clr-color {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .clr-field {
@@ -307,7 +342,8 @@ input.clr-color:focus {
   height: 100%;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   border: 0;
   color: inherit;
   text-indent: -1000px;
@@ -326,7 +362,8 @@ input.clr-color:focus {
   top: 0;
   border-radius: inherit;
   background-color: currentColor;
-  box-shadow: inset 0 0 1px rgba(0,0,0,.5);
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .clr-alpha,
@@ -348,11 +385,11 @@ input.clr-color:focus {
 .clr-keyboard-nav .clr-alpha input:focus + div,
 .clr-keyboard-nav .clr-segmented input:focus + label {
   outline: none;
-  box-shadow: 0 0 0 2px #1e90ff, 0 0 2px 2px #fff;
+  -webkit-box-shadow: 0 0 0 2px #1e90ff, 0 0 2px 2px #fff;
+          box-shadow: 0 0 0 2px #1e90ff, 0 0 2px 2px #fff;
 }
 
 /** Dark theme **/
-
 .clr-dark {
   background-color: #444;
 }
@@ -362,7 +399,8 @@ input.clr-color:focus {
 }
 
 .clr-dark .clr-swatches button:after {
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.3);
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
 .clr-dark input.clr-color {
@@ -376,14 +414,15 @@ input.clr-color:focus {
 }
 
 .clr-dark .clr-preview:after {
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.5);
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 /** Polaroid theme **/
-
 .clr-picker.clr-polaroid {
   border-radius: 6px;
-  box-shadow: 0 0 5px rgba(0,0,0,.1), 0 5px 30px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0 5px 30px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0 5px 30px rgba(0, 0, 0, 0.2);
 }
 
 .clr-picker.clr-polaroid:before {
@@ -397,9 +436,11 @@ input.clr-color:focus {
   border: solid transparent;
   border-width: 0 8px 10px 8px;
   border-bottom-color: currentColor;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: #fff;
-  filter: drop-shadow(0 -4px 3px rgba(0,0,0,.1));
+  -webkit-filter: drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.1));
+          filter: drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.1));
   pointer-events: none;
 }
 
@@ -415,7 +456,8 @@ input.clr-color:focus {
 .clr-picker.clr-polaroid.clr-top:before {
   top: auto;
   bottom: -10px;
-  transform: rotateZ(180deg);
+  -webkit-transform: rotateZ(180deg);
+          transform: rotateZ(180deg);
 }
 
 .clr-polaroid .clr-gradient {
@@ -435,7 +477,8 @@ input.clr-color:focus {
 
 .clr-polaroid .clr-hue div,
 .clr-polaroid .clr-alpha div {
-  box-shadow: 0 0 5px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .clr-polaroid .clr-format {
@@ -447,6 +490,7 @@ input.clr-color:focus {
   width: calc(100% - 12px);
   margin: 0 6px;
 }
+
 .clr-polaroid .clr-swatches div {
   padding-bottom: 10px;
 }
@@ -470,7 +514,6 @@ input.clr-color:focus {
 }
 
 /** Large theme **/
-
 .clr-picker.clr-large {
   width: 275px;
 }
@@ -483,3 +526,4 @@ input.clr-color:focus {
   width: 22px;
   height: 22px;
 }
+/*# sourceMappingURL=coloris.css.map */
