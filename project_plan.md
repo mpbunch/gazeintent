@@ -8,7 +8,7 @@
 
 **Github Repo**: https://github.com/mpbunch/E14ACNND3.git
 
-**Website Design Template**: TBD
+**Website Design Template**: Bootstrap
 
 **Website Location**: https://gazeintent.herokuapp.com/ 
 
@@ -22,59 +22,54 @@ Matt Bunch - mattbunch@gmail.com
 
 The purpose of this project is to determine intent of gaze. Specifically, the intent of gaze while viewing a screen. We believe we can determine if someone is actively looking at a screen, for how long, as well as collect other bio/demo data about the user.
 
-
 The project will be implemented using the following technologies: Python, Flask, and a Convolutional Neural Network
-
 
 As an initial proof of concept, we will observe users through a web application with webcam support. The webcam data will be sent to a server where the data is passed through a CNN, features will be analyzed, and spit out for rendering. This returned metadata will be rendered within the web application to prove that we are able to accurately classify and represent the users gaze.
 
 This foundational technology could be used within many industries:
 1. Advertising, how valuable is my ad space actually worth
-2. Airplanes, are people paying attention to the flight attendants
+2. Security, airlines, are people paying attention to the flight attendants
 3. Enhanced web interface controls, allowing for non-motor individuals to control and interact with the web
 
 Dataset:
-Appearance-based Gaze Estimation in the Wild (MPIIGaze)
-https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/appearance-based-gaze-estimation-in-the-wild
-
+Webgazer
 
 ## Project Structure
 
-/app/				- The folder containing the app.
-/app/app.py			- The main app entry point
-/app/templates		- Where the templates live.
+/app/				    - The folder containing the app
+/app/route.py		- The main app entry point
+/app/models.py  - Application database models
+/app/forms.py   - Application forms
+/app/templates	- Where the templates live
+/app/static			- Static files, etc
 
-/app/static			- Static files, etc.
+./requirements.txt - Python application dependencies
 
-/framework/			- ???.
 
 The main components of the app are:
 
-1. **Base** - This module contains the skeleton that the entire framework rests on. It is responsible
-for checking for compatibility, as well as loading and securing the various sub-modules.
+1. **Base** - The main website, where we will demonstrate the gaze intent product offering.
 
-2. **Component X** - This component does X. It uses Google Tensorflow to do ...
+2. **Webgazer** - Webgazer is at the heart of our project, it is a javascript implementation that enables eye location detection.
 
-3. **Component Y** - This component does Y. It uses Z to add W features.
+3. **Heroku** - Heroku is the platform from which our application will be served.
+
+4. **Custom Scripting** - Custom javascript will be written to preform all of the support functions to bring enable webgazer to preform our specific function.
 
 ## Project Timeline
 
 1. Milestone 1: Determine the dataset
 
-2. Milestone 2: Come up with the innovative metrics of gaze detection based on the dataset annotation. Example could be "Ask the users to open the webcam and the web app could indicate the gaze on the interface."
+2. Milestone 2: Document the functions and inner workings of the application
 
 3. Milestone 3: Setup application hosting
 
-4. Milestone 4: ML work
-  Read papers: decide which network to use and how to train the networks
-  Decide which framework to use (e.g. TensorFlow)
-  Cloud service: “where to do the training”, or does anyone has a GPU to run the training locally
-  Decide which data processing container to use:  docker, singularity
-  After training, tuning the hyperparameters and network architecture
-  Export trained network (ONNX?)
+4. Milestone 4: Implement webgazer
 
-5. Milestone 5: Sketch the wireframe/prototype the web application and determine how to implement D3
+5. Milestone 5: Implement a calibration function
 
-6. Milestone 6: Build the frontend and backend of the web application
+6. Milestone 6: Implement the test function
 
-7. Milestone 7: Test & fine tune
+7. Milestone 7: Implement the data visualization 
+
+8. Milestone 8: Cleanup project codebase, create presentation assets.

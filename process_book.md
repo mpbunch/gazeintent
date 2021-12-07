@@ -20,41 +20,54 @@ Yihan Zhou - zhanonly@gmail.com
 Michael Lintott - mil623@g.harvard.edu
 Matt Bunch - mattbunch@gmail.com
 
-# Milestone 1 Tasks
+All:
+1. Choose data set **COMPLETE**
+2. Cite all work **COMPLETE**
+
+Michael
+1. test.html **COMPLETE**
+2. test.js **COMPLETE**
+3. pass test data to /api **COMPLETE**
+4. 
+
+Yihan
+1. admin.html **COMPLETE**
+2. profile.html **COMPLETE**
+3. theme **COMPLETE**
+4. data visualization **COMPLETE**
+5. video editing **COMPLETE**
+6. crud operations for profile **COMPLETE**
+7. Project Plan **COMPLETE**
+8. 
 
 Matt
-1. Github repository **COMPLETE**
-
-Yihan, Matt
-1. Process book **IN PROCESS**
-2. Project Plan **COMPLETE**
-
-All:
-1. Choose data set **IN PROCESS**
-2. Cite all work **IN PROCESS**
-
-# Milestone X Tasks
-
-Name
-1. Task 1 **NOT STARTED**
-2. Task 2 **NOT STARTED**
-3. Task 3 **NOT STARTED**
-
-Name
-1. Task 1 **NOT STARTED**
-2. Task 2 **NOT STARTED**
-3. Task 3 **NOT STARTED**
-
-Name
-1. Task 1 **NOT STARTED**
-2. Task 2 **NOT STARTED**
-3. Task 3 **NOT STARTED**
+1. Gitup setup **COMPLETE**
+2. Heroku setup **COMPLETE**
+3. Postgres setup **COMPLETE**
+4. setup.html **COMPLETE**
+5. login/logout.html **COMPLETE**
+6. models.py **COMPLETE**
+7. forms.py **COMPLETE**
+8. form validation **COMPLETE**
+9. webgazer implementation **COMPLETE**
+10. calibration.html **COMPLETE**
+11. client_history.html **COMPLETE**
+12. input sanitization **COMPLETE**
+13. clean up project **COMPLETE**
+14. video transcript **COMPLETE**
+15. google analytics **COMPLETE**
+16. 404, unauthorized **COMPLETE**
+17. calibrate/test api **COMPLETE**
+18. Process book **COMPLETE**
 
 # References & Citations
-
-The Stanford GraphBase: A Platform for Combinatorial Computing by Donald E. Knuth (New York: ACM Press, 1994), viii+576pp.
-https://www-cs-faculty.stanford.edu/~knuth/sgb.html
-
-Whitesides, Sue H., and Symposium on Graph Drawing. Graph Drawing : 6th International Symposium, GD '98, Montréal, Canada, August 13-15, 1998 : Proceedings. Springer, 1998.
-
-Di Battista, Giuseppe. Graph Drawing : 5th International Symposium, GD'97, Rome, Italy, September 18-20, 1997 : Proceedings. Springer Verlag, 1998.
+Webgazer: https://webgazer.cs.brown.edu/
+Bootstrap: https://getbootstrap.com/
+Bootstrap Icons: https://icons.getbootstrap.com/
+Stackoverflow: https://stackoverflow.com/
+Datatables: https://datatables.net/
+Carousel: https://bootsnipp.com/snippets/K0ZnX
+Jquery: https://jquery.com/
+FontAwesome: https://fontawesome.com/
+Google Analytics: https://analytics.google.com
+coloris: !! (mike) is this used anymore !!

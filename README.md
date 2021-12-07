@@ -16,6 +16,4 @@ https://gazeintent.herokuapp.com/
 9. python routes.py
 
 # Heroku
-1. These
-2. Steps will be
-3. Added, soon.
+1. You will need access to the gazeintent project inorder to run this on your localhost
