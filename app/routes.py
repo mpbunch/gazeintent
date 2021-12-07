@@ -52,7 +52,8 @@ Documentation
 """
 @app.route("/documentation")
 def documentation():
-    active = "Documentation"
+    # Sets active state of navigation item
+    active = "documentation"
     return render_template("site/documentation.html", active=active)
 
 """
@@ -101,7 +102,8 @@ def signup():
                 "message": "Oops something isn't quite right.",
                 "type": 2
             }
-    return render_template('site/signup.html', form=form, message=message)
+    active = 'signup'
+    return render_template('site/signup.html', form=form, message=message, active=active)
 
 
 """
@@ -207,7 +209,8 @@ def profile():
                 "message": "Oops, something went wrong.",
                 "type": 2
             }
-    return render_template("client/profile.html", form=form, message=message, user=current_user)
+    active = 'profile'
+    return render_template("client/profile.html", form=form, message=message, user=current_user, active=active)
 
 # Client Profile | Change Password
 @app.route("/resetpassword", methods=['GET', 'POST'])
@@ -280,8 +283,10 @@ def admin():
                 calibration_data.append(record)
             else:
                 test_data.append(record)
-        return render_template("admin/admin.html", user=current_user, calibration=data, details=calibration_data, tdetails=test_data, profile=profile, totalType=totalType)
-    return render_template("client/client.html", user=current_user)
+        active = 'admin'
+        return render_template("admin/admin.html", user=current_user, calibration=data, details=calibration_data, tdetails=test_data, profile=profile, totalType=totalType, active=active)
+    active = 'client'
+    return render_template("client/client.html", user=current_user, active=active)
 
 """
 Support Misc

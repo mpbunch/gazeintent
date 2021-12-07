@@ -13,8 +13,7 @@
                         {% if not current_user.is_authenticated %}
                         <li class="nav-item">
                             <a {% if active=='documentation' %} class="nav-link active" aria-current="page" {% else %}
-                                class="nav-link" {% endif %} href="{{ url_for('documentation') }}">How It
-                                Works</a>
+                                class="nav-link" {% endif %} href="{{ url_for('documentation') }}">How It Works</a>
                         </li>
                         <li class="nav-item">
                             <a {% if active=='signup' %} class="nav-link active" aria-current="page" {% else %}
@@ -36,8 +35,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a {% if active=='logout' %} class="nav-link active" aria-current="page" {% else %}
-                                class="nav-link" {% endif %} href="{{ url_for('logout') }}">Logout</a>
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                         </li>
                         {% endif %}
 
