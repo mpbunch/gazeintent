@@ -294,7 +294,6 @@ def signup():
         "type": 0
     }
     form = SignupForm(request.form)
-    print(form.validate_on_submit())
     if request.method == 'POST':
         if form.validate_on_submit():
             email_address = request.form['email_address']
@@ -314,7 +313,8 @@ def signup():
                 # Not sure this is needed
                 # As the only way this block will be hit is if the db.session fails
                 # Which will result in no data entered to need a rollback
-                # including rollback() in the exception statement. According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
+                # including rollback() in the exception statement. 
+                # According to SQLAlchemy 1.3 Documentation: https://docs.sqlalchemy.org/en/13/faq/sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush-or-similar
                 db.session.rollback()
                 message = {
                     "message": "Opps, something went wrong. Try again.",
@@ -337,16 +337,14 @@ def slack():
     try:
         status = data['data']['status']
         action = data['action']
-        data = {"text": '{action} gazeintent. Status: {status}'.format(
-            action=action, status=status)}
+        data = {"text": '{action} gazeintent. Status: {status}'.format(action=action, status=status)}
         slack_webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
     except Exception:
         return "Malformed payload."
 
     try:
         if action.lower() == 'update':
-            response = requests.post(slack_webhook_url, data=json.dumps(
-                data), headers={'Content-Type': 'application/json'})
+            response = requests.post(slack_webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
             if response.status_code != 200:
                 pass
                 # raise ValueError(f'Request to slack returned an error {response.status_code}, the response is:\n{response.text}')

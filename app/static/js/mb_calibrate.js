@@ -41,6 +41,7 @@ export class gridBuilder {
     test = () => {
         return "test"
     }
+
     calibrate = (grid_cells = 9, div = 'gazeGrid', actual_gaze = false) => {
         if (!actual_gaze) return
         // get active calibartion cell
