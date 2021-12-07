@@ -17,3 +17,10 @@ https://gazeintent.herokuapp.com/
 
 # Heroku
 1. You will need access to the gazeintent project inorder to run this on your localhost
+
+# Components
+1. Webgazer: This is the backbone of the application, we used many of its features to make our application work.
+2. Frameworks: We leveraged bootstrap, fontawesome, datatables, and other small components from online sources.
+3. Custom: We wrote 98% of the javascript used in the project, what was not written by us was common stuff like the sleep function, or packaged code like init.datatables, or init.webgazer
+4. Theme: We used frameworks to provide the basic design, but we put all of the pages together. 
+5. Data visualization: Custom solution written in javascript and css. 

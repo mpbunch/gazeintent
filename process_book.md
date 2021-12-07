@@ -10,7 +10,7 @@ CSCI S14A - Building Interactive Web Applications for Data Analysis
 
 **Github Repo**: https://github.com/mpbunch/E14ACNND3.git
 
-**Website Design Template**: TBD
+**Website Design Template**: Bootstrap
 
 **Website Location**: https://gazeintent.herokuapp.com/
 
