@@ -1,7 +1,10 @@
 {% extends "shared/layout.html" %}
 {% block content %}
+<!-- load datatables css -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+<!-- load page specific css -->
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_history.css')}}" />
+
 <div id="client-history" class="container section">
     <table id="data" class="table table-striped">
         <thead>
@@ -26,11 +29,17 @@
         </tbody>
     </table>
 </div>
+
+<!-- load datatables dependency, jquery -->
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- load jquery datatables js -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<!-- load bootstrap datatables js -->
 <script type="text/javascript" charset="utf8"
     src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+
 <script>
+    // Init data table
     $(document).ready(function () {
         $('#data').DataTable();
     });

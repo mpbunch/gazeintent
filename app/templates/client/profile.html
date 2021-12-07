@@ -3,66 +3,61 @@
 
 {% block content %}
 <div class="container section">
-  <div class="row">
-    <h3>Profile</h3>
-    <!-- gender zip age -->
-    <div class="col-md-4 offset-md-4">
-      <div class="col-xs-12">
-        {% if message.type == 1 %}
-        <div class="alert alert-success" role="alert">
-          {{ message.message }}
-        </div>
-        {% endif %}
-        {% if message.type == 2 %}
-        <div class="alert alert-danger" role="alert">
-          {{ message.message }}
-        </div>
-        {% endif %}
-      </div>
-      <div class="login-form bg-light mt-4 p-4">
-        <form method="POST" class="row g-3" action="{{ url_for('profile') }}">
-          {{ form.csrf_token }}
-          BIO
-          <div class="col-12">
-            <div class="col-12">
-              <label>Email Address</label>
-              <br>
-              <label>{{user.email_address}}</label>
-            </div>
-            <label>{{ form.first_name.label }}</label>
-            {{ form.first_name(value=user.first_name, class="form-control", placeholder="First Name") }}
-            <span class="form-error"> {{ form.errors.first_name | first }} </span>
-          </div>
-          <div class="col-12">
-            <label>{{ form.last_name.label }}</label>
-            {{ form.last_name(value=user.last_name, class="form-control", placeholder="Last Name") }}
-            <span class="form-error"> {{ form.errors.last_name | first }} </span>
-          </div>
-          <hr class="mt-4">
-          DEMO
-          <div class="col-12">
-            <label>{{ form.gender.label }}</label>
-            {{ form.gender(value=user.gender, class="form-control", placeholder="Gender") }}
-            <span class="form-error"> {{ form.errors.gender | first }} </span>
-          </div>
-          <div class="col-12">
-            <label>{{ form.age.label }}</label>
-            {{ form.age(value=user.age, class="form-control", placeholder="Age") }}
-            <span class="form-error"> {{ form.errors.age | first }} </span>
-          </div>
-          <div class="col-12">
-            <label>{{ form.zipcode.label }}</label>
-            {{ form.zipcode(value=user.zipcode, class="form-control", placeholder="Zipcode") }}
-            <span class="form-error"> {{ form.errors.zipcode | first }} </span>
-          </div>
-          <p><a class="link-primary" href="{{ url_for('resetpassword') }}">Reset Password</a></p>
-          <div class="col-12">
-            <button type="submit" name="demo" value="updatedemo" class="btn btn-dark float-end">Update</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+	<div class="row">
+		<h3>Profile</h3>
+		<div class="col-md-4 offset-md-4">
+			<div class="col-xs-12">
+				{% if message.message and message.type is not none %}
+				<div class="alert {{'alert-success' if message.type == 1 else 'alert-danger'}}" role="alert">
+					{{ message.message }}
+				</div>
+				{% endif %}
+			</div>
+			<div class="login-form bg-light mt-4 p-4">
+				<form method="POST" class="row g-3" action="{{ url_for('profile') }}">
+					{{ form.csrf_token }}
+					BIO
+					<div class="col-12">
+						<label>Email Address</label>
+						<br>
+						<input type="text" class="form-control" disabled value="{{user.email_address}}" />
+					</div>
+					<div class="col-12">
+						<label>{{ form.first_name.label }}</label>
+						{{ form.first_name(value=user.first_name, class="form-control", placeholder="First Name") }}
+						<span class="form-error"> {{ form.errors.first_name | first }} </span>
+					</div>
+					<div class="col-12">
+						<label>{{ form.last_name.label }}</label>
+						{{ form.last_name(value=user.last_name, class="form-control", placeholder="Last Name") }}
+						<span class="form-error"> {{ form.errors.last_name | first }} </span>
+					</div>
+					<hr class="mt-4">
+					DEMO
+					<div class="col-12">
+						<label>{{ form.gender.label }}</label>
+						{{ form.gender(value=user.gender, class="form-control", placeholder="Gender") }}
+						<span class="form-error"> {{ form.errors.gender | first }} </span>
+					</div>
+					<div class="col-12">
+						<label>{{ form.age.label }}</label>
+						{{ form.age(value=user.age, class="form-control", placeholder="Age") }}
+						<span class="form-error"> {{ form.errors.age | first }} </span>
+					</div>
+					<div class="col-12">
+						<label>{{ form.zipcode.label }}</label>
+						{{ form.zipcode(value=user.zipcode, class="form-control", placeholder="Zipcode") }}
+						<span class="form-error"> {{ form.errors.zipcode | first }} </span>
+					</div>
+					<div class="col-12">
+						<a class="link-primary" href="{{ url_for('resetpassword') }}">Reset Password</a>
+						<button type="submit" name="demo" value="updatedemo"
+							class="btn btn-dark float-end">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
 {% endblock %}
