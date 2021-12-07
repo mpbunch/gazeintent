@@ -16,7 +16,7 @@ https://gazeintent.herokuapp.com/
 9. python routes.py
 
 # Heroku
-1. You will need access to the gazeintent project inorder to run this on your localhost
+1. You will need access to the gazeintent project in order to run this on your localhost
 
 # Components
 1. Webgazer: This is the backbone of the application, we used many of its features to make our application work.
