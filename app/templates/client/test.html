@@ -2,17 +2,18 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_test.css')}}" />
-<div id="client-test" class="container section"> <!-- original div id 'client-calibration'only referenced once in mb_utils in window resize function -->
-  <div id="fullheight"></div>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_calibrate.css')}}" />
 
+<div id="client-test" class="container section">
+  <div id="fullheight"></div>
   <div id="gazeGrid"></div>
   <div id="clicker"></div>
   <canvas id="plotting_canvas"></canvas>
 </div>
-<script src="{{ url_for('static', filename='node_modules/webgazer/dist/webgazer.min.js') }}"
-  type="text/javascript"></script>
-<script type="module" src="{{ url_for('static', filename='js/webcam_client_test.js') }}" type="text/javascript">
-</script>
+
+<script src="{{ url_for('static', filename='node_modules/webgazer/dist/webgazer.min.js') }}" type="text/javascript"></script>
+<script type="module" src="{{ url_for('static', filename='js/client_test.js') }}" type="text/javascript"></script>
 <script type="module" src="{{ url_for('static', filename='js/ml_client_test.js') }}" type="text/javascript"></script>
 <script type="module" src="{{ url_for('static', filename='js/ml_client_test_stim.js') }}" type="text/javascript"></script>
+
 {% endblock %}
