@@ -364,28 +364,27 @@ def unauthorized_handler():
     return render_template('shared/404.html'), 404
 
 def formatData(data, user_id=None):
+    # hacky solution
+    # i spent a ton of time messing the sql alchemy
+    # and just decided to do it all in code
     calibration_data = []
     test_data = []
     for row in data:
         record = {}
         record_user_id = getattr(row, 'user_id')
         record_data = getattr(row, 'data')
-        print(record_data)
         if not user_id or int(user_id) == int(record_user_id):
-            
             for x in row.__table__.columns:
                 value = getattr(row, x.name)
                 if x.name == 'record_created':
                     value = value.strftime('%m/%d/%y')
                 record[x.name] = value
-                
                 if 'data' not in record_data:
-                    print('-- cal --')
                     calibration_data.append(record)
                 else:
-                    print('-- tes --')
                     test_data.append(record)
-
     return calibration_data, test_data
+
+
 if __name__ == "__main__":
     app.run(debug=True)
