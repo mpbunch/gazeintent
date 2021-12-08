@@ -105,7 +105,6 @@ def signup():
     active = 'signup'
     return render_template('site/signup.html', form=form, message=message, active=active)
 
-
 """
 Login / Logout
 """
@@ -170,9 +169,10 @@ def clienttest():
 @login_required
 def clienthistory():
     user_id = current_user.get_id()
-    data = Calibration.query.with_entities(Calibration.data).filter_by(user_id=user_id).all()
-    data = [x[0] for x in data]
-    return render_template("client/history.html", history=data)
+    data = Calibration.query.all()
+    print(user_id)
+    calibration_data, test_data = formatData(data, user_id)
+    return render_template("client/history.html", details=calibration_data, tdetails=test_data)
 
 # Client Profile | Update Information
 @app.route("/profile", methods=['GET', 'POST'])
@@ -270,19 +270,7 @@ def admin():
         totalType = Calibration.query.with_entities(Calibration.data).count()
 
         data = Calibration.query.all()
-        calibration_data = []
-        test_data = []
-        for row in data:
-            record = {}
-            for x in row.__table__.columns:
-                value = getattr(row, x.name)
-                if x.name == 'record_created':
-                    value = value.strftime('%m/%d/%y')
-                record[x.name] = value
-            if record['data']['type']=='calibration':
-                calibration_data.append(record)
-            else:
-                test_data.append(record)
+        calibration_data, test_data = formatData(data)
         active = 'admin'
         return render_template("admin/admin.html", user=current_user, calibration=data, details=calibration_data, tdetails=test_data, profile=profile, totalType=totalType, active=active)
     active = 'client'
@@ -375,5 +363,29 @@ def unauthorized_handler():
     # reqiures authentication (something of value exists here)
     return render_template('shared/404.html'), 404
 
+def formatData(data, user_id=None):
+    calibration_data = []
+    test_data = []
+    for row in data:
+        record = {}
+        record_user_id = getattr(row, 'user_id')
+        record_data = getattr(row, 'data')
+        print(record_data)
+        if not user_id or int(user_id) == int(record_user_id):
+            
+            for x in row.__table__.columns:
+                value = getattr(row, x.name)
+                if x.name == 'record_created':
+                    value = value.strftime('%m/%d/%y')
+                record[x.name] = value
+                
+                if 'data' not in record_data:
+                    print('-- cal --')
+                    calibration_data.append(record)
+                else:
+                    print('-- tes --')
+                    test_data.append(record)
+
+    return calibration_data, test_data
 if __name__ == "__main__":
     app.run(debug=True)

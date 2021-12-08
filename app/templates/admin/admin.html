@@ -3,7 +3,7 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/admin.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/heatmap.css')}}" />
 
 <div class="container section">
 	<div class="row">
@@ -16,7 +16,7 @@
 
 	{% include "shared/testresults.html" %}
 
-	{% include "shared/userresults.html" %}
+	{% include "shared/usersresults.html" %}
 
 	{% include "shared/calibrationresults.html" %}
 
@@ -29,10 +29,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('#data').DataTable();
+		$('#test').DataTable();
+		$('#users').DataTable();
+		$('#calibration').DataTable();
 	});
 </script>
 
-<script type="text/javascript" charset="utf8" src="{{url_for('static', 'filename='js/heatmap.js"></script>
+<script type="text/javascript" charset="utf8" src="{{url_for('static', filename='js/heatmap.js')}}"></script>
 
 {% endblock %}

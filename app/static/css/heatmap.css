@@ -21,11 +21,13 @@
   border: 1px solid red;
 }
 
-#testdata tr {
+#test tr,
+#calibration tr,
+#users tr {
   cursor: pointer;
 }
 
-tr:hover {
+tbody tr:hover {
   background-color: #ccc;
 }
-/*# sourceMappingURL=admin.css.map */
+/*# sourceMappingURL=heatmap.css.map */
