@@ -21,7 +21,6 @@ export class gridBuilder {
                 this.element.classList.add('active-cell');
                 this.element.innerHTML = `Look Here, Hold Your Gaze.`;
             }
-            // this.element.append(this.center_element);
             grid.appendChild(this.element);
         }
 
@@ -54,7 +53,7 @@ export class gridBuilder {
         // add dataset.gazed += 1
         // if dataset.gazed == 5
         // advance to next cell
-        let threshold = 5;
+        let threshold = 8;
         let active_cell_gazed = parseInt(active_cell.dataset.gazed);
         let rect = active_cell.getBoundingClientRect();
         let x = rect.x + active_cell.offsetWidth / 2;
@@ -79,7 +78,7 @@ export class gridBuilder {
          * This function calculates a measurement for how precise 
          * the eye tracker currently is which is displayed to the user
          */
-        calculatePrecision = (past50Array) => {
+        const calculatePrecision = (past50Array) => {
             let windowHeight = window.innerHeight;
             let windowWidth = window.innerWidth;
 
@@ -92,8 +91,8 @@ export class gridBuilder {
             let staringPointY = windowHeight / 2;
 
             let precisionPercentages = new Array(50);
-            this.calculatePrecisionPercentages(precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY);
-            let precision = this.calculateAverage(precisionPercentages);
+            calculatePrecisionPercentages(precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY);
+            let precision = calculateAverage(precisionPercentages);
 
             // Return the precision measurement as a rounded percentage
             return Math.round(precision);
@@ -104,7 +103,7 @@ export class gridBuilder {
          * the prediction point from the centre point (uses the window height as
          * lower threshold 0%)
          */
-        calculatePrecisionPercentages = (precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY) => {
+        const calculatePrecisionPercentages = (precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY) => {
             for (let x = 0; x < 50; x++) {
                 // Calculate distance between each prediction and staring point
                 let xDiff = staringPointX - x50[x];
@@ -130,7 +129,7 @@ export class gridBuilder {
         /*
          * Calculates the average of all precision percentages calculated
          */
-        calculateAverage = (precisionPercentages) => {
+        const calculateAverage = (precisionPercentages) => {
             let precision = 0;
             for (let x = 0; x < 50; x++) {
                 precision += precisionPercentages[x];
@@ -143,7 +142,7 @@ export class gridBuilder {
         * Sets store_points to true, so all the occuring prediction
         * points are stored
         */
-        store_points_letiable = () => {
+        const store_points_letiable = () => {
             webgazer.params.storingPoints = true;
         }
 
@@ -151,17 +150,18 @@ export class gridBuilder {
          * Sets store_points to false, so prediction points aren't
          * stored any more
          */
-        stop_storing_points_letiable = () => {
+        const stop_storing_points_letiable = () => {
             webgazer.params.storingPoints = false;
         }
 
-        this.store_points_letiable(); // start storing the prediction points
+        store_points_letiable(); // start storing the prediction points
         let end = Date.now()
         this.sleep(5000).then(() => {
-            console.log('yy')
-            this.stop_storing_points_letiable(); // stop storing the prediction points
+            document.querySelector('#gazeGrid').remove();
+            document.querySelector('.clicker').remove();
+            stop_storing_points_letiable(); // stop storing the prediction points
             let past50 = webgazer.getStoredPoints(); // retrieve the stored points
-            let precision_measurement = this.calculatePrecision(past50);
+            let precision_measurement = calculatePrecision(past50);
             let accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
             let accuracy_div = document.querySelector("#accuracy");
             accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
@@ -191,7 +191,7 @@ export class gridBuilder {
                 .then(response => {
                     return response.text();
                 }).then(() => {
-                    this.sleep(3000).then(() => window.location.href = "/client?c=1")
+                    this.sleep(4000).then(() => window.location.href = "/client?c=1")
                 });
         });
     }
