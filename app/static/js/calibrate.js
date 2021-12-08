@@ -33,7 +33,7 @@ import { gridBuilder } from "./mb_calibrate.js";
             clearInterval(checkExist);
         }
     }, 100);
-
+    // enable the live preview
     webgazer.params.showVideoPreview = true;
     //start the webgazer tracker
     await webgazer.setRegression('ridge') /* currently must set regression and tracker */
@@ -44,16 +44,11 @@ import { gridBuilder } from "./mb_calibrate.js";
         })
         .saveDataAcrossSessions(true)
         .begin();
-
     await webgazer.showVideoPreview(true) /* shows all video previews */
         .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
         .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
-
-
-
     window.saveDataAcrossSessions = true;
     window.onbeforeunload = () => {
         webgazer.end();
     }
-
 })(webgazer, gridBuilder);

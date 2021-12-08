@@ -3,8 +3,18 @@
 #client-client{
     margin-bottom:300px;
     margin-top:60px;
+
     .client-list{
         li{
+            .green{
+                color:green;
+            }
+            .noCheck,
+            .historyCheck,   
+            .calibrationCheck{
+                opacity:0;
+                padding-right:10px;
+            }
             list-style-type: none;
             margin-left:-40px;
         }

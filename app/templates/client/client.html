@@ -14,12 +14,32 @@
         </div>
         <div class="col-6">
             <ul class="client-list">
-                <li><a href="{{ url_for('clientcalibrate') }}">Calibrate</a></li>
-                <li><a href="{{ url_for('clienttest') }}">Test</a></li>
-                <li><a href="{{ url_for('clienthistory') }}">View History</a></li>
+                <li><i class="calibrationCheck fas fa-check green"></i><a
+                        href="{{ url_for('clientcalibrate') }}">Calibrate</a></li>
+                <li><i class="historyCheck fas fa-check green"></i><a href="{{ url_for('clienttest') }}">Test</a></li>
+                <li><i class="noCheck fas fa-check"></i><a href="{{ url_for('clienthistory') }}">View History</a></li>
             </ul>
         </div>
     </div>
 </div>
 
+<script>
+    (() => {
+        // https://www.sitepoint.com/get-url-parameters-with-javascript/
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const calibration_complete = urlParams.get('c')
+        const history_complete = urlParams.get('h')
+        if (calibration_complete) {
+            // add checkmark
+            let c = document.querySelector('.calibrationCheck');
+            c.style.opacity = 1;
+        }
+        if (history_complete) {
+            // add checkmark
+            let h = document.querySelector('.historyCheck');
+            h.style.opacity = 1;
+        }
+    })()
+</script>
 {% endblock %}

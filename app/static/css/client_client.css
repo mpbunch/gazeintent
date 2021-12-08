@@ -7,4 +7,15 @@
   list-style-type: none;
   margin-left: -40px;
 }
+
+#client-client .client-list li .green {
+  color: green;
+}
+
+#client-client .client-list li .noCheck,
+#client-client .client-list li .historyCheck,
+#client-client .client-list li .calibrationCheck {
+  opacity: 0;
+  padding-right: 10px;
+}
 /*# sourceMappingURL=client_client.css.map */

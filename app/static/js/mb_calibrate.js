@@ -38,10 +38,6 @@ export class gridBuilder {
         return document.querySelector(`#${div}`);
     }
 
-    test = () => {
-        return "test"
-    }
-
     calibrate = (grid_cells = 9, div = 'gazeGrid', actual_gaze = false) => {
         if (!actual_gaze) return
         // get active calibartion cell
@@ -171,13 +167,10 @@ export class gridBuilder {
             accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
             accuracy_div.style.display = 'initial';
             // write some data to the db
-            // how do we keep track of start time
-            // how do we get time ellapsed
             // write a timestamp to some dataset.start
             // new date.now() - start
             // convert to seconds
             // save start, end, diff_in_sec
-
             var start = parseInt(document.querySelector('#gaze-1').dataset.start);
             var diff = end - start;
             let payload = {
@@ -198,7 +191,7 @@ export class gridBuilder {
                 .then(response => {
                     return response.text();
                 }).then(text => {
-                    // error
+                    window.location.href = "/client?c=1"
                 });
         });
     }
