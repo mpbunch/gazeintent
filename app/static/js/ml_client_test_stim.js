@@ -71,7 +71,7 @@ function sleep(time) {
 }
 
 function randomDelayFunction() {
-    return (Math.floor(Math.random()*5)+2) * 1000;
+    return (Math.floor(Math.random()*3)+0) * 1000;
 }
 ``
 // Stimulus function - places a random symbol in a random cell for a random duration
@@ -145,4 +145,93 @@ async function stim() {
 
     alert('TEST IS DONE');
 };
+
+    calibrate = (grid_cells = 9, div = 'gazeGrid', actual_gaze = false) => {
+        if (!actual_gaze) return
+        // get active calibartion cell
+        let active_cell = document.querySelector(`.active-cell`);
+        if (!active_cell) return
+        if (active_cell.id == 'gaze-1') active_cell.dataset.start = Date.now();
+        let position = active_cell.dataset.position.split(',');
+        let cell_position = [position[0], position[1], [position[2], position[3]]];
+
+        let size = 3;
+        let gaze_position = [[actual_gaze.x, size], [actual_gaze.y, size]];
+        let hit = this.collision(cell_position, gaze_position);
+        // if gaze hits active cell
+        // add dataset.gazed += 1
+        // if dataset.gazed == 5
+        // advance to next cell
+        let threshold = 10;
+        let active_cell_gazed = parseInt(active_cell.dataset.gazed);
+        var rect = active_cell.getBoundingClientRect();
+        let x = rect.x + active_cell.offsetWidth / 2;
+        let y = rect.y + active_cell.offsetHeight / 2;
+        var clicker = document.querySelector('#clicker');
+        clicker.setAttribute('style', `left: ${x}px; top: ${y}px`)
+        if (hit && active_cell_gazed < threshold) {
+            // calibration is working
+            active_cell.dataset.gazed = active_cell_gazed ? active_cell_gazed + 1 : 1
+            // click
+            // document.elementFromPoint(x, y).click();
+        } else if (hit && active_cell_gazed >= threshold) {
+            // advance calibration
+            this.advance(active_cell, grid_cells)
+        }
+    }
+
+    sleep(5000).then(() => {
+        stop_storing_points_variable(); // stop storing the prediction points
+        var past50 = webgazer.getStoredPoints(); // retrieve the stored points
+        var precision_measurement = calculatePrecision(past50);
+        var accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
+        var accuracy_div = document.querySelector("#accuracy");
+        accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
+        accuracy_div.style.display = 'initial';
+        // write some data to the db
+        // how do we keep track of start time
+        // how do we get time ellapsed
+        // write a timestamp to some dataset.start
+        // new date.now() - start
+        // convert to seconds
+        // save start, end, diff_in_sec
+
+        var start = parseInt(document.querySelector('#gaze-1').dataset.start);
+        var diff = end - start;
+        let payload = {
+            cache: "no-cache",
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                type: 'calibration',
+                accuracy: precision_measurement,
+                start: start,
+                end: end,
+                diff: diff
+            })
+        }
+        fetch(`/api/calibrate`, payload)
+            .then(response => {
+                return response.text();
+            }).then(text => {
+                // error
+            });
+    });
+
+    collision = (p1, p2) => {
+        var r1, r2;
+        r1 = p1[0] < p2[0] ? p1 : p2;
+        r2 = p1[0] < p2[0] ? p2 : p1;
+        return r1[1] > r2[0] || r1[0] === r2[0];
+    }
+
+    get_position = (elem) => {
+        var pos, width, height;
+        pos = elem.getBoundingClientRect();
+        width = elem.offsetWidth / 2;
+        height = elem.offsetHeight;
+        return [[pos.left, pos.left + width], [pos.top, pos.top + height]];
+    }
 
