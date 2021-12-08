@@ -1,0 +1,33 @@
+<div class="row mt-30">
+    <div class="col-12 mt-30">
+        <table id="testdata" class="table table-striped">
+            <h3>Test Results</h3>
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Record Id</th>
+                    <th>User Id</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Total Time</th>
+                    <th>Type</th>
+                    <th>Created Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in tdetails %}
+                <tr onclick="heatmap({{ record.data.data }})">
+                    <td> <i class="fas fa-eye" /> Heatmap </td>
+                    <td>{{ record.calibration_id }}</td>
+                    <td>{{ record.user_id }}</td>
+                    <td>{{ record.data.meta.start }}</td>
+                    <td>{{ record.data.meta.end }}</td>
+                    <td>{{ record.data.meta.diff }}</td>
+                    <td>{{ record.data.type }}</td>
+                    <td>{{ record.record_created }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

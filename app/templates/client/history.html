@@ -6,28 +6,13 @@
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/client_history.css')}}" />
 
 <div id="client-history" class="container section">
-    <table id="data" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Accuracy</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Diff</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in history %}
-            <tr>
-                <td>{{ item.type }}</td>
-                <td>{{ item.accuracy }}</td>
-                <td>{{ item.start }}</td>
-                <td>{{ item.end }}</td>
-                <td>{{ item.diff }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    {% include "shared/datavis.html" %}
+
+    {% include "shared/testresults.html" %}
+
+    {% include "shared/calibrationresults.html" %}
+
 </div>
 
 <!-- load datatables dependency, jquery -->

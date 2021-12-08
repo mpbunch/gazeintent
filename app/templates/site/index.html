@@ -2,55 +2,58 @@
 {% block content %}
 
 <main>
-  <div class="container section marketing">
-    <div class="row section featurette">
-      <div class="col-md-5">
-        <h2 class="featurette-heading">Track engagement in one tool</h2>
-        <p class="lead">
-          GazeIntent aggregates and helps you to track everything you need to understand your audience smoothly.</p>
-        <p><a class="btn btn-primary btn-lg" href="{{ url_for('signup') }}">Sign up today</a></p>
-      </div>
-      <div class="col-md-7">
-        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="665"
-          height="500" preserveAspectRatio="xMidYMid slice" focusable="false"
-          src="{{url_for('static', filename='img/homepage.jpeg')}}" alt="heroimage">
-      </div>
-    </div>
+	<div class="container section marketing">
+		<div class="row section featurette">
+			<div class="col-md-5">
+				<h2 class="featurette-heading">Track engagement in one tool</h2>
+				<p class="lead">
+					GazeIntent aggregates and helps you to track everything you need to understand your audience
+					smoothly.</p>
+				<p><a class="btn btn-primary btn-lg" href="{{ url_for('signup') }}">Sign up today</a></p>
+			</div>
+			<div class="col-md-7">
+				<img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="665"
+					height="500" preserveAspectRatio="xMidYMid slice" focusable="false"
+					src="{{url_for('static', filename='img/homepage.jpeg')}}" alt="heroimage">
+			</div>
+		</div>
 
-    <div class="featurette-divider">
-    </div>
+		<div class="featurette-divider">
+		</div>
 
-    <div class="row section featurette">
-      <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Understand what draws attention</h2>
-        <p class="lead">
-          Monitor interest and understand what's working in your advertisement. Get direct feedback on customer
-          attention.</p>
-      </div>
-      <div class="col-md-5 order-md-1">
-        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-          height="500" preserveAspectRatio="xMidYMid slice" focusable="false"
-          src="{{url_for('static', filename='img/look1.png')}}" alt="image">
-      </div>
-    </div>
+		<div class="row section featurette">
+			<div class="col-md-7 order-md-2">
+				<h2 class="featurette-heading">Understand what draws attention</h2>
+				<p class="lead">
+					Monitor interest and understand what's working in your advertisement. Get direct feedback on
+					customer
+					attention.</p>
+			</div>
+			<div class="col-md-5 order-md-1">
+				<img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+					height="500" preserveAspectRatio="xMidYMid slice" focusable="false"
+					src="{{url_for('static', filename='img/look1.png')}}" alt="image">
+			</div>
+		</div>
 
-    <div class="featurette-divider">
-    </div>
+		<div class="featurette-divider">
+		</div>
 
-    <div class="row section featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">No more guesswork </h2>
-        <p class="lead">
-          Elevate your digital strategy with in-situ monitoring. Reap the rewards of data-driven approach to user
-          engagement.</p>
-      </div>
-      <div class="col-md-5">
-        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-          height="500" preserveAspectRatio="xMidYMid slice" focusable="false"
-          src="{{url_for('static', filename='img/look2.png')}}" alt="image">
-      </div>
-    </div>
-  </div>
+		<div class="row section featurette">
+			<div class="col-md-7">
+				<h2 class="featurette-heading">No more guesswork </h2>
+				<p class="lead">
+					Elevate your digital strategy with in-situ monitoring. Reap the rewards of data-driven approach to
+					user
+					engagement.</p>
+			</div>
+			<div class="col-md-5">
+				<img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+					height="500" preserveAspectRatio="xMidYMid slice" focusable="false"
+					src="{{url_for('static', filename='img/look2.png')}}" alt="image">
+			</div>
+		</div>
+	</div>
 </main>
 
 {% endblock %}

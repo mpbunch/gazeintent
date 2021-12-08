@@ -1,0 +1,30 @@
+<div class="row mt-30">
+    <div class="col-12 mt-30">
+        <table id="data" class="table table-striped">
+            <h3>Users</h3>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Zipcode</th>
+                    <th>User Id</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pro in profile %}
+                <tr>
+                    <td>{{ pro.first_name }}</td>
+                    <td>{{ pro.last_name }}</td>
+                    <td>{{ pro.email_address }}</td>
+                    <td>{{ pro.gender }}</td>
+                    <td>{{ pro.age }}</td>
+                    <td>{{ pro.zipcode }}</td>
+                    <td>{{ pro.id }}</td>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
