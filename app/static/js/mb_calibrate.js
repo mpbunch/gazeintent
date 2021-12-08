@@ -49,11 +49,8 @@ export class gridBuilder {
         let size = 3;
         let gaze_position = [[actual_gaze.x, size], [actual_gaze.y, size]];
         let hit = this.collision(cell_position, gaze_position);
-        // if gaze hits active cell
-        // add dataset.gazed += 1
-        // if dataset.gazed == 5
-        // advance to next cell
-        let threshold = 8;
+
+        let threshold = 12;
         let active_cell_gazed = parseInt(active_cell.dataset.gazed);
         let rect = active_cell.getBoundingClientRect();
         let x = rect.x + active_cell.offsetWidth / 2;
@@ -63,9 +60,6 @@ export class gridBuilder {
         if (hit && active_cell_gazed < threshold) {
             // calibration is working
             active_cell.dataset.gazed = active_cell_gazed ? active_cell_gazed + 1 : 1
-            // click
-            // document.elementFromPoint(x, y).click();
-            clicker.click();
         } else if (hit && active_cell_gazed >= threshold) {
             // advance calibration
             this.advance(active_cell, grid_cells)
