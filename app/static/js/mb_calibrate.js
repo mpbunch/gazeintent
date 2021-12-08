@@ -49,11 +49,8 @@ export class gridBuilder {
         let size = 3;
         let gaze_position = [[actual_gaze.x, size], [actual_gaze.y, size]];
         let hit = this.collision(cell_position, gaze_position);
-        // if gaze hits active cell
-        // add dataset.gazed += 1
-        // if dataset.gazed == 5
-        // advance to next cell
-        let threshold = 8;
+
+        let threshold = 12;
         let active_cell_gazed = parseInt(active_cell.dataset.gazed);
         let rect = active_cell.getBoundingClientRect();
         let x = rect.x + active_cell.offsetWidth / 2;
@@ -63,9 +60,6 @@ export class gridBuilder {
         if (hit && active_cell_gazed < threshold) {
             // calibration is working
             active_cell.dataset.gazed = active_cell_gazed ? active_cell_gazed + 1 : 1
-            // click
-            // document.elementFromPoint(x, y).click();
-            clicker.click();
         } else if (hit && active_cell_gazed >= threshold) {
             // advance calibration
             this.advance(active_cell, grid_cells)
@@ -157,8 +151,10 @@ export class gridBuilder {
         store_points_letiable(); // start storing the prediction points
         let end = Date.now()
         this.sleep(5000).then(() => {
-            document.querySelector('#gazeGrid').remove();
-            document.querySelector('.clicker').remove();
+            let start = parseInt(document.querySelector('#gaze-1').dataset.start);
+
+            Array.from(document.querySelectorAll('.gaze-cell')).map(e => e.remove())
+            document.querySelector('#clicker').remove();
             stop_storing_points_letiable(); // stop storing the prediction points
             let past50 = webgazer.getStoredPoints(); // retrieve the stored points
             let precision_measurement = calculatePrecision(past50);
@@ -166,12 +162,7 @@ export class gridBuilder {
             let accuracy_div = document.querySelector("#accuracy");
             accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
             accuracy_div.style.display = 'initial';
-            // write some data to the db
-            // write a timestamp to some dataset.start
-            // new date.now() - start
-            // convert to seconds
-            // save start, end, diff_in_sec
-            let start = parseInt(document.querySelector('#gaze-1').dataset.start);
+
             let diff = end - start;
             let payload = {
                 cache: "no-cache",

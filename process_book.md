@@ -34,12 +34,15 @@ Michael
 Yihan
 1. admin.html **COMPLETE**
 2. profile.html **COMPLETE**
-3. theme **COMPLETE**
-4. data visualization **COMPLETE**
-5. video editing **COMPLETE**
-6. crud operations for profile **COMPLETE**
-7. code cleanup **COMPLETE**
-8. research **COMPLETE**
+3. resetpassword.html **COMPLETE**
+4. theme **COMPLETE**
+5. data visualization **COMPLETE**
+6. admin profile list, test list, calibration list **COMPLETE**
+7. video recording and editing **COMPLETE**
+8. crud operations for profile **COMPLETE**
+9. update password **COMPLETE**
+10. code cleanup **COMPLETE**
+11. research **COMPLETE**
 
 Matt
 1. Gitup setup **COMPLETE**
@@ -62,6 +65,7 @@ Matt
 18. Process book **COMPLETE**
 19. Project Plan **COMPLETE**
 20. research **COMPLETE**
+21. screen recording **COMPLETE**
 
 # References & Citations
 Webgazer: https://webgazer.cs.brown.edu/
