@@ -1,3 +1,8 @@
 @import 'variables';
 @import 'carousel';
 @import 'global';
+
+body{
+    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAQAAADYv8WvAAAAD0lEQVR42mNkMGBgYAQRAAIpAGMZ9yLYAAAAAElFTkSuQmCC), auto;
+    user-select: none;
+}

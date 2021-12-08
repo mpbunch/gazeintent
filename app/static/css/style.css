@@ -168,4 +168,12 @@ li a .fa-user {
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
+
+body {
+  cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAQAAADYv8WvAAAAD0lEQVR42mNkMGBgYAQRAAIpAGMZ9yLYAAAAAElFTkSuQmCC), auto;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
 /*# sourceMappingURL=style.css.map */

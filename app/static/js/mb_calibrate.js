@@ -157,8 +157,10 @@ export class gridBuilder {
         store_points_letiable(); // start storing the prediction points
         let end = Date.now()
         this.sleep(5000).then(() => {
-            document.querySelector('#gazeGrid').remove();
-            document.querySelector('.clicker').remove();
+            let start = parseInt(document.querySelector('#gaze-1').dataset.start);
+
+            Array.from(document.querySelectorAll('.gaze-cell')).map(e => e.remove())
+            document.querySelector('#clicker').remove();
             stop_storing_points_letiable(); // stop storing the prediction points
             let past50 = webgazer.getStoredPoints(); // retrieve the stored points
             let precision_measurement = calculatePrecision(past50);
@@ -166,12 +168,7 @@ export class gridBuilder {
             let accuracy_div = document.querySelector("#accuracy");
             accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
             accuracy_div.style.display = 'initial';
-            // write some data to the db
-            // write a timestamp to some dataset.start
-            // new date.now() - start
-            // convert to seconds
-            // save start, end, diff_in_sec
-            let start = parseInt(document.querySelector('#gaze-1').dataset.start);
+
             let diff = end - start;
             let payload = {
                 cache: "no-cache",

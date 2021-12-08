@@ -62,6 +62,7 @@ Matt
 18. Process book **COMPLETE**
 19. Project Plan **COMPLETE**
 20. research **COMPLETE**
+21. screen recording **COMPLETE**
 
 # References & Citations
 Webgazer: https://webgazer.cs.brown.edu/
