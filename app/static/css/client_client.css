@@ -1,3 +1,8 @@
+#client-client {
+  margin-bottom: 300px;
+  margin-top: 60px;
+}
+
 #client-client .client-list li {
   list-style-type: none;
   margin-left: -40px;
