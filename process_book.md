@@ -29,6 +29,7 @@ Michael
 2. test.js **COMPLETE**
 3. pass test data to /api **COMPLETE**
 4. code cleanup **COMPLETE**
+5. research **COMPLETE**
 
 Yihan
 1. admin.html **COMPLETE**
@@ -38,6 +39,7 @@ Yihan
 5. video editing **COMPLETE**
 6. crud operations for profile **COMPLETE**
 7. code cleanup **COMPLETE**
+8. research **COMPLETE**
 
 Matt
 1. Gitup setup **COMPLETE**
@@ -59,6 +61,7 @@ Matt
 17. calibrate/test api **COMPLETE**
 18. Process book **COMPLETE**
 19. Project Plan **COMPLETE**
+20. research **COMPLETE**
 
 # References & Citations
 Webgazer: https://webgazer.cs.brown.edu/
