@@ -1,70 +1,26 @@
-body {
-  overflow: hidden;
-}
-
-#fullheight {
-  height: 100vh;
-}
-
 #clicker {
   position: absolute;
-  width: 35px;
-  height: 35px;
-  transform: translate(-50%, 50%);
-  border-radius: 0%;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0) !important;
+  border-radius: 50%;
   z-index: 1000000;
   top: 50%;
   left: 50%;
 }
-#clicker .btn-start {
+
+#btnStartTest {
   transform: translate(-50%, 50%);
 }
 
-#gazeGrid {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-#gazeGrid #accuracy {
-  display: none;
-  position: absolute;
-  top: 50%;
-  text-align: center;
-}
 #gazeGrid .gaze-cell,
 #gazeGrid .gazeCell {
-  text-align: center;
-  border: solid 1px #f00;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: solid 0px #f00 !important;
 }
 #gazeGrid .gaze-cell button[id^=cell-btn-],
 #gazeGrid .gazeCell button[id^=cell-btn-] {
   height: 100px;
   width: 100px;
-}
-#gazeGrid .gaze-cell .gazeCellCalibrate,
-#gazeGrid .gazeCell .gazeCellCalibrate {
-  border-radius: 50%;
-}
-#gazeGrid #webgazerLoading {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: grid;
-}
-#gazeGrid #webgazerLoading .spinner-box {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /*# sourceMappingURL=client_test.css.map */

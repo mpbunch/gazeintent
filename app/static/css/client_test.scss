@@ -1,67 +1,30 @@
 @import 'variables';
-body{
-    overflow: hidden;
-}
-#fullheight{
-    height:100vh;
-}
+
 #clicker{
     position: absolute;
-    width:35px;
-    height:35px;
-    transform: translate(-50%, 50%); // moves the symbol div to the center of the grid cell
-    border-radius: 00%;
+    width:15px;
+    height:15px;
+    background-color: rgb(0,0,0,0) !important;
+    border-radius: 50%;
     z-index:1000000;
     top:50%;
     left:50%;
-
+}
 #btnStartTest {
     transform: translate(-50%, 50%); // moves the symbol div to the center of the grid cell
-    }
 }
+
 #gazeGrid{
-    #accuracy{
-        display:none;
-        position:absolute;
-        top:50%;
-        text-align: center;
-    }
-    position:absolute;
-    top:50px;
-    right:0;
-    bottom:0;
-    left:0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     .gaze-cell,
     .gazeCell{
-        text-align: center;
-        border: solid 1px $red;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        border: solid 0px $red !important;
         button[id^=cell-btn-]{
             height:100px;
             width:100px;
         }
-        .gazeCellCalibrate{
-            border-radius:50%;
-        }
+
     }
-    #webgazerLoading{
-        position:absolute;
-        top:0;
-        right:0;
-        bottom:0;
-        left:0;
-        display:grid;
-        .spinner-box{
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    }
+
 }
 
 

@@ -1,28 +1,53 @@
+import { gridBuilder } from "./ml_client_test.js";
 
-// ml_util is work in progress
-// copied and edited from mb_utils
+(async function () {
+    var grid, data, cells, div;
+    div = 'gazeGrid';
+    cells = 9;
+    data = {}
+    data.x = 0;
+    data.y = 0;
+    grid = new gridBuilder();
+    grid.loading(true, div);
+    //Set up the webgazer video feedback.
+    var setup = function () {
 
-import { doGazeTest } from "./ml_util.js";
-
-(function () {
-    let gaze = new doGazeTest();
-    console.log('client_test - new doGazeTest');
-    // Show loading wheel wile webgazer is being loaded
-    gaze.loading();
-    // wait for webgazer before calibration grid load
+        //Set up the main canvas. The main canvas is used to calibrate the webgazer.
+        var canvas = document.getElementById("plotting_canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.position = 'fixed';
+    };
+    setup();
+    // Webgazer examples were used as a launching off point for this code block
     var checkExist = setInterval(function () {
         // Once the eye location div is loaded, show calibration or test
         if (document.getElementById('webgazerGazeDot')) {
-            console.log('client_test - Webgazer Loaded!');
-            // turn off loading wheel
-            gaze.loading(false);
-            // init test
-            let test = gaze.test();
-            console.log('client_test - starting test now')
-            // start test
-            test.start();
-            // clear interval, so only one test event is loaded
+            setTimeout(() => {
+                // turn off loading wheel
+                grid.loading(false, div);
+                // make the grid
+                grid.makeGrid();
+            }, 1000);
+            // clear interval, so only one calibration event is loaded
             clearInterval(checkExist);
         }
     }, 100);
-})(doGazeTest);
+  
+    //start the webgazer tracker
+    await webgazer.setRegression('ridge') /* currently must set regression and tracker */
+        //.setTracker('clmtrackr')
+        .setGazeListener(function (data, clock) {
+            // init calibration
+            grid.test(cells, div, data)
+        })
+        .saveDataAcrossSessions(true)
+        .begin();
+    await webgazer.showVideoPreview(false) /* shows all video previews */
+        .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
+        .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
+    window.saveDataAcrossSessions = true;
+    window.onbeforeunload = () => {
+        webgazer.end();
+    }
+})(webgazer, gridBuilder);
