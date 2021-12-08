@@ -1,0 +1,26 @@
+@import 'variables';
+body{
+    overflow: hidden;
+}
+#fullheight{
+    height:100vh;
+}
+#gazeGrid{
+    position:absolute;
+    top:50px;
+    right:0;
+    bottom:0;
+    left:0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    .gazeCell{
+        text-align: center;
+        border: solid 1px $red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .gazeCellCalibrate {
+            border-radius: 50%;
+        }
+    }
+}
