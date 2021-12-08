@@ -73,4 +73,4 @@ Carousel: https://bootsnipp.com/snippets/K0ZnX
 Jquery: https://jquery.com/
 FontAwesome: https://fontawesome.com/
 Google Analytics: https://analytics.google.com
-coloris: !! (mike) is this used anymore !!
+
