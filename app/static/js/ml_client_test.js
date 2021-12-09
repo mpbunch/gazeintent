@@ -19,12 +19,6 @@ export class gridBuilder {
             let position = this.get_position(elem);
             elem.dataset.position = position
         })
-        // return div so you can do other stuff with it
-        let accuracy = document.createElement('div');
-        accuracy.classList.add('accuracy')
-        accuracy.id = 'accuracy'
-        grid.append(accuracy)
-        return document.querySelector(`#${div}`);
     }
 
     test = (grid_cells = 9, div = 'gazeGrid', actual_gaze = false) => {
@@ -56,128 +50,13 @@ export class gridBuilder {
             // click
             // document.elementFromPoint(x, y).click();
             clicker.click();
-        } else if (hit && active_cell_gazed >= threshold) {
-            // advance calibration
-            this.advance(active_cell, grid_cells)
         }
-    }
-
-    accuracy = () => {
-        // inspired by: https://webgazer.cs.brown.edu/#examples
-        /*
-         * This function calculates a measurement for how precise 
-         * the eye tracker currently is which is displayed to the user
-         */
-        const calculatePrecision = (past50Array) => {
-            let windowHeight = window.innerHeight;
-            let windowWidth = window.innerWidth;
-
-            // Retrieve the last 50 gaze prediction points
-            let x50 = past50Array[0];
-            let y50 = past50Array[1];
-
-            // Calculate the position of the point the user is staring at
-            let staringPointX = windowWidth / 2;
-            let staringPointY = windowHeight / 2;
-
-            let precisionPercentages = new Array(50);
-            calculatePrecisionPercentages(precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY);
-            let precision = calculateAverage(precisionPercentages);
-
-            // Return the precision measurement as a rounded percentage
-            return Math.round(precision);
-        };
-
-        /*
-         * Calculate percentage accuracy for each prediction based on distance of
-         * the prediction point from the centre point (uses the window height as
-         * lower threshold 0%)
-         */
-        const calculatePrecisionPercentages = (precisionPercentages, windowHeight, x50, y50, staringPointX, staringPointY) => {
-            for (let x = 0; x < 50; x++) {
-                // Calculate distance between each prediction and staring point
-                let xDiff = staringPointX - x50[x];
-                let yDiff = staringPointY - y50[x];
-                let distance = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
-
-                // Calculate precision percentage
-                let halfWindowHeight = windowHeight / 2;
-                let precision = 0;
-                if (distance <= halfWindowHeight && distance > -1) {
-                    precision = 100 - (distance / halfWindowHeight * 100);
-                } else if (distance > halfWindowHeight) {
-                    precision = 0;
-                } else if (distance > -1) {
-                    precision = 100;
-                }
-
-                // Store the precision
-                precisionPercentages[x] = precision;
-            }
-        }
-
-
-        this.sleep(5000).then(() => {
-            document.querySelector('#gazeGrid').remove();
-            document.querySelector('.clicker').remove();
-            stop_storing_points_letiable(); // stop storing the prediction points
-            let past50 = webgazer.getStoredPoints(); // retrieve the stored points
-            let precision_measurement = calculatePrecision(past50);
-            let accuracyLabel = "<a>Accuracy | " + precision_measurement + "%</a>";
-            let accuracy_div = document.querySelector("#accuracy");
-            accuracy_div.innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
-            accuracy_div.style.display = 'initial';
-            // write some data to the db
-            // write a timestamp to some dataset.start
-            // new date.now() - start
-            // convert to seconds
-            // save start, end, diff_in_sec
-            let start = parseInt(document.querySelector('#gaze-1').dataset.start);
-            let diff = end - start;
-            let payload = {
-                cache: "no-cache",
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    type: 'calibration',
-                    accuracy: precision_measurement,
-                    start: start,
-                    end: end,
-                    diff: diff
-                })
-            }
-            fetch(`/api/calibrate`, payload)
-                .then(response => {
-                    return response.text();
-                }).then(() => {
-                    this.sleep(4000).then(() => window.location.href = "/client?c=1")
-                });
-        });
     }
 
     reset = () => {
         webgazer.clearData();
     }
 
-    advance = (activeCell, grid_cells) => {
-        // we need to identify calibration sequence
-        let sequence = { 1: 2, 2: 3, 3: 4, 4: 6, 5: 0, 6: 7, 7: 8, 8: 9, 9: 5 }
-        // active cell clean up
-        activeCell.classList.remove('active-cell');
-        activeCell.innerHTML = ''
-
-        // next cell setup
-        let next = parseInt(activeCell.dataset.cell);
-        if (sequence[next] && next <= grid_cells) {
-            let next_cell = document.querySelector(`#gaze-${sequence[next]}`)
-            next_cell.classList.add('active-cell');
-            next_cell.innerHTML = `Look Here, Hold Your Gaze.`;
-        } else {
-            this.accuracy()
-        }
-    }
 
     sleep = (time) => {
         return new Promise((resolve) => setTimeout(resolve, time));
@@ -211,5 +90,4 @@ export class gridBuilder {
             if (loading) loading.remove()
         }
     }
-
 }

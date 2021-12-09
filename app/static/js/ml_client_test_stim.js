@@ -1,9 +1,10 @@
 // variables to hold the stimulus details
-var timeStartTest = ''; 
-var timeStopTest = '';
-var timeStartStim = '';
-var timeStopStim = '';
-var stimEventsTotal = 4;
+var timeTestStart = ''; 
+var timeTestStop = '';
+var timeStimStart = '';
+var timeStimStop = '';
+var timeStimGaze = '';
+var stimEventsTotal = 1; // Changed to 1 for quicker testing
 var stimCount = 0;
 var randomSymbol = '';
 var randomColor = '';
@@ -11,8 +12,9 @@ var randomCell = '';
 var randomDelay = '';
 var stimSymbol = '';
 var stimData = [];
-let symbolList = ["fas fa-circle", "fas fa-square", "fas fa-heart", "fas fa-star", "fas fa-check", "fas fa-compress", "fas fa-crosshairs", "fas fa-dot-circle", "fas fa-ellipsis-h", "fas fa-exclamation"];
-let colorList = ["Red", "Orange", "DarkYellow", "Green", "Blue", "Indigo", "Violet", "Turquoise", "Tomato", "SaddleBrown"];
+
+let symbolList = ["fas fa-circle fa-2x", "fas fa-square fa-2x", "fas fa-heart fa-2x", "fas fa-star fa-2x", "fas fa-check fa-2x", "fas fa-compress fa-2x", "fas fa-crosshairs fa-2x", "fas fa-dot-circle fa-2x", "fas fa-ellipsis-h fa-2x", "fas fa-exclamation fa-2x"];
+let colorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet", "Turquoise", "Tomato", "SaddleBrown"];
 
 // checkExist copied from webcam.js and edited for the client test page
 // Webgazer examples were used as a launching off point for this code block
@@ -20,7 +22,6 @@ var checkExist = setInterval(function () {
     // Once the eye location div is loaded, show calibration or test
     if (document.getElementById('webgazerGazeDot')) {
         setTimeout(() => {
-            console.log('Webgazer Loaded IN THE CLIENT TEST PAGE!');
             btnStartStim(); 
         }, 3000);
         // clear interval, so only one calibration event is loaded
@@ -28,28 +29,23 @@ var checkExist = setInterval(function () {
     } 
 }, 100);
 
-// add the start button once the gazer dot div is loaded
 function btnStartStim() {
-    // Create a button to start the test
     let btn = document.createElement("button");
     btn.innerHTML = "Start";
     btn.type="button";
     btn.className="btn btn-success btn-sm";
     btn.id="btnStartTest";
 
-    // change this to wait until webgazer is loaded
+    let msg="Click the button to begin the test";
+    document.getElementById("gaze-2").innerHTML = msg;
+
     const el = document.getElementById("clicker");
     el.appendChild(btn);
 
-    // Start button onclick function
     btn.onclick=function () {
-        timeStartTest = Date.now();
-        console.log(timeStartTest);
-
-        // remove button once it is clicked and the test has started
+        timeTestStart = Date.now();
         btn.remove();
-
-        // start stim function
+        document.getElementById("gaze-2").innerHTML = '';
         stim();
     };
 };
@@ -64,12 +60,12 @@ function sleep(time) {
 }
 
 function randomDelayFunction() {
-    return (Math.floor(Math.random()*4)+1) * 1000;
+    return (Math.floor(Math.random()*5)+2) * 1000;
 }
 
 // Stimulus function - places a random symbol in a random cell for a random duration
 async function stim() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < stimEventsTotal; i++) {
         stimCount++;
         randomDelay = randomDelayFunction();
         randomCell = "gaze-" + (Math.floor(Math.random()*10)+1); 
@@ -81,7 +77,7 @@ async function stim() {
         if(document.getElementById(randomCell)) {
             document.getElementById(randomCell).innerHTML = stimSymbol;
         } 
-        timeStartStim = Date.now();
+        timeStimStart = Date.now();
 
         // random duration for stimulus symbol to appear in the selected cell
         await sleep(randomDelay);
@@ -92,26 +88,51 @@ async function stim() {
         } 
 
         // if user gaze touches the active cell
-        timeStopStim = Date.now();
+        timeStimStop = Date.now();
 
         // if symbol duration time runs out before user gaze touch active cell
-        timeStopStim = Date.now();
+        timeStimStop = Date.now();
+        timeStimGaze = timeStimStop - timeStimStart;
 
-        // save or append stim data to a dictionary
-        console.log('saved stimulus event details into a dictionary');
+        // add stimulus details to an array
+        stimData.push({
+            cell: randomCell,
+            stim: randomSymbol,
+            color: randomColor,
+            start: timeStimStart,
+            end: timeStimStop,
+            gaze: timeStimGaze
+        })
 
-        stimData = [{"meta":{"start":1111,"end":2222},"data":[{"cell":2, "stim":"square", "start":1111, "end":2222, "gaze":1100, "color":"red", "latency":20},{"cell":9, "stim":"square", "start":1111, "end":2222, "gaze":1100, "color":"red", "latency":20},{"cell":4, "stim":"square", "start":1111, "end":2222, "gaze":1100, "color":"red", "latency":20}]}]    // PLACEHOLDER DATA 
-
-        // write dictionary to database
-        console.log("WRITE STIM DICTIONARY DATA TO DATABASE" + stimData);
-
+        console.log(JSON.stringify(stimData));
         // random delay between displaying stimulus symbols
         randomDelay = randomDelayFunction();
         await sleep(randomDelay);
     }
 
-    // write dictionary to database
-    console.log("WRITE STIM DICTIONARY DATA TO DATABASE");
+    timeTestStop = Date.now();
+    let payload = {
+        cache: "no-cache",
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            meta: {
+                'start': timeTestStart,
+                'end': timeTestStop
+            },
+            data:stimData,
+            type: "test"
+        })
+    }
+    fetch(`/api/calibrate`, payload)
+        .then(response => {
+            return response.text();
+        }).then(() => {
+           // sleep(4000).then(() => window.location.href = "/client?c=1&h=1")
+        });
 
-    alert('Test Completed');
+    let msg="Test Completed <br><br> Details have been saved to the database. <br><br>Thank you for participating.";
+    document.getElementById("gaze-2").innerHTML = msg;
 };
