@@ -4,7 +4,7 @@ var timeTestStop = '';
 var timeStimStart = '';
 var timeStimStop = '';
 var timeStimGaze = '';
-var stimEventsTotal = 2; // Changed to 2 for quicker testing
+var stimEventsTotal = 1; // Changed to 1 for quicker testing
 var stimCount = 0;
 var randomSymbol = '';
 var randomColor = '';
@@ -29,15 +29,12 @@ var checkExist = setInterval(function () {
     } 
 }, 100);
 
-// add the start button once the gazer dot div is loaded
 function btnStartStim() {
-    // Create a button to start the test
     let btn = document.createElement("button");
     btn.innerHTML = "Start";
     btn.type="button";
     btn.className="btn btn-success btn-sm";
     btn.id="btnStartTest";
-
 
     let msg="Click the button to begin the test";
     document.getElementById("gaze-2").innerHTML = msg;
@@ -45,14 +42,10 @@ function btnStartStim() {
     const el = document.getElementById("clicker");
     el.appendChild(btn);
 
-
-
-    // Start button onclick function
     btn.onclick=function () {
         timeTestStart = Date.now();
         btn.remove();
         document.getElementById("gaze-2").innerHTML = '';
-        // start stim function
         stim();
     };
 };
@@ -102,14 +95,14 @@ async function stim() {
         timeStimGaze = timeStimStop - timeStimStart;
 
         // add stimulus details to an array
-        stimData[i] = {
+        stimData.push({
             cell: randomCell,
             stim: randomSymbol,
             color: randomColor,
             start: timeStimStart,
             end: timeStimStop,
             gaze: timeStimGaze
-        }
+        })
 
         console.log(JSON.stringify(stimData));
         // random delay between displaying stimulus symbols
@@ -117,37 +110,29 @@ async function stim() {
         await sleep(randomDelay);
     }
 
-    // write dictionary to database
-    console.log("WRITE STIM DICTIONARY DATA TO DATABASE");
-    // see payload example
-
-    var metaDetails = {start : timeTestStart, end : timeTestStop};
-
+    timeTestStop = Date.now();
     let payload = {
         cache: "no-cache",
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-        }, 
-        meta: metaDetails,
-        data: stimData
+        },
+        body: JSON.stringify({
+            meta: {
+                'start': timeTestStart,
+                'end': timeTestStop
+            },
+            data:stimData,
+            type: "test"
+        })
     }
-
-    console.log('PAYLOAD:   ' + JSON.stringify(payload));
-    
     fetch(`/api/calibrate`, payload)
         .then(response => {
-            console.log('in response');
             return response.text();
         }).then(() => {
-            console.log('in if then');
-            sleep(4000).then(() => window.location.href = "/client?c=1")
-    });
-    
-    
-
+           // sleep(4000).then(() => window.location.href = "/client?c=1&h=1")
+        });
 
     let msg="Test Completed <br><br> Details have been saved to the database. <br><br>Thank you for participating.";
     document.getElementById("gaze-2").innerHTML = msg;
-
 };

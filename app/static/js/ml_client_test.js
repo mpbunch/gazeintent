@@ -53,39 +53,6 @@ export class gridBuilder {
         }
     }
 
-    accuracy = () => {
-        this.sleep(5000).then(() => {
-
-            // write some data to the db
-            // write a timestamp to some dataset.start
-            // new date.now() - start
-            // convert to seconds
-            // save start, end, diff_in_sec
-            let start = parseInt(document.querySelector('#gaze-1').dataset.start);
-            let diff = end - start;
-            let payload = {
-                cache: "no-cache",
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    type: 'calibration',
-                    accuracy: precision_measurement,
-                    start: start,
-                    end: end,
-                    diff: diff
-                })
-            }
-            fetch(`/api/calibrate`, payload)
-                .then(response => {
-                    return response.text();
-                }).then(() => {
-                    this.sleep(4000).then(() => window.location.href = "/client?c=1")
-                });
-        });
-    }
-
     reset = () => {
         webgazer.clearData();
     }
@@ -123,5 +90,4 @@ export class gridBuilder {
             if (loading) loading.remove()
         }
     }
-
 }
