@@ -379,10 +379,10 @@ def formatData(data, user_id=None):
                 if x.name == 'record_created':
                     value = value.strftime('%m/%d/%y')
                 record[x.name] = value
-                if 'data' not in record_data:
-                    calibration_data.append(record)
-                else:
-                    test_data.append(record)
+            if 'data' not in record_data:
+                calibration_data.append(record)
+            else:
+                test_data.append(record)
     return calibration_data, test_data
 
 

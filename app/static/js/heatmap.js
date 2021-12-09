@@ -10,7 +10,12 @@ heatmap = (myData) => {
         let id = myData[i]['cell'];
         let div = document.getElementById(id);
         // determine opacity for cell
-        var percentage_cell = (myData[i]['gazeEnd'] - myData[i]['gazeStart']) / (myData[i]['stimEnd'] - myData[i]['stimStart']);
+        try {
+            var percentage_cell = (myData[i]['gazeEnd'] - myData[i]['gazeStart']) / (myData[i]['stimEnd'] - myData[i]['stimStart']);
+        } catch {
+            // oops something went wrong
+            percentage_cell = 0
+        }
 
         // set opacity
         div.style.opacity = percentage_cell;
