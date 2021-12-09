@@ -77,4 +77,5 @@ Carousel: https://bootsnipp.com/snippets/K0ZnX
 Jquery: https://jquery.com/
 FontAwesome: https://fontawesome.com/
 Google Analytics: https://analytics.google.com
+sleep functions: http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep & https://stackoverflow.com/questions/64995893/add-timeout-sleep-function-inside-javascript-loop
 

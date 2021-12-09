@@ -50,10 +50,6 @@ function btnStartStim() {
 };
   
 // Sleep function - wait the selected amount of time, then remove stim symbol
-// modified from:
-// https://stackoverflow.com/questions/64995893/add-timeout-sleep-function-inside-javascript-loop
-// and from mb_calibrate -> sleep function because javascript doesn't have one,
-// sourced from http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
