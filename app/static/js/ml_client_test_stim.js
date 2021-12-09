@@ -4,7 +4,7 @@ var timeTestStop = '';
 var timeStimStart = '';
 var timeStimStop = '';
 var timeStimGaze = '';
-var stimEventsTotal = 1; // Changed to 1 for quicker testing
+var stimEventsTotal = 9;
 var stimCount = 0;
 var randomSymbol = '';
 var randomColor = '';
@@ -67,7 +67,7 @@ async function stim() {
     for (let i = 0; i < stimEventsTotal; i++) {
         stimCount++;
         randomDelay = randomDelayFunction();
-        randomCell = "gaze-" + (Math.floor(Math.random()*10)+1); 
+        randomCell = "gaze-" + (Math.floor(Math.random()*9)+1); 
         
         // get random symbol, color, cell 
         randomSymbol = symbolList[Math.floor(Math.random()*symbolList.length)];
@@ -102,8 +102,6 @@ async function stim() {
             end: timeStimStop,
             gaze: timeStimGaze
         })
-
-        console.log(JSON.stringify(stimData));
         // random delay between displaying stimulus symbols
         randomDelay = randomDelayFunction();
         await sleep(randomDelay);
@@ -122,7 +120,7 @@ async function stim() {
         .then(response => {
             return response.text();
         }).then(() => {
-           // sleep(4000).then(() => window.location.href = "/client?c=1&h=1")
+           sleep(4000).then(() => window.location.href = "/client?c=1&h=1")
         });
 
     let msg="Test Completed <br><br> Details have been saved to the database. <br><br>Thank you for participating.";
