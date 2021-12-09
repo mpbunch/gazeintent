@@ -24,7 +24,6 @@ var checkExist = setInterval(function () {
         setTimeout(() => {
             btnStartStim(); 
         }, 3000);
-        // clear interval, so only one calibration event is loaded
         clearInterval(checkExist);
     } 
 }, 100);
@@ -117,14 +116,7 @@ async function stim() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            meta: {
-                'start': timeTestStart,
-                'end': timeTestStop
-            },
-            data:stimData,
-            type: "test"
-        })
+        body: JSON.stringify({"data": [{"cell": 7, "stim": "square", "color": "green", "gazeEnd": 1638850163113, "stimEnd": 1638850162135, "gazeStart": 1638850160978, "stimStart": 1638850159000}, {"cell": 5, "stim": "rombus", "color": "orange", "gazeEnd": 1638850167764, "stimEnd": 1638850169737, "gazeStart": 1638850164856, "stimStart": 1638850164000}, {"cell": 4, "stim": "square", "color": "red", "gazeEnd": 1638850170779, "stimEnd": 1638850171944, "gazeStart": 1638850167974, "stimStart": 1638850166000}, {"cell": 7, "stim": "smile", "color": "red", "gazeEnd": 1638850173761, "stimEnd": 1638850173230, "gazeStart": 1638850171531, "stimStart": 1638850170000}, {"cell": 6, "stim": "rombus", "color": "purple", "gazeEnd": 1638850178091, "stimEnd": 1638850177885, "gazeStart": 1638850175206, "stimStart": 1638850174000}, {"cell": 7, "stim": "rectangle", "color": "green", "gazeEnd": 1638850181178, "stimEnd": 1638850180359, "gazeStart": 1638850177819, "stimStart": 1638850176000}, {"cell": 8, "stim": "star", "color": "red", "gazeEnd": 1638850182303, "stimEnd": 1638850185205, "gazeStart": 1638850180136, "stimStart": 1638850180000}, {"cell": 5, "stim": "star", "color": "red", "gazeEnd": 1638850184423, "stimEnd": 1638850188924, "gazeStart": 1638850183494, "stimStart": 1638850183000}, {"cell": 4, "stim": "star", "color": "orange", "gazeEnd": 1638850190258, "stimEnd": 1638850190004, "gazeStart": 1638850187254, "stimStart": 1638850186000}], "meta": {"end": 1638850163051, "diff": 4051, "start": 1638850159000}, "type": "test"})
     }
     fetch(`/api/calibrate`, payload)
         .then(response => {
@@ -136,3 +128,5 @@ async function stim() {
     let msg="Test Completed <br><br> Details have been saved to the database. <br><br>Thank you for participating.";
     document.getElementById("gaze-2").innerHTML = msg;
 };
+
+
